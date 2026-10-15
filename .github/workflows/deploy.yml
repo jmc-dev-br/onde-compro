@@ -38,6 +38,10 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html dist/index.html
+          if [[ -d assets ]]; then
+            mkdir -p dist/assets
+            cp -R assets/. dist/assets/
+          fi
 
       - name: Publicar no Cloudflare Pages
         if: steps.credentials.outputs.configured == 'true'
