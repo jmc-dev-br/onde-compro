@@ -62,7 +62,7 @@ const grid=document.getElementById('resultsGrid');
 const title=document.getElementById('resultTitle');
 const subtitle=document.getElementById('resultSubtitle');
 const status=document.getElementById('searchStatus');
-const clean=function(s){return String(s||'').trim().replace(/\\s+/g,' ');};
+const clean=function(s){return String(s||'').trim().replace(/\s+/g,' ');};
 const fallbackStores=[
 {name:'Mercado Livre',letter:'M',about:'Veja anúncios e vendedores no marketplace.',url:function(q){return 'https://lista.mercadolivre.com.br/'+encodeURIComponent(q).replace(/%20/g,'-');}},
 {name:'Amazon Brasil',letter:'a',about:'Pesquise o item no catálogo da Amazon Brasil.',url:function(q){return 'https://www.amazon.com.br/s?k='+encodeURIComponent(q);}},
