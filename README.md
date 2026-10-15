@@ -18,3 +18,6 @@ No GitHub, acesse **Settings → Secrets and variables → Actions** e crie este
 - `CLOUDFLARE_ACCOUNT_ID`: ID da conta Cloudflare.
 
 Depois disso, novos commits na branch `main` publicam automaticamente em https://onde-compro.pages.dev/. Não compartilhe o token no código nem no chat.
+
+
+Deploy check: workflow dispatch smoke test trigger.
