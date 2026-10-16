@@ -99,3 +99,14 @@ body.account-modal-open{overflow:hidden}
  .profile-category-grid label span{padding:9px 8px;font-size:10px;min-height:40px}
  .profile-edit-form{gap:13px}
 }
+
+/* Distintivo oficial do criador do Onde compro? */
+.account-nav-owner-mark[hidden],.account-owner-badge[hidden]{display:none!important}
+.account-nav-owner-mark{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:8px;background:#12251a;color:#caff83;border:1px solid #537544;font-size:14px;font-weight:900;line-height:1;box-shadow:0 2px 7px #14271a12}
+.account-owner-badge{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;padding:9px 12px 9px 9px;margin:0 0 13px;border-radius:14px;border:1px solid #d7e8c2;background:linear-gradient(110deg,#f0f8e6,#f9fbf5);box-shadow:0 4px 12px #1e381006}
+.account-owner-symbol{width:35px;height:35px;display:grid;place-items:center;flex-shrink:0;border-radius:11px;background:linear-gradient(145deg,#1e3927,#102219);color:#c8ff7a;box-shadow:0 3px 8px #172a1a1b}
+.account-owner-symbol svg{width:22px;height:22px;display:block}
+.account-owner-badge-copy{display:grid;gap:3px;min-width:0}
+.account-owner-badge-copy strong{font-size:11px;letter-spacing:.05px;color:#2c4729}
+.account-owner-badge-copy small{font-size:10px;color:#74856c;line-height:1.4}
+.account-owner-verified{display:grid;place-items:center;width:19px;height:19px;margin-left:auto;flex-shrink:0;border-radius:50%;background:#4b7b30;color:#fff;font-size:12px;font-weight:900;box-shadow:0 0 0 3px #e0efcf}
