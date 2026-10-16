@@ -85,7 +85,8 @@ function scoreResult(result, query) {
   const url = String(result.url || "");
   const host = getHost(url);
   if (!host || !/^https:\/\//i.test(url)) return -100;
-  const isTikTokShop = hostMatches(host, "tiktok.com") && /(?:shop|product|view\\/product)/i.test((() => { try { return new URL(url).pathname; } catch { return ""; } })());
+  const tiktokPath = (() => { try { return new URL(url).pathname.toLowerCase(); } catch { return ""; } })();
+  const isTikTokShop = hostMatches(host, "tiktok.com") && (tiktokPath.split("/").includes("shop") || tiktokPath.split("/").includes("product"));
   if (EXCLUDED_HOSTS.some((domain) => hostMatches(host, domain)) && !isTikTokShop) return -100;
 
   let score = 0;
