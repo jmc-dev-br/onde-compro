@@ -9,8 +9,8 @@ const KNOWN_STORES = [
   "kalunga.com.br", "webcontinental.com.br", "olx.com.br", "enjoei.com.br",
   "netshoes.com.br", "dafiti.com.br", "zattini.com.br", "centauro.com.br",
   "decathlon.com.br", "petlove.com.br", "cobasi.com.br", "rihappy.com.br",
-  "epocacosmeticos.com.br", "beleza na web.com.br", "drogasil.com.br",
-  "droga raia.com.br", "ebay.com", "etsy.com", "walmart.com", "bestbuy.com"
+  "epocacosmeticos.com.br", "belezanaweb.com.br", "drogasil.com.br",
+  "drogaraia.com.br", "ebay.com", "etsy.com", "walmart.com", "bestbuy.com"
 ];
 
 const EXCLUDED_HOSTS = [
@@ -131,7 +131,7 @@ function storeLabel(host) {
     ["ebay.com", "eBay"], ["etsy.com", "Etsy"], ["walmart.com", "Walmart"],
     ["bestbuy.com", "Best Buy"]
   ];
-  const match = labels.find(([domain]) => hostMatches(host, domain.replace(/ /g, "")));
+  const match = labels.find(([domain]) => hostMatches(host, domain));
   if (match) return match[1];
   return host.replace(/^www\./, "");
 }
