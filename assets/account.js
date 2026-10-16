@@ -30,6 +30,18 @@ let mode = 'signin';
 let currentUser = null;
 let currentProfile = {};
 
+function requestedReturnPath() {
+  try {
+    const value = new URLSearchParams(window.location.search).get('retorno');
+    if (!value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\\\')) return null;
+    const resolved = new URL(value, window.location.origin);
+    return resolved.origin === window.location.origin ? resolved.pathname + resolved.search + resolved.hash : null;
+  } catch (_) { return null; }
+}
+function redirectAfterAuth() {
+  const destination = requestedReturnPath();
+  if (destination) window.location.assign(destination);
+}
 function clean(value) { return String(value || '').trim(); }
 function setStatus(element, message = '', error = false) {
   if (!element) return;
@@ -252,7 +264,7 @@ form?.addEventListener('submit', async (event) => {
         email, password,
         options: {
           data: { display_name: displayName },
-          emailRedirectTo: window.location.origin + window.location.pathname
+          emailRedirectTo: window.location.origin + (requestedReturnPath() || window.location.pathname)
         }
       });
       if (error) throw error;
@@ -261,6 +273,7 @@ form?.addEventListener('submit', async (event) => {
         updateNav();
         await showProfile();
         setStatus(profileStatus, 'Conta criada com sucesso!');
+        if (requestedReturnPath()) { redirectAfterAuth(); return; }
       } else {
         setStatus(statusBox, 'Cadastro iniciado! Confira seu e-mail para confirmar a conta. Depois, entre aqui.');
       }
@@ -271,6 +284,7 @@ form?.addEventListener('submit', async (event) => {
       updateNav();
       await showProfile();
       setStatus(profileStatus, 'Você entrou na sua conta.');
+      if (requestedReturnPath()) { redirectAfterAuth(); return; }
     }
   } catch (error) {
     setStatus(statusBox, friendlyAuthError(error), true);
@@ -501,5 +515,14 @@ supabase.auth.onAuthStateChange((event, session) => {
   currentUser = data?.session?.user || null;
   updateNav();
   if (currentUser) await refreshOwnerRole(currentUser.id);
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('conta') === '1') {
+    if (requestedReturnPath() && currentUser) {
+      redirectAfterAuth();
+      return;
+    }
+    if (!currentUser) openModal();
+    else openModal();
+  }
   // O evento PASSWORD_RECOVERY abre a tela da nova senha ao validar o link de recuperação.
 })();
