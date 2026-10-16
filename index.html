@@ -294,7 +294,7 @@ footer{padding:31px 0;background:#fff}
     <div id="accountProfileView" hidden>
       <p class="account-kicker">SUA ÁREA</p>
       <h2 id="accountDialogTitleProfile">Minha conta</h2>
-      <p class="account-description">Confira e atualize as informações básicas do seu perfil.</p>
+      <p class="account-description" id="accountProfileDescription">Confira e atualize as informações básicas do seu perfil.</p>
       <div class="account-profile-badge">Conta conectada</div>
       <div class="account-profile-info"><span>E-mail da conta</span><span id="accountEmail"></span></div>
       <form class="account-form" id="accountProfileForm">
@@ -308,8 +308,8 @@ footer{padding:31px 0;background:#fff}
     </div>
     <div id="accountResetView" hidden>
       <p class="account-kicker">RECUPERAÇÃO DE ACESSO</p>
-      <h2>Redefina sua senha</h2>
-      <p class="account-description">Informe o e-mail usado no cadastro para receber as instruções.</p>
+      <h2 id="accountResetTitle">Redefina sua senha</h2>
+      <p class="account-description" id="accountResetDescription">Informe o e-mail usado no cadastro para receber as instruções.</p>
       <form class="account-form" id="accountResetForm">
         <label>E-mail
           <input id="accountResetEmail" type="email" autocomplete="email" required maxlength="254" placeholder="voce@exemplo.com">
@@ -321,8 +321,8 @@ footer{padding:31px 0;background:#fff}
     </div>
     <div id="accountNewPasswordView" hidden>
       <p class="account-kicker">NOVA SENHA</p>
-      <h2>Escolha uma nova senha</h2>
-      <p class="account-description">Use pelo menos 8 caracteres e confirme a senha para salvar.</p>
+      <h2 id="accountNewPasswordTitle">Escolha uma nova senha</h2>
+      <p class="account-description" id="accountNewPasswordDescription">Use pelo menos 8 caracteres e confirme a senha para salvar.</p>
       <form class="account-form" id="accountNewPasswordForm">
         <label>Nova senha
           <input id="accountNewPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Pelo menos 8 caracteres">
