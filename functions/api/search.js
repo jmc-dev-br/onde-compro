@@ -615,7 +615,39 @@ function storeLabel(host) {
     ["globalsources.com", "Global Sources"],
     ["reverb.com", "Reverb"],
     ["discogs.com", "Discogs"],
-    ["saldaodainformatica.com.br", "Saldão da Informática"]
+    ["saldaodainformatica.com.br", "Saldão da Informática"],
+    ["colombo.com.br", "Lojas Colombo"],
+    ["lebes.com.br", "Lebes"],
+    ["gazin.com.br", "Gazin"],
+    ["bemol.com.br", "Bemol"],
+    ["koerich.com.br", "Koerich"],
+    ["novomundo.com.br", "Novo Mundo"],
+    ["taqi.com.br", "taQi"],
+    ["webcontinental.com.br", "WebContinental"],
+    ["dufrio.com.br", "Dufrio"],
+    ["frigelar.com.br", "Frigelar"],
+    ["lojasbecker.com.br", "Lojas Becker"],
+    ["alobebe.com.br", "Alô Bebê"],
+    ["graodegente.com.br", "Grão de Gente"],
+    ["lg.com", "LG Brasil"],
+    ["motorola.com.br", "Motorola"],
+    ["sony.com.br", "Sony Brasil"],
+    ["jbl.com.br", "JBL"],
+    ["megamamute.com.br", "MegaMamute"],
+    ["kalunga.com.br", "Kalunga"],
+    ["hardstore.com.br", "Hardstore"],
+    ["patoloco.com.br", "Patoloco"],
+    ["ikesaki.com.br", "Ikesaki"],
+    ["mundodocabeleireiro.com.br", "Mundo do Cabeleireiro"],
+    ["bistek.com.br", "Bistek"],
+    ["condor.com.br", "Condor"],
+    ["supernosso.com", "Supernosso"],
+    ["comper.com.br", "Comper"],
+    ["ferramentaskennedy.com.br", "Ferramentas Kennedy"],
+    ["artwalk.com.br", "Artwalk"],
+    ["worldtennis.com.br", "World Tennis"],
+    ["oscarcalcados.com.br", "Oscar Calçados"],
+    ["armarinhosfernando.com.br", "Armarinhos Fernando"]
   ];
   const match = labels.find(([domain]) => hostMatches(host, domain));
   if (match) return match[1];
@@ -909,9 +941,11 @@ export async function onRequestGet(context) {
     }
   }
 
-  // If broad web search didn't find a direct product page, try only the known shopping domains.
-  // This extra request runs only when the first pass found no offers, conserving free search credits.
-  if (candidates.filter((item) => item.directProductPage).length < 3 && env.TAVILY_API_KEY) {
+  // Run a store-focused comparison when the broad search has not found enough priced offers
+  // across a useful range of sellers. This avoids stopping after a few results from one store.
+  const pricedDirectOffers = new Set(candidates.filter((item) => item.directProductPage && item.priceValue !== null).map((item) => item.url)).size;
+  const pricedDirectStores = new Set(candidates.filter((item) => item.directProductPage && item.priceValue !== null).map((item) => item.domain || getHost(item.url))).size;
+  if ((pricedDirectOffers < 8 || pricedDirectStores < 5) && env.TAVILY_API_KEY) {
     try {
       const targetedResponse = await fetch("https://api.tavily.com/search", {
         method: "POST",
