@@ -85,11 +85,17 @@ function scoreResult(result, query) {
   let score = 0;
   const providerScore = Number(result.score || 0);
   score += Math.max(0, providerScore) * 3;
-  const direct = isProductPath(url);
   const store = KNOWN_STORES.some((domain) => hostMatches(host, domain));
+  const searchOrHome = looksLikeSearchOrHome(url);
+  let pathSuggestsProduct = false;
+  try {
+    const segments = new URL(url).pathname.split("/").filter(Boolean);
+    pathSuggestsProduct = segments.some((segment) => segment.length >= 8);
+  } catch { /* URL was validated above. */ }
+  const direct = isProductPath(url) || (store && !searchOrHome && pathSuggestsProduct);
   if (direct) score += 7;
   if (store) score += 4;
-  if (looksLikeSearchOrHome(url)) score -= 7;
+  if (searchOrHome) score -= 7;
 
   const haystack = (String(result.title || "") + " " + String(result.content || result.description || "")).toLowerCase();
   const words = query.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
@@ -199,9 +205,11 @@ export async function onRequestGet(context) {
         search_depth: "basic",
         max_results: 20,
         country: "brazil",
+        language: "pt",
         include_answer: false,
         include_raw_content: false,
-        include_images: true
+        include_images: true,
+        include_image_descriptions: true
       })
     });
   } catch {
