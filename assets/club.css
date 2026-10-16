@@ -165,3 +165,22 @@
 
 .club-interest-button.club-interest-saved{border-color:#d3e7c1;background:linear-gradient(135deg,#eff8e6,#e2f2d4);color:#355b2b;box-shadow:none}
 .club-interest-button.club-interest-saved:hover{background:#e5f4d9}
+
+/* Assinatura do Clube */
+.club-subscribe-button.club-subscribe-active{border-color:#d5e8c6;background:linear-gradient(135deg,#eff8e7,#e1f1d3);color:#35592d;box-shadow:none}
+.club-subscribe-button.club-subscribe-active:hover{filter:none;transform:none}
+.club-interest-secondary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:10px;border:0;background:transparent;color:#64834e;font:inherit;font-size:10px;font-weight:850;cursor:pointer}
+.club-interest-secondary:hover{text-decoration:underline;color:#3d652e}
+.club-interest-secondary:disabled{opacity:.6;cursor:wait}
+.club-interest-secondary.is-saved{color:#466b31}
+.club-subscription-panel{display:grid;gap:12px;margin:15px 0 0;border:1px solid #d9e7cf;background:#f5faef;border-radius:15px;padding:13px}
+.club-subscription-panel[hidden]{display:none!important}
+.club-subscription-panel-head{display:flex;align-items:center;gap:10px}
+.club-subscription-status-icon{display:grid;place-items:center;width:30px;height:30px;flex-shrink:0;border-radius:10px;background:#dfefcf;color:#4b7733;font-weight:950}
+.club-subscription-status-icon.is-warning{background:#f8edcf;color:#9a7428}
+.club-subscription-panel-head>div{display:grid;gap:4px;min-width:0}
+.club-subscription-panel-head strong{font-size:11px;color:#355530}
+.club-subscription-panel-head small{font-size:9px;line-height:1.6;color:#72816d}
+.club-cancel-button{justify-self:start;padding:8px 0;border:0;background:transparent;color:#916251;font:inherit;font-size:10px;font-weight:850;cursor:pointer}
+.club-cancel-button:hover{text-decoration:underline}
+.club-cancel-button:disabled{opacity:.55;cursor:wait}
