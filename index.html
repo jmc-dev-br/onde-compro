@@ -292,11 +292,12 @@ const preferredIcon=safeUrl(item.favicon);
 const iconSource=preferredIcon||fallbackIcon;
 if(iconSource){
 const siteIcon=document.createElement('img');siteIcon.className='site-favicon';siteIcon.src=iconSource;siteIcon.alt='Ícone de '+storeName;siteIcon.loading='lazy';siteIcon.referrerPolicy='no-referrer';
+initial.style.display='none';
 siteIcon.addEventListener('error',function(){
 if(siteIcon.src!==fallbackIcon&&fallbackIcon){siteIcon.src=fallbackIcon;return;}
-siteIcon.remove();
+siteIcon.remove();initial.style.display='';
 },{once:false});
-logo.replaceChildren(siteIcon);
+logo.append(siteIcon);
 }
 const info=document.createElement('div');
 const h=document.createElement('h3');h.textContent=item.title||'Produto encontrado';
