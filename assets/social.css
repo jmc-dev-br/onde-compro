@@ -191,3 +191,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .social-compact-button{width:100%;text-align:left;cursor:pointer;background:#fff;color:inherit;font:inherit;transition:background .15s ease,border-color .15s ease}
 .social-compact-button:hover{background:#f8fbf4;border-color:#dce7d3}
 .social-compact-button:focus-visible{outline:3px solid #a8dc6e;outline-offset:2px}
+
+.social-footer-links{display:flex;align-items:center;gap:18px;font-weight:800}
+.social-footer-links a{color:#4c7136}
+@media(max-width:520px){.social-footer-links{width:100%;gap:16px}}
