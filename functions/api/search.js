@@ -126,7 +126,7 @@ function getPageImage(result) {
     if (!candidate) continue;
     try {
       const parsed = new URL(candidate);
-      if (parsed.protocol === "https:" && !/\\.svg(?:[?#]|$)/i.test(parsed.href)) return parsed.href;
+      if (parsed.protocol === "https:" && !/\.svg(?:[?#]|$)/i.test(parsed.href)) return parsed.href;
     } catch { /* Ignore malformed image URLs. */ }
   }
   return null;
@@ -134,10 +134,10 @@ function getPageImage(result) {
 
 function getPriceMention(text) {
   const value = String(text || "");
-  const match = value.match(/R\\$\\s?\\d{1,3}(?:\\.\\d{3})*(?:,\\d{2})?|R\\$\\s?\\d+(?:,\\d{2})?/i);
+  const match = value.match(/R\$\s?\d{1,3}(?:\.\d{3})*(?:,\d{2})?|R\$\s?\d+(?:,\d{2})?/i);
   if (!match) return null;
-  const label = match[0].replace(/\\s+/g, " ").trim();
-  const number = Number(label.replace(/R\\$\\s?/i, "").replace(/\\./g, "").replace(",", "."));
+  const label = match[0].replace(/\s+/g, " ").trim();
+  const number = Number(label.replace(/R\$\s?/i, "").replace(/\./g, "").replace(",", "."));
   if (!Number.isFinite(number) || number <= 0 || number > 100000000) return null;
   return { label, value: number };
 }
@@ -145,13 +145,13 @@ function getPriceMention(text) {
 function explainPrice(text) {
   const value = String(text || "");
   const checks = [
-    { re: /\\b(cupom|cupom de desconto|código promocional|cashback)\\b/i, reason: "A página menciona cupom, código promocional ou cashback. Confira as regras e se o desconto é aplicado ao finalizar a compra." },
-    { re: /\\b(pix|desconto à vista|desconto no pix|pagamento à vista)\\b/i, reason: "A página menciona condição de pagamento ou desconto à vista. Confira se o preço depende do método de pagamento." },
-    { re: /\\b(usado|seminovo|recondicionado|refurbished|open box|mostruário|vitrine)\\b/i, reason: "O anúncio pode envolver produto usado, recondicionado ou de mostruário. Compare estado, garantia e política de devolução." },
-    { re: /\\b(frete grátis|frete gratis|frete gratuito)\\b/i, reason: "A página menciona frete grátis. O custo total pode ficar menor, mas confira se o benefício vale para seu CEP." },
-    { re: /\\b(promoção|promocional|oferta|liquidação|desconto|sale)\\b/i, reason: "A página menciona promoção ou desconto. Confira o preço final e a validade da oferta na loja." },
-    { re: /\\b(kit|combo|conjunto|pacote com|lote)\\b/i, reason: "O anúncio pode ser de um kit ou conjunto. Confirme quantas unidades e acessórios estão incluídos antes de comparar." },
-    { re: /\\b(importado|internacional|sem garantia nacional)\\b/i, reason: "A página menciona produto importado ou condição de garantia diferente. Verifique impostos, prazo, devolução e garantia antes de comprar." }
+    { re: /\b(cupom|cupom de desconto|código promocional|cashback)\b/i, reason: "A página menciona cupom, código promocional ou cashback. Confira as regras e se o desconto é aplicado ao finalizar a compra." },
+    { re: /\b(pix|desconto à vista|desconto no pix|pagamento à vista)\b/i, reason: "A página menciona condição de pagamento ou desconto à vista. Confira se o preço depende do método de pagamento." },
+    { re: /\b(usado|seminovo|recondicionado|refurbished|open box|mostruário|vitrine)\b/i, reason: "O anúncio pode envolver produto usado, recondicionado ou de mostruário. Compare estado, garantia e política de devolução." },
+    { re: /\b(frete grátis|frete gratis|frete gratuito)\b/i, reason: "A página menciona frete grátis. O custo total pode ficar menor, mas confira se o benefício vale para seu CEP." },
+    { re: /\b(promoção|promocional|oferta|liquidação|desconto|sale)\b/i, reason: "A página menciona promoção ou desconto. Confira o preço final e a validade da oferta na loja." },
+    { re: /\b(kit|combo|conjunto|pacote com|lote)\b/i, reason: "O anúncio pode ser de um kit ou conjunto. Confirme quantas unidades e acessórios estão incluídos antes de comparar." },
+    { re: /\b(importado|internacional|sem garantia nacional)\b/i, reason: "A página menciona produto importado ou condição de garantia diferente. Verifique impostos, prazo, devolução e garantia antes de comprar." }
   ];
   const match = checks.find((entry) => entry.re.test(value));
   if (match) return { reason: match.reason, evidenceFound: true };
