@@ -1,36 +1,44 @@
 # Onde compro?
 
-Buscador de produtos em português para encontrar caminhos de compra, inclusive itens difíceis de achar.
+Buscador de produtos em português para encontrar ofertas e páginas diretas de compra.
 
-## O que a busca mostra
+## Diretório de lojas
 
-- Até três resultados relevantes da web com link para a página de origem.
-- Foto do produto quando o buscador encontra imagens associadas à própria página.
-- Preço mencionado no resultado quando o trecho de texto permite identificar um valor em reais.
-- Uma explicação cautelosa do possível motivo de preço menor quando o texto cita promoção, cupom, desconto no Pix, frete grátis, produto usado/recondicionado, kit ou importação.
+O site reúne **187 lojas, marketplaces, comparadores e serviços de nicho** organizados em 10 categorias, com um filtro para localizar uma plataforma pelo nome ou domínio. A seleção inclui marketplaces gerais e internacionais, comparadores de preço, tecnologia, casa e construção, moda, beleza e farmácias, supermercados e pets, automotivo, livros e games, agro e itens especializados.
 
-As fotos e preços vêm do conteúdo indexado e podem estar incompletos ou desatualizados. A explicação de preço é apenas uma pista textual, não prova de que a oferta é a mais barata. O usuário deve confirmar o preço final, frete, vendedor, estado do produto, estoque, garantia e devolução no site da loja. A compra acontece fora do Onde compro?.
+O diretório é uma curadoria ampla, não uma lista literalmente completa de todas as lojas existentes. Algumas lojas atendem apenas certas regiões; lojas internacionais podem exigir importação, frete e impostos adicionais.
 
-## API de busca
+## Busca de produtos
 
-A API é implementada como Cloudflare Pages Function em `functions/api/search.js` e usa Tavily Search. Ela solicita imagens associadas a cada página e retorna dados extraídos de título e snippet.
+Quando a pessoa pesquisa um item, a API tenta retornar até três páginas específicas de produtos, com foto e preço se esses dados estiverem disponíveis. Os resultados com preço identificado são ordenados do menor para o maior. Se a busca web não encontrar três links diretos, uma segunda consulta tenta pesquisar apenas nos domínios catalogados.
 
-Para ativar:
+A integração web usa Tavily Search. Há uma busca geral e uma busca de recuperação que só roda quando são encontrados menos de três links diretos, para equilibrar cobertura e uso de créditos. A busca geral da web não garante que todo vendedor ou loja seja pesquisado em todas as consultas.
+
+### Limitações importantes
+
+- Os links devem levar à página específica do anúncio, mas nem todos os resultados de busca permitem confirmar isso automaticamente.
+- Um preço extraído de texto indexado pode estar desatualizado; preços de listagem estruturados são preferíveis.
+- A explicação de possível preço menor é baseada em sinais textuais (promoção, cupom, Pix, frete, usado, kit ou importado) e não prova que o anúncio seja a melhor oferta.
+- O usuário deve confirmar modelo, vendedor, condição, estoque, frete, prazo, garantia e valor final na página da loja. A compra ocorre fora do Onde compro?.
+
+## Configuração da API
+
 1. Gere uma API key em https://app.tavily.com/.
 2. No Cloudflare, vá a **Workers & Pages → onde-compro → Settings → Variables and Secrets**.
 3. No ambiente **Production**, crie o segredo `TAVILY_API_KEY`.
-4. Publique novamente o site.
+4. Publique novamente o site. A chave deve ficar no servidor, nunca no HTML ou no repositório público.
 
-Não coloque a API key no HTML nem no repositório.
+A busca principal está implementada em `functions/api/search.js` como Cloudflare Pages Function.
 
 ## Desenvolvimento e publicação
 
-Abra `index.html` no navegador para visualizar a página. Para testar a Function localmente, use Wrangler Pages com `TAVILY_API_KEY` configurada no ambiente local.
+Abra `index.html` para conferir o layout. Para testar a Function localmente, use Wrangler Pages com `TAVILY_API_KEY` configurada no ambiente local.
 
-O workflow `.github/workflows/deploy.yml` publica `index.html`, os ativos e a pasta `functions/` no Cloudflare Pages após cada push para `main`.
+O workflow `.github/workflows/deploy.yml` publica os ativos do site no Cloudflare Pages após alterações na branch `main`. Ele cancela deploys antigos concorrentes para reduzir o risco de uma versão antiga sobrescrever a mais nova.
 
 Segredos do GitHub Actions necessários para publicar:
-- `CLOUDFLARE_API_TOKEN`: token da API com permissão de edição para Cloudflare Pages.
+- `CLOUDFLARE_API_TOKEN`: token com permissão de edição para Cloudflare Pages.
 - `CLOUDFLARE_ACCOUNT_ID`: ID da conta Cloudflare.
 
-Site publicado: https://onde-compro.pages.dev/
+Site: https://onde-compro.pages.dev/
+Repositório: https://github.com/jmc-dev-br/onde-compro
