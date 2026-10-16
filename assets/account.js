@@ -186,12 +186,40 @@ async function showProfile() {
     setStatus(profileStatus, 'Não conseguimos carregar seu perfil agora. ' + friendlyAuthError(error), true);
   }
   await refreshOwnerRole(currentUser.id);
+  await refreshClubMemberBadge(currentUser.id);
   $('accountDialogTitleProfile').textContent = 'Seu cantinho';
   $('accountProfileDescription').textContent = 'Personalize seu perfil e deixe a experiência com a sua cara.';
   $('accountBioCount').textContent = String($('accountProfileBio').value.length);
   paintAvatar(currentProfile.avatar_url, $('accountProfileName').value);
   updateNav();
   updateProfileCompletion();
+}
+async function refreshClubMemberBadge(userId = currentUser?.id) {
+  const badge = $('accountClubMemberBadge');
+  const subtitle = $('accountClubMemberSubtext');
+  if (!badge) return;
+  if (!userId || !currentUser || currentUser.id !== userId) { badge.hidden = true; return; }
+  try {
+    const { data, error } = await supabase.from('club_subscriptions')
+      .select('status, current_period_end')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (error) throw error;
+    const periodValid = Boolean(data?.current_period_end && new Date(data.current_period_end).getTime() > Date.now());
+    const isMember = data?.status === 'active' || (data?.status === 'cancelled' && periodValid);
+    badge.hidden = !isMember;
+    if (subtitle && isMember) {
+      if (data.status === 'cancelled' && periodValid) {
+        subtitle.textContent = 'Acesso até ' + new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(data.current_period_end));
+      } else {
+        subtitle.textContent = 'Assinatura ativa · Onde compro?';
+      }
+    }
+  } catch (_) {
+    badge.hidden = true;
+  }
 }
 function updateNav() {
   if (!openButton) return;
