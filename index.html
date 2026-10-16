@@ -257,7 +257,7 @@ footer{padding:31px 0;background:#fff}
 </head>
 <body>
 <div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Encontre. Compare. Compre direto.</div></div></div>
-<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta">Entrar</button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
+<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta"><span class="account-nav-avatar-fallback" id="accountNavAvatarIcon" aria-hidden="true">♙</span><img id="accountNavAvatar" class="account-nav-avatar" alt="" hidden><span id="accountNavLabel">Entrar</span></button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
 <div class="account-modal" id="accountModal" hidden>
   <div class="account-backdrop" data-close-account aria-hidden="true"></div>
   <section class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="accountDialogTitle" aria-describedby="accountDialogDescription">
@@ -293,15 +293,61 @@ footer{padding:31px 0;background:#fff}
     </div>
     <div id="accountProfileView" hidden>
       <p class="account-kicker">SUA ÁREA</p>
-      <h2 id="accountDialogTitleProfile">Minha conta</h2>
-      <p class="account-description" id="accountProfileDescription">Confira e atualize as informações básicas do seu perfil.</p>
-      <div class="account-profile-badge">Conta conectada</div>
+      <h2 id="accountDialogTitleProfile">Seu cantinho</h2>
+      <p class="account-description" id="accountProfileDescription">Personalize seu perfil e deixe a experiência com a sua cara.</p>
+      <div class="profile-hero-card">
+        <div class="profile-completion-head"><span>Seu perfil</span><strong id="accountProfileProgressText">0% completo</strong></div>
+        <div class="profile-progress-track" role="progressbar" id="accountProfileProgress" aria-label="Completude do perfil" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="accountProfileProgressBar"></span></div>
+        <div class="profile-avatar-row">
+          <div class="profile-avatar-frame">
+            <img id="accountProfileAvatarPreview" alt="Prévia da foto de perfil" hidden>
+            <span id="accountProfileAvatarFallback" aria-hidden="true">♙</span>
+          </div>
+          <div class="profile-avatar-copy">
+            <strong>Sua foto de perfil</strong>
+            <span>Escolha uma imagem que combine com você.</span>
+            <div class="profile-avatar-actions">
+              <label class="profile-upload-button" for="accountAvatarFile">Trocar foto</label>
+              <input id="accountAvatarFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+              <button class="profile-remove-avatar" id="accountAvatarRemove" type="button" hidden>Remover</button>
+            </div>
+            <small>JPG, PNG ou WebP · até 8 MB. A imagem será otimizada.</small>
+          </div>
+        </div>
+      </div>
       <div class="account-profile-info"><span>E-mail da conta</span><span id="accountEmail"></span></div>
-      <form class="account-form" id="accountProfileForm">
+      <form class="account-form profile-edit-form" id="accountProfileForm">
         <label>Nome de exibição
-          <input id="accountProfileName" type="text" autocomplete="name" maxlength="80" required>
+          <input id="accountProfileName" type="text" autocomplete="name" maxlength="60" required placeholder="Como quer ser chamado?">
         </label>
-        <button class="account-action" id="accountProfileSave" type="submit">Salvar alterações</button>
+        <label>Nome de usuário
+          <div class="profile-username-input"><span>@</span><input id="accountProfileUsername" type="text" autocomplete="username" minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]{3,20}" autocapitalize="none" spellcheck="false" placeholder="seu_usuario"></div>
+          <small class="profile-field-hint">De 3 a 20 caracteres: letras, números e _. Sem espaços.</small>
+        </label>
+        <label>Sobre você
+          <textarea id="accountProfileBio" rows="3" maxlength="240" placeholder="Conte um pouquinho sobre você (opcional)."></textarea>
+          <small class="profile-field-hint"><span id="accountBioCount">0</span>/240 caracteres</small>
+        </label>
+        <label>Site ou link pessoal <span class="profile-optional">opcional</span>
+          <input id="accountProfileWebsite" type="url" maxlength="200" placeholder="https://seusite.com">
+        </label>
+        <fieldset class="profile-category-fieldset">
+          <legend>O que você gosta de comprar?</legend>
+          <p>Escolha as categorias que mais combinam com seus interesses.</p>
+          <div class="profile-category-grid">
+            <label><input type="checkbox" name="favoriteCategory" value="Tecnologia"><span>💻 Tecnologia</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Games"><span>🎮 Games</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Casa"><span>🏡 Casa</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Moda"><span>👟 Moda</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Livros"><span>📚 Livros</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Beleza"><span>✨ Beleza</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Esportes"><span>⚽ Esportes</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Música"><span>🎧 Música</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Alimentos"><span>🥑 Alimentos</span></label>
+            <label><input type="checkbox" name="favoriteCategory" value="Outros"><span>🛍️ Outros</span></label>
+          </div>
+        </fieldset>
+        <button class="account-action profile-save-button" id="accountProfileSave" type="submit">Salvar meu perfil</button>
       </form>
       <p class="account-status" id="accountProfileStatus" role="status" aria-live="polite" hidden></p>
       <button class="account-signout" id="accountSignout" type="button">Sair da conta</button>
