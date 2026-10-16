@@ -228,9 +228,11 @@ function updateNav() {
   const isOwner = Boolean(currentUser && currentProfile.is_owner === true);
   const ownerMark = $('accountNavOwnerMark');
   const ownerBadge = $('accountOwnerBadge');
+  const affiliateAdminLink = $('accountAffiliateAdminLink');
   if (label) label.textContent = currentUser ? 'Minha conta' : 'Entrar';
   if (ownerMark) ownerMark.hidden = !isOwner;
   if (ownerBadge && profileView && !profileView.hidden) ownerBadge.hidden = !isOwner;
+  if (affiliateAdminLink) affiliateAdminLink.hidden = !isOwner;
   openButton.setAttribute('aria-label', isOwner ? 'Abrir conta do criador do site' : currentUser ? 'Abrir minha conta' : 'Entrar ou criar conta');
   paintAvatar(currentProfile.avatar_url, currentProfile.display_name || currentUser?.user_metadata?.display_name || currentUser?.email);
 }
