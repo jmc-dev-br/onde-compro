@@ -56,13 +56,13 @@
         </div>
         <section id="socialPeopleView" class="social-view" role="tabpanel" aria-labelledby="socialPeopleTab">
           <div class="social-view-heading"><div><h3>Descobrir pessoas</h3><p>Encontre alguém pelo nome, @usuário ou descrição.</p></div><span class="social-mini-count" id="socialPeopleCount">Carregando…</span></div>
-          <label class="social-search"><span>⌕</span><input id="socialPeopleSearch" type="search" placeholder="Buscar pessoas..." autocomplete="off"><kbd>⌘ K</kbd></label>
+          <label class="social-search"><span>⌕</span><input id="socialPeopleSearch" type="search" aria-label="Buscar pessoas por nome, usuário ou interesse" placeholder="Buscar pessoas..." autocomplete="off"><kbd>⌘ K</kbd></label>
           <div id="socialPeopleGrid" class="social-people-grid"></div>
           <p id="socialPeopleStatus" class="social-status" role="status" aria-live="polite" hidden></p>
         </section>
         <section id="socialCommunitiesView" class="social-view" role="tabpanel" aria-labelledby="socialCommunitiesTab" hidden>
           <div class="social-view-heading"><div><h3>Explore comunidades</h3><p>Junte-se a grupos e converse sobre seus assuntos favoritos.</p></div><button id="socialCreateCommunityOpen" class="social-secondary-button" type="button">＋ Criar comunidade</button></div>
-          <label class="social-search"><span>⌕</span><input id="socialCommunitySearch" type="search" placeholder="Buscar comunidades ou categorias..." autocomplete="off"><kbd>⌕</kbd></label>
+          <label class="social-search"><span>⌕</span><input id="socialCommunitySearch" type="search" aria-label="Buscar comunidades por nome, descrição ou categoria" placeholder="Buscar comunidades ou categorias..." autocomplete="off"><kbd>⌕</kbd></label>
           <form id="socialCreateCommunityForm" class="social-create-panel" hidden>
             <div class="social-create-heading"><div><span class="social-section-kicker">COMECE SEU GRUPO</span><h4>Criar comunidade</h4></div><button id="socialCreateCommunityClose" class="social-icon-button" type="button" aria-label="Fechar formulário">×</button></div>
             <label>Nome da comunidade<input id="socialCommunityName" type="text" maxlength="60" minlength="3" required placeholder="Ex.: Setup e tecnologia"></label>
