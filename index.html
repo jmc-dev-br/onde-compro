@@ -257,7 +257,7 @@ footer{padding:31px 0;background:#fff}
 </head>
 <body>
 <div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Encontre. Compare. Compre direto.</div></div></div>
-<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta"><span class="account-nav-avatar-fallback" id="accountNavAvatarIcon" aria-hidden="true">♙</span><img id="accountNavAvatar" class="account-nav-avatar" alt="" hidden><span id="accountNavLabel">Entrar</span></button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
+<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta"><span class="account-nav-avatar-fallback" id="accountNavAvatarIcon" aria-hidden="true">♙</span><img id="accountNavAvatar" class="account-nav-avatar" alt="" hidden><span id="accountNavLabel">Entrar</span><span id="accountNavOwnerMark" class="account-nav-owner-mark" title="Criador do site" aria-label="Criador do site" hidden>✳</span></button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
 <div class="account-modal" id="accountModal" hidden>
   <div class="account-backdrop" data-close-account aria-hidden="true"></div>
   <section class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="accountDialogTitle" aria-describedby="accountDialogDescription">
@@ -294,6 +294,13 @@ footer{padding:31px 0;background:#fff}
     <div id="accountProfileView" hidden>
       <p class="account-kicker">SUA ÁREA</p>
       <h2 id="accountDialogTitleProfile">Seu cantinho</h2>
+      <div id="accountOwnerBadge" class="account-owner-badge" hidden>
+        <span class="account-owner-symbol" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M7 12h18l-1.5 14h-15L7 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M11 12V9a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m12 18 4 3 4-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="account-owner-badge-copy"><strong>Criador do Onde compro?</strong><small>Conta oficial do fundador</small></span>
+        <span class="account-owner-verified" aria-label="Distintivo oficial">✓</span>
+      </div>
       <p class="account-description" id="accountProfileDescription">Personalize seu perfil e deixe a experiência com a sua cara.</p>
       <div class="profile-hero-card">
         <div class="profile-completion-head"><span>Seu perfil</span><strong id="accountProfileProgressText">0% completo</strong></div>
