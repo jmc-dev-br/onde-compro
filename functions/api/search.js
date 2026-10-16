@@ -123,6 +123,14 @@ function storeLabel(host) {
 }
 
 
+function getPageFavicon(result) {
+  const candidate = result && typeof result.favicon === "string" ? result.favicon : "";
+  try {
+    const parsed = new URL(candidate);
+    return parsed.protocol === "https:" ? parsed.href : null;
+  } catch { return null; }
+}
+
 function getPageImage(result) {
   const images = Array.isArray(result && result.images) ? result.images : [];
   for (const image of images) {
@@ -209,7 +217,8 @@ export async function onRequestGet(context) {
         include_answer: false,
         include_raw_content: false,
         include_images: true,
-        include_image_descriptions: true
+        include_image_descriptions: true,
+        include_favicon: true
       })
     });
   } catch {
@@ -258,6 +267,7 @@ export async function onRequestGet(context) {
       domain: rating.host,
       store: storeLabel(rating.host),
       imageUrl,
+      favicon: getPageFavicon(item),
       priceMention: price ? price.label : null,
       priceValue: price ? price.value : null,
       priceReason: priceWhy.reason,
