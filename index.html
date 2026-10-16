@@ -49,16 +49,172 @@ footer{padding:26px 0;color:#77847b;font-size:12px}.foot{display:flex;align-item
 
 @media(max-width:800px){.hero-grid{grid-template-columns:1fr;padding:54px 0 48px;gap:20px}.visual{min-height:260px}.orb{width:235px;height:235px}.bag{width:100px;height:100px;font-size:52px}.float.one{right:5px}.float.two{left:4px}.navlinks{display:none}.cards,.results-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr;gap:22px}.section{padding:43px 0}}
 @media(max-width:540px){.wrap{width:min(100% - 28px,1120px)}.top .wrap{font-size:10px}.top .right-note{display:none}nav{min-height:68px;gap:10px}.brand-logo{width:174px}header .result-link{padding:10px 11px;font-size:11px}.hero-grid{padding:43px 0 40px}h1{font-size:43px;letter-spacing:-2px}.lead{font-size:14px}.search{gap:5px}.search input{font-size:13px}.search button{padding:0 12px;font-size:12px}.visual{min-height:235px}.orb{width:205px;height:205px}.float{padding:10px 11px}.float b{font-size:13px}.float.one{top:10px}.float.two{bottom:12px}.cards,.results-grid{grid-template-columns:1fr}.section-head,.results-head{align-items:start;flex-direction:column}.close{align-self:flex-start}}
+
+/* Visual refresh — Onde compro? */
+:root{--ink:#17251d;--muted:#69776c;--line:#e3e9dd;--paper:#f7f8f2;--green:#b8f35b;--dark:#102019;--white:#fff;--soft:#edf7df;--radius:24px}
+body{background:var(--paper);color:var(--ink);font-family:Inter,"Aptos",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.12px}
+.wrap{width:min(1160px,calc(100% - 48px))}
+.top{background:linear-gradient(90deg,#0e1b15,#1b3022);font-size:12px;letter-spacing:.15px}
+.top .wrap{min-height:35px}
+.top b{color:#c9ff75}
+.dot{box-shadow:0 0 0 4px #b8f35b1f}
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(220,229,216,.85);box-shadow:0 5px 22px #12211407}
+nav{min-height:82px}
+.brand-logo{width:230px;filter:drop-shadow(0 2px 1px #10201904)}
+.navlinks{gap:30px;font-size:13px;color:#3d4d41}
+.navlinks a{padding:10px 0}
+header .result-link{background:#13251b;border-radius:13px;padding:14px 18px;font-size:12px;align-self:center}
+header .result-link:hover{background:#2f4a32;box-shadow:0 8px 18px #14231a1c}
+.hero{background:radial-gradient(ellipse at 80% 8%,#7cb63824 0,transparent 35%),radial-gradient(ellipse at 15% 100%,#2a573a45 0,transparent 42%),linear-gradient(128deg,#0d1b14 0%,#12271b 55%,#172e20 100%);isolation:isolate}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(90deg,transparent,#000 70%);pointer-events:none}
+.hero:after{width:490px;height:490px;right:-195px;top:-65px;border-color:#c4f87120;box-shadow:0 0 0 54px #b8f35b06,0 0 0 110px #b8f35b04}
+.hero-grid{max-width:1160px;padding:83px 0 78px;gap:36px}
+.eyebrow{display:inline-flex;align-items:center;color:#c7ff78;font-size:10px;letter-spacing:1.65px;font-weight:900}
+.eyebrow span{background:#b8f35b19;color:#c7ff78;border:1px solid #b8f35b24}
+h1{font-size:clamp(46px,5.1vw,72px);line-height:.98;letter-spacing:-4.3px;margin:23px 0 22px;max-width:670px}
+h1 em{color:#c6ff73;text-shadow:0 0 35px #b8f35b17}
+.lead{max-width:550px;color:#c3d1c5;line-height:1.8;font-size:15px;letter-spacing:0}
+.search{margin-top:31px;padding:8px;gap:12px;max-width:680px;border:1px solid #ffffffa8;border-radius:17px;box-shadow:0 18px 48px #0003,0 1px 0 #fff inset}
+.search svg{margin-left:10px;color:#627666}
+.search input{height:50px;font-size:15px;letter-spacing:0}
+.search button{height:50px;padding:0 23px;border-radius:12px;background:linear-gradient(135deg,#c9ff78,#a9e84f);color:#142219;box-shadow:0 5px 15px #aee95a2e;transition:transform .18s ease,box-shadow .18s ease}
+.search button:hover{background:#d5ff98;transform:translateY(-1px);box-shadow:0 8px 18px #aee95a40}
+.examples{margin-top:19px;gap:8px;color:#afc0b2}
+.examples button{background:#ffffff08;border-color:#ffffff2a;padding:9px 13px;transition:all .18s ease}
+.examples button:hover{background:#b8f35b14;border-color:#c6ff73a0}
+.visual{min-height:340px}
+.orb{width:306px;height:306px;border-color:#d6eacb35;background:radial-gradient(circle,#b8f35b0a,transparent 62%);box-shadow:0 0 80px #b8f35b08}
+.orb:before{inset:27px;border-color:#ffffff15}
+.orb:after{inset:58px;border-color:#ffffff10}
+.bag{width:138px;height:138px;background:linear-gradient(145deg,#d0ff85,#adeb4b);border:1px solid #ecffd0;border-radius:39px;display:grid;place-items:center;transform:rotate(-7deg);box-shadow:0 24px 58px #b8f35b20,0 2px 1px #fff inset}
+.bag svg{width:95px;height:95px;transform:rotate(7deg)}
+.float{border:1px solid #ffffffbb;border-radius:16px;padding:15px 17px;box-shadow:0 16px 38px #0002;font-size:11px}
+.float small{font-size:10px;letter-spacing:.2px}
+.float b{font-size:14px;letter-spacing:-.2px}
+.float.one{top:33px;right:-1px}
+.float.two{left:-2px;bottom:32px}
+.trust-bar{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 6px 22px #19281b05}
+.trust-inner{min-height:89px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;gap:22px}
+.trust-inner>div{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0}
+.trust-icon{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:#eef7e4;color:#446b2b;font-size:21px;font-weight:900;flex-shrink:0}
+.trust-inner strong{display:block;font-size:12px;font-weight:850;letter-spacing:-.1px}
+.trust-inner small{display:block;margin-top:3px;font-size:11px;color:#758277}
+.section{padding:70px 0}
+.section-head{margin-bottom:28px}
+.kicker{color:#5c8135;font-size:10px;letter-spacing:1.65px}
+.section h2{font-size:clamp(29px,3.3vw,39px);letter-spacing:-1.7px;line-height:1.08}
+.muted{max-width:700px;color:#6c796e;font-size:14px;line-height:1.8}
+.cards{gap:18px}
+.card{position:relative;overflow:hidden;border:1px solid #e4eade;border-radius:22px;padding:24px;min-height:205px;box-shadow:0 8px 25px #18281a06;gap:14px}
+.card:after{content:"";position:absolute;right:-35px;top:-43px;width:115px;height:115px;border-radius:50%;background:#b8f35b18;pointer-events:none}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 35px #14271a10;border-color:#c8dda9}
+.cardicon{z-index:1;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#f1f9e7,#e5f3d7);border:1px solid #e1edd2;color:#365629}
+.card h3{font-size:17px;letter-spacing:-.45px}
+.card p{font-size:13px;line-height:1.7;color:#6d7a6f}
+.card a{align-self:flex-start;border-radius:12px;background:#12251a;padding:12px 15px;font-size:11px;transition:all .18s ease}
+.card a:hover{background:#314b34;transform:translateY(-1px)}
+#results{background:linear-gradient(180deg,#edf3e7 0%,#f7f9f3 100%);border-top:1px solid #dce7d4;border-bottom:1px solid #dce7d4;padding:70px 0}
+.results-head{align-items:end;margin-bottom:27px}
+.results-head h2{font-size:clamp(27px,3.1vw,38px);letter-spacing:-1.5px;line-height:1.08}
+.close{border:1px solid #dce5d7;background:#ffffffd9;color:#314532;border-radius:12px;padding:11px 14px;font-size:11px;transition:all .18s ease}
+.close:hover{background:#fff;border-color:#bdcfae}
+.results-grid{gap:20px;align-items:stretch}
+.result{position:relative;overflow:hidden;gap:14px;padding:17px;border:1px solid #e3eadf;border-radius:23px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px #14271a07;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.result:hover{transform:translateY(-5px);box-shadow:0 22px 45px #172d1b14;border-color:#c8dcb5}
+.product-photo-wrap{height:210px;border-radius:17px;background:radial-gradient(ellipse at 50% 45%,#fff 0%,#fbfcf8 65%,#eff5e9 100%);border:1px solid #edf1e8}
+.product-photo{padding:17px;transition:transform .35s ease}
+.result:hover .product-photo{transform:scale(1.035)}
+.product-photo-placeholder{padding:15px}
+.product-photo-placeholder span{display:grid;place-items:center;width:60px;height:60px;border-radius:20px;background:#edf5e5;color:#628249;font-size:28px}
+.product-rank{position:absolute;left:11px;top:11px;z-index:2;padding:7px 10px;border-radius:999px;background:#14271de8;border:1px solid #ffffff66;color:#fff;font-size:9px;font-weight:900;letter-spacing:.9px;text-transform:uppercase;backdrop-filter:blur(10px)}
+.result-top{gap:10px;align-items:center!important;min-height:48px}
+.logo{width:43px;height:43px;border-radius:14px;background:#fff;border:1px solid #e9eee5;display:grid;place-items:center;overflow:hidden;flex-shrink:0;box-shadow:0 2px 5px #18281a05;color:#456532}
+.site-favicon{display:block;width:25px;height:25px;object-fit:contain}
+.result h3{font-size:15px;line-height:1.4;letter-spacing:-.3px;color:#1a2b20}
+.result small{font-size:11px;color:#768278}
+.result-kind{font-size:9px;letter-spacing:.7px;text-transform:uppercase;padding:6px 9px}
+.result-kind.related{background:#f2f3ed;color:#687368}
+.result p{font-size:12px;line-height:1.7;color:#647166}
+.price-line{padding:12px 13px;border:1px solid #e1eed5;border-radius:14px;background:linear-gradient(135deg,#f5faee,#edf7e2)}
+.price-label{font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.6px}
+.price-value{font-size:25px;letter-spacing:-1.1px;color:#2b4f20}
+.price-missing{padding:12px 13px;border:1px dashed #dce5d5;border-radius:14px;background:#fbfcf9;font-size:11px;color:#68766b;line-height:1.6}
+.price-reason{padding:13px;border:1px solid #e7ebe3;border-radius:15px;background:#fbfcf9}
+.price-reason strong{font-size:11px;color:#344c2c}
+.price-reason p{font-size:11px;line-height:1.65}
+.price-reason .evidence{font-size:9px;letter-spacing:.1px}
+.result .result-link{align-self:stretch;margin-top:auto;padding:13px 14px;border-radius:13px;background:#14271d;color:#fff;font-size:11px;box-shadow:0 5px 12px #13251a0a;transition:all .18s ease}
+.result .result-link:hover{background:#315136;transform:translateY(-1px);box-shadow:0 8px 18px #13251a15}
+.note{margin-top:22px;padding:16px 18px;border:1px solid #e2e9dc;border-radius:16px;background:#ffffffbd;font-size:11px;line-height:1.8;color:#667366}
+.how{background:#fff;border-color:#e8ece4}
+.steps{gap:30px}
+.step{padding:18px;border:1px solid #e8ede4;border-radius:18px;background:#fbfcf9}
+.num{width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#cdfb88,#afe653);color:#1b2d1d}
+.step h3{font-size:15px;letter-spacing:-.3px}
+.step p{font-size:12px;line-height:1.75}
+footer{padding:31px 0;background:#fff}
+.foot{border-top:1px solid #e7ece3;padding-top:22px;color:#758177}
+.foot strong{color:#18281d}
+@media(max-width:800px){
+  .wrap{width:min(100% - 34px,1160px)}
+  .hero-grid{padding:60px 0 54px;gap:8px}
+  .visual{min-height:280px}
+  .trust-inner{gap:14px}
+  .trust-inner>div{justify-content:flex-start}
+  .result{padding:14px}
+  .product-photo-wrap{height:185px}
+}
+@media(max-width:540px){
+  .wrap{width:calc(100% - 28px)}
+  .top .wrap{min-height:33px;font-size:9px}
+  nav{min-height:70px}
+  .brand-logo{width:165px}
+  header .result-link{padding:11px 12px;font-size:10px}
+  .hero-grid{padding:46px 0 40px}
+  h1{font-size:43px;line-height:1.01;letter-spacing:-2.5px}
+  .lead{font-size:13px;line-height:1.8}
+  .search{margin-top:24px;padding:6px;gap:4px}
+  .search input{height:45px;font-size:12px}
+  .search button{height:45px;padding:0 11px;font-size:11px}
+  .search svg{width:19px;margin-left:6px}
+  .examples{font-size:10px}
+  .examples button{padding:8px 10px;font-size:10px}
+  .visual{min-height:230px}
+  .orb{width:200px;height:200px}
+  .bag{width:95px;height:95px;border-radius:29px}
+  .bag svg{width:71px;height:71px}
+  .float{padding:10px 11px;border-radius:12px}
+  .float b{font-size:11px}
+  .float.one{top:6px;right:0}
+  .float.two{left:0;bottom:8px}
+  .trust-inner{min-height:auto;padding:17px 0;grid-template-columns:1fr;gap:13px}
+  .trust-inner>div{justify-content:flex-start}
+  .trust-icon{width:34px;height:34px}
+  .section,#results{padding:47px 0}
+  .section-head{gap:10px;margin-bottom:21px}
+  .section h2,.results-head h2{font-size:28px;letter-spacing:-1px}
+  .cards,.results-grid{grid-template-columns:1fr}
+  .card{min-height:180px;padding:21px}
+  .results-head{align-items:flex-start}
+  .results-head .close{align-self:flex-start}
+  .result{padding:15px}
+  .product-photo-wrap{height:215px}
+  .step{padding:15px}
+  footer{padding:26px 0}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Busca ampla em desenvolvimento</div></div></div>
+<div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Encontre. Compare. Compre direto.</div></div></div>
 <header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></nav></header>
 <main>
 <section class="hero" id="busca"><div class="wrap hero-grid"><div><div class="eyebrow"><span>✳</span> SUA PRÓXIMA COMPRA COMEÇA AQUI</div><h1>O que você quer comprar? <em>A gente procura.</em></h1><p class="lead">Pesquise praticamente qualquer produto e encontre caminhos para descobrir onde comprar. Do item do dia a dia àquela peça difícil de achar.</p>
 <form class="search" id="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="query" type="search" placeholder="Digite qualquer produto..." autocomplete="off" aria-label="Produto que deseja encontrar" required><button type="submit">Buscar agora</button></form>
 <div class="examples"><span>Experimente:</span><button type="button" data-query="Teclado mecânico">Teclado mecânico</button><button type="button" data-query="Fone Bluetooth">Fone Bluetooth</button><button type="button" data-query="Peça de reposição difícil de encontrar">Peça difícil de achar</button></div>
-</div><div class="visual" aria-hidden="true"><div class="orb"><div class="bag">🛍️</div></div><div class="float one"><small>Busque em vários lugares</small><b>Mais opções para comparar</b></div><div class="float two"><small>Não sabe onde procurar?</small><b>É só pesquisar.</b></div></div></div></section>
+</div><div class="visual" aria-hidden="true"><div class="orb"><div class="bag"><svg viewBox="0 0 96 96" role="img" aria-label="Sacola com confirmação"><path d="M25 34h46l5 47H20l5-47Z" fill="none" stroke="#10201A" stroke-width="5" stroke-linejoin="round"/><path d="M34 35V25a14 14 0 0 1 28 0v10" fill="none" stroke="#10201A" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="53" r="14" fill="#10201A"/><path d="m41 53 5 5 10-11" fill="none" stroke="#B8F35B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="m71 17 5-6m4 18 8-1" fill="none" stroke="#10201A" stroke-width="4" stroke-linecap="round"/></svg></div></div><div class="float one"><small>Busque em vários lugares</small><b>Mais opções para comparar</b></div><div class="float two"><small>Não sabe onde procurar?</small><b>É só pesquisar.</b></div></div></div></section>
+<div class="trust-bar" aria-label="Benefícios"><div class="wrap trust-inner"><div><span class="trust-icon">↗</span><span><strong>Links diretos</strong><small>Abra a página na loja</small></span></div><div><span class="trust-icon">⌕</span><span><strong>Busca ampla</strong><small>Produtos comuns e difíceis</small></span></div><div><span class="trust-icon">✓</span><span><strong>Mais transparência</strong><small>Confira preço e condições</small></span></div></div></div>
 <section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Transparência:</strong> fotos, preços e motivos são extraídos do conteúdo disponibilizado pelo buscador e podem estar incompletos ou desatualizados. Só indicamos um possível motivo de preço menor quando há um sinal no texto; isso não prova que a oferta seja a mais barata. Confirme tudo na página da loja.</div></div></section>
 <section class="section" id="explorar"><div class="wrap"><div class="section-head"><div><div class="kicker">COMECE POR AQUI</div><h2>Um produto. Vários caminhos.</h2><p class="muted">Cada lugar tem um catálogo diferente. Pesquise em mais de uma fonte para ampliar suas chances de encontrar o item certo.</p></div></div><div class="cards">
 <article class="card"><div class="cardicon">⌕</div><h3>Google Shopping</h3><p>Compare produtos e anúncios encontrados na web.</p><a href="https://shopping.google.com.br/" target="_blank" rel="noopener noreferrer">Explorar produtos ↗</a></article>
@@ -114,42 +270,60 @@ items.slice(0,3).forEach(function(item,index){
 const href=safeUrl(item.url);if(!href)return;
 const article=document.createElement('article');article.className='result';
 const photoWrap=document.createElement('div');photoWrap.className='product-photo-wrap';
+const rank=document.createElement('span');rank.className='product-rank';rank.textContent='Resultado '+(index+1);photoWrap.append(rank);
 const imageUrl=safeUrl(item.imageUrl);
 if(imageUrl){
 const photo=document.createElement('img');photo.className='product-photo';photo.src=imageUrl;photo.alt='Foto do produto: '+(item.title||q);photo.loading='lazy';photo.referrerPolicy='no-referrer';
-photo.addEventListener('error',function(){photo.remove();const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='Foto indisponível na fonte';placeholder.append(icon,text);photoWrap.append(placeholder);},{once:true});
+photo.addEventListener('error',function(){photo.remove();const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='Foto indisponível nesta fonte';placeholder.append(icon,text);photoWrap.append(placeholder);},{once:true});
 photoWrap.append(photo);
 }else{
-const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='A página não forneceu uma foto';placeholder.append(icon,text);photoWrap.append(placeholder);
+const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='Foto não fornecida pela página';placeholder.append(icon,text);photoWrap.append(placeholder);
 }
 const top=document.createElement('div');top.className='result-top';
-const logo=document.createElement('div');logo.className='logo';logo.textContent=String(item.store||item.domain||'W').slice(0,1).toUpperCase();
+const logo=document.createElement('div');logo.className='logo';
+let host=String(item.domain||'');
+try{host=host||new URL(href).hostname.replace(/^www\./,'');}catch(e){}
+const storeName=String(item.store||host||'Loja');
+const initial=document.createElement('span');initial.textContent=storeName.trim().charAt(0).toUpperCase()||'L';
+logo.append(initial);
+let fallbackIcon='';
+try{fallbackIcon='https://www.google.com/s2/favicons?domain='+encodeURIComponent(host)+'&sz=64';}catch(e){}
+const preferredIcon=safeUrl(item.favicon);
+const iconSource=preferredIcon||fallbackIcon;
+if(iconSource){
+const siteIcon=document.createElement('img');siteIcon.className='site-favicon';siteIcon.src=iconSource;siteIcon.alt='Ícone de '+storeName;siteIcon.loading='lazy';siteIcon.referrerPolicy='no-referrer';
+siteIcon.addEventListener('error',function(){
+if(siteIcon.src!==fallbackIcon&&fallbackIcon){siteIcon.src=fallbackIcon;return;}
+siteIcon.remove();
+},{once:false});
+logo.replaceChildren(siteIcon);
+}
 const info=document.createElement('div');
 const h=document.createElement('h3');h.textContent=item.title||'Produto encontrado';
-const sm=document.createElement('small');sm.className='result-domain';sm.textContent=item.store||item.domain||'Página encontrada na web';
+const sm=document.createElement('small');sm.className='result-domain';sm.textContent=storeName;
 info.append(h,sm);top.append(logo,info);
 const kind=document.createElement('span');kind.className='result-kind'+(item.directProductPage?'':' related');kind.textContent=item.directProductPage?'Página do produto':'Resultado relacionado';
 const p=document.createElement('p');p.textContent=item.description||'Abra o link para conferir os detalhes, o preço e a disponibilidade diretamente na página de origem.';
 const priceLine=document.createElement('div');
 if(item.priceMention){
 priceLine.className='price-line';
-const priceLabel=document.createElement('span');priceLabel.className='price-label';priceLabel.textContent='Preço mencionado';
+const priceLabel=document.createElement('span');priceLabel.className='price-label';priceLabel.textContent='Preço encontrado no texto';
 const priceValue=document.createElement('span');priceValue.className='price-value';priceValue.textContent=item.priceMention;
 priceLine.append(priceLabel,priceValue);
 }else{
-priceLine.className='price-missing';priceLine.textContent='Preço não identificado no trecho da página. Confira no site da loja.';
+priceLine.className='price-missing';priceLine.textContent='Preço não confirmado no resultado. Confira na loja.';
 }
 const reason=document.createElement('div');reason.className='price-reason';
 const reasonTitle=document.createElement('strong');reasonTitle.textContent='Por que pode estar mais barato?';
-const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'Não há informação suficiente no resultado para apontar um motivo confiável. Compare frete, condição, vendedor e garantia.';
+const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'O resultado não informa um motivo confirmado. Compare frete, condição do produto, vendedor e garantia.';
 reason.append(reasonTitle,reasonText);
-if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent='Sinal identificado no texto da página';reason.append(evidence);}
+if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent='Indício mencionado pela página';reason.append(evidence);}
 const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver produto na loja ↗';
 article.append(photoWrap,top,kind,p,priceLine,reason,a);grid.append(article);
 });
 title.textContent='Top '+Math.min(3,items.length)+' resultados para: '+q;
-subtitle.textContent='Foto e preço aparecem quando a página encontrada fornece esses dados. O link abre a origem do anúncio.';
-setStatus('O motivo do preço é uma indicação baseada no texto indexado, não uma garantia de que a oferta seja mais barata. Confira preço final, frete, estoque, estado do produto, vendedor e garantia na loja.','');
+subtitle.textContent='Compare opções, confira o preço final e vá direto à página de origem.';
+setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.','');
 }
 
 async function showResults(rawQuery){
