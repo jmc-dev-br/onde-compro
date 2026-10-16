@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102019">
+  <meta name="description" content="Gerenciamento privado de links oficiais de afiliados do Onde compro?">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/assets/account.css">
+  <link rel="stylesheet" href="/assets/affiliate-admin.css">
+  <title>Links de afiliado — Onde compro?</title>
+</head>
+<body class="affiliate-admin-page">
+  <div class="affiliate-admin-topline"><div><span>PAINEL PRIVADO · ONDE COMPRO?</span><a href="/">Voltar ao site ↗</a></div></div>
+  <header class="affiliate-admin-header">
+    <a class="affiliate-admin-brand" href="/"><img src="/assets/logo.svg" alt="Onde compro?" width="650" height="210"></a>
+    <span class="affiliate-admin-lock"><span>●</span> Acesso do proprietário</span>
+  </header>
+  <main class="affiliate-admin-wrap">
+    <section class="affiliate-admin-hero">
+      <span class="affiliate-admin-eyebrow">MONETIZAÇÃO · LINKS RASTREÁVEIS</span>
+      <h1>Seus links.<br><em>Suas comissões.</em></h1>
+      <p>Cadastre os links oficiais gerados nos programas de afiliados. Quando a busca encontrar exatamente aquele produto, o Onde compro? usará o link comissionado e continuará mostrando a loja correta.</p>
+      <div class="affiliate-admin-note"><span>ⓘ</span><p>Não inventamos códigos de afiliado. Este painel aceita somente links que você gerou por uma ferramenta oficial ou recebeu da rede. Um link cadastrado não garante comissão: ela depende das regras e da atribuição de cada programa.</p></div>
+    </section>
+    <section id="affiliateLoginGate" class="affiliate-admin-gate" hidden>
+      <div class="affiliate-admin-gate-icon">♙</div><h2>Entre com a conta do proprietário</h2>
+      <p>O cadastro e a edição de links são restritos à conta oficial do dono do site.</p>
+      <a class="affiliate-admin-primary" href="/?conta=1&amp;retorno=%2Fafiliados.html">Entrar na minha conta ↗</a>
+    </section>
+    <section id="affiliateDenied" class="affiliate-admin-gate" hidden>
+      <div class="affiliate-admin-gate-icon">🔒</div><h2>Acesso restrito</h2>
+      <p>Esta área aceita somente a conta proprietária do Onde compro?. Entre com a conta correta ou volte ao site.</p>
+      <a class="affiliate-admin-secondary" href="/">Voltar ao Onde compro?</a>
+    </section>
+    <div id="affiliateAdminApp" hidden>
+      <section class="affiliate-admin-summary">
+        <div><span>LINKS MAPEADOS</span><strong id="affiliateMappingCount">0</strong><small>Produtos com URL afiliada específica</small></div>
+        <div><span>GERAÇÃO AUTOMÁTICA</span><strong>Amazon · Shopee</strong><small>Disponível apenas com credenciais válidas no servidor</small></div>
+      </section>
+      <section class="affiliate-admin-form-card">
+        <div class="affiliate-admin-section-heading"><div><span class="affiliate-admin-eyebrow">CADASTRO MANUAL OFICIAL</span><h2>Adicionar link de afiliado</h2><p>Use para marketplaces e redes que entregam um link especial por produto.</p></div><span class="affiliate-admin-plus">＋</span></div>
+        <form id="affiliateMappingForm" class="affiliate-admin-form">
+          <label>Loja / rede de afiliados
+            <select id="affiliateNetwork" required>
+              <option value="Mercado Livre Afiliados">Mercado Livre Afiliados</option>
+              <option value="Amazon Associados">Amazon Associados (opcional se tag automática estiver configurada)</option>
+              <option value="Shopee Afiliados">Shopee Afiliados (opcional se API estiver configurada)</option>
+              <option value="Temu Afiliados">Temu Afiliados</option>
+              <option value="TikTok Shop Afiliados">TikTok Shop Afiliados</option>
+              <option value="AliExpress Portals">AliExpress Portals</option>
+              <option value="Awin">Awin</option>
+              <option value="Impact">Impact</option>
+              <option value="Outro programa oficial">Outro programa oficial</option>
+            </select>
+          </label>
+          <label>Link original do produto
+            <input id="affiliateSourceUrl" type="url" inputmode="url" placeholder="https://www.loja.com.br/produto..." required>
+            <small>É o endereço normal retornado pela pesquisa do Onde compro?, sem sua tag de afiliado.</small>
+          </label>
+          <label>Link de afiliado gerado pelo programa
+            <input id="affiliateTargetUrl" type="url" inputmode="url" placeholder="https://link-oficial-gerado-pelo-programa..." required>
+            <small>Copie o link especial do painel oficial. Deve começar com https://.</small>
+          </label>
+          <label>Nota opcional
+            <input id="affiliateNotes" type="text" maxlength="300" placeholder="Ex.: modelo preto 128 GB, campanha de outubro">
+          </label>
+          <button id="affiliateSaveButton" class="affiliate-admin-primary" type="submit">Salvar mapeamento ↗</button>
+          <p id="affiliateFormStatus" class="affiliate-admin-status" role="status" aria-live="polite" hidden></p>
+        </form>
+      </section>
+      <section class="affiliate-admin-list-card">
+        <div class="affiliate-admin-section-heading"><div><span class="affiliate-admin-eyebrow">CATÁLOGO</span><h2>Links cadastrados</h2><p>O sistema compara o endereço original do resultado com a lista abaixo.</p></div><button id="affiliateRefreshButton" class="affiliate-admin-secondary" type="button">Atualizar ↻</button></div>
+        <label class="affiliate-admin-search"><span>⌕</span><input id="affiliateMappingSearch" type="search" placeholder="Filtrar por loja, rede ou URL..." aria-label="Filtrar links de afiliado"></label>
+        <div id="affiliateMappingList" class="affiliate-admin-list"></div>
+        <p id="affiliateListStatus" class="affiliate-admin-status" role="status" aria-live="polite" hidden></p>
+      </section>
+      <section class="affiliate-admin-guidance">
+        <h2>Quais lojas podem ser automatizadas?</h2>
+        <div class="affiliate-admin-guidance-grid">
+          <article><strong>Amazon</strong><p>Automática quando você salva sua tag de associado como segredo <code>AMAZON_ASSOCIATES_TAG</code> no Cloudflare. Este cadastro manual é opcional.</p></article>
+          <article><strong>Shopee</strong><p>Automática quando o programa fornecer credenciais da Open API e você salvar <code>SHOPEE_AFFILIATE_APP_ID</code> e <code>SHOPEE_AFFILIATE_APP_SECRET</code> como secrets no Cloudflare.</p></article>
+          <article><strong>Mercado Livre, Temu e TikTok Shop</strong><p>Use o gerador oficial de links do programa para cada produto. O TikTok Shop informa que seus links de afiliado externos são gerados pelo aplicativo; o Mercado Livre também pede que se use o gerador/barra oficial.</p></article>
+          <article><strong>Awin, Impact e outros</strong><p>Se a rede gerar um deep link oficial, cadastre aqui. Uma integração automática por API exige aprovação, credenciais e compatibilidade do programa da loja.</p></article>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="affiliate-admin-footer"><a href="/">Onde compro?</a><span>Links honestos. Ofertas melhores.</span></footer>
+  <script type="module" src="/assets/affiliate-admin.js"></script>
+</body>
+</html>
