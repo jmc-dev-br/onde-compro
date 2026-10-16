@@ -41,6 +41,11 @@ function showView(view) {
   profileView.hidden = view !== 'profile';
   resetView.hidden = view !== 'reset';
   newPasswordView.hidden = view !== 'new-password';
+  const dialog = modal?.querySelector('.account-dialog');
+  const headings = { auth: 'accountDialogTitle', profile: 'accountDialogTitleProfile', reset: 'accountResetTitle', 'new-password': 'accountNewPasswordTitle' };
+  const descriptions = { auth: 'accountDialogDescription', profile: 'accountProfileDescription', reset: 'accountResetDescription', 'new-password': 'accountNewPasswordDescription' };
+  if (dialog && headings[view]) dialog.setAttribute('aria-labelledby', headings[view]);
+  if (dialog && descriptions[view]) dialog.setAttribute('aria-describedby', descriptions[view]);
 }
 function openModal() {
   modal.hidden = false;
@@ -252,6 +257,8 @@ supabase.auth.onAuthStateChange((event, session) => {
   currentUser = session?.user || null;
   updateNav();
   if (event === 'PASSWORD_RECOVERY') {
+    modal.hidden = false;
+    document.body.classList.add('account-modal-open');
     showView('new-password');
     setStatus(newPasswordStatus, 'Escolha uma nova senha para sua conta.');
   } else if (event === 'SIGNED_OUT') {
@@ -264,10 +271,5 @@ supabase.auth.onAuthStateChange((event, session) => {
   const { data } = await supabase.auth.getSession();
   currentUser = data?.session?.user || null;
   updateNav();
-  if (window.location.hash.includes('redefinir-senha') && currentUser) {
-    modal.hidden = false;
-    document.body.classList.add('account-modal-open');
-    showView('new-password');
-    setStatus(newPasswordStatus, 'Escolha uma nova senha para sua conta.');
-  }
+  // O evento PASSWORD_RECOVERY abre a tela da nova senha ao validar o link de recuperação.
 })();
