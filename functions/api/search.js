@@ -145,15 +145,15 @@ export async function onRequestGet(context) {
       method: "POST",
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + env.TAVILY_API_KEY
       },
       body: JSON.stringify({
-        api_key: env.TAVILY_API_KEY,
         query: query + " comprar produto no Brasil",
         topic: "general",
         search_depth: "basic",
         max_results: 20,
-        country: "Brazil",
+        country: "brazil",
         include_answer: false,
         include_raw_content: false,
         include_images: false
