@@ -224,8 +224,8 @@ function affiliateKey(rawUrl) {
       if (trackingParams.test(key)) parsed.searchParams.delete(key);
     }
     parsed.searchParams.sort();
-    parsed.pathname = parsed.pathname.replace(/\\/+$/, "") || "/";
-    return parsed.toString().replace(/\\/$/, "").toLowerCase();
+    parsed.pathname = parsed.pathname.replace(/\/+$/, "") || "/";
+    return parsed.toString().replace(/\/$/, "").toLowerCase();
   } catch { return null; }
 }
 
@@ -269,7 +269,7 @@ function addAmazonTag(rawUrl, associateTag) {
   if (!/^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$/.test(safeTag)) return null;
   try {
     const parsed = new URL(rawUrl);
-    const host = parsed.hostname.replace(/^www\\./, "").toLowerCase();
+    const host = parsed.hostname.replace(/^www\./, "").toLowerCase();
     if (host !== "amazon.com.br" && !host.endsWith(".amazon.com.br")) return null;
     if (!isProductPath(parsed.href)) return null;
     parsed.searchParams.set("tag", safeTag);
@@ -283,7 +283,7 @@ async function generateShopeeAffiliateLink(originUrl, env) {
   if (!appId || !appSecret) return null;
   let parsed;
   try { parsed = new URL(originUrl); } catch { return null; }
-  const host = parsed.hostname.replace(/^www\\./, "").toLowerCase();
+  const host = parsed.hostname.replace(/^www\./, "").toLowerCase();
   if (host !== "shopee.com.br" && !host.endsWith(".shopee.com.br")) return null;
 
   const query = "query { generateShortLink(input: { originUrl: " + JSON.stringify(parsed.href) + " }) { shortLink } }";
