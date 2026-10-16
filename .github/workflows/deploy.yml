@@ -42,6 +42,10 @@ jobs:
             mkdir -p dist/assets
             cp -R assets/. dist/assets/
           fi
+          if [[ -d functions ]]; then
+            mkdir -p dist/functions
+            cp -R functions/. dist/functions/
+          fi
 
       - name: Publicar no Cloudflare Pages
         if: steps.credentials.outputs.configured == 'true'
