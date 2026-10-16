@@ -11,7 +11,7 @@
   <title>Clube Onde compro? — Faça parte</title>
 </head>
 <body class="club-page">
-  <div class="club-topline"><div class="club-wrap"><span><i></i> EM PREPARAÇÃO · SEM COBRANÇA NESTA FASE</span><a href="/">Voltar à busca ↗</a></div></div>
+  <div class="club-topline"><div class="club-wrap"><span><i></i> CLUBE · R$ 6/MÊS · PAGAMENTO EM CONFIGURAÇÃO</span><a href="/">Voltar à busca ↗</a></div></div>
   <header class="club-header">
     <nav class="club-wrap club-nav" aria-label="Navegação principal">
       <a class="club-brand" href="/" aria-label="Onde compro? página inicial"><img src="/assets/logo.svg" alt="Onde compro?" width="650" height="210"></a>
@@ -91,16 +91,22 @@
     </section>
     <section class="club-price-section" id="planos">
       <div class="club-wrap club-price-layout">
-        <div class="club-price-copy"><span class="club-section-kicker">UMA IDEIA SIMPLES</span><h2>Um clube que cabe<br>no bolso.</h2><p>Estamos avaliando um único plano, com preço acessível e vantagens claras. Primeiro queremos entender o interesse; depois vamos testar o pagamento recorrente e a entrega real dos benefícios.</p><div class="club-price-reassurance"><span>✓</span><span>Sem cobrança nesta fase<br><small>Demonstrar interesse não cria assinatura.</small></span></div></div>
+        <div class="club-price-copy"><span class="club-section-kicker">UMA IDEIA SIMPLES</span><h2>Um clube que cabe<br>no bolso.</h2><p>Um plano simples de R$ 6 por mês, com renovação automática no cartão de crédito. O pagamento será processado em checkout seguro do Asaas; a assinatura só será liberada depois da confirmação do provedor.</p><div class="club-price-reassurance"><span>✓</span><span>Checkout seguro<br><small>O pagamento só começa depois da confirmação.</small></span></div></div>
         <article class="club-price-card">
-          <div class="club-price-card-top"><span class="club-price-crown">♛</span><span class="club-coming-soon">EM PREPARAÇÃO</span></div>
+          <div class="club-price-card-top"><span class="club-price-crown">♛</span><span class="club-coming-soon" id="clubPlanStatusBadge">ATIVAÇÃO EM ANDAMENTO</span></div>
           <h3>Clube Onde compro?</h3><p class="club-price-tagline">Para quem gosta de encontrar boas oportunidades.</p>
-          <div class="club-price"><span>R$</span><strong>5</strong><span>,00 <small>/ mês</small></span></div>
-          <p class="club-price-caption">Preço proposto · assinatura ainda não disponível</p>
+          <div class="club-price"><span>R$</span><strong>6</strong><span>,00 <small>/ mês</small></span></div>
+          <p class="club-price-caption">Plano mensal · cartão de crédito com renovação automática</p>
           <div class="club-price-rule"></div>
           <ul><li><span>✓</span> Perfil e insígnia de membro</li><li><span>✓</span> Estatísticas pessoais de pesquisa</li><li><span>✓</span> Conquistas e marcos de participação</li><li><span>✓</span> Benefícios exclusivos conforme lançamento</li></ul>
-          <button id="clubInterestButton" class="club-primary-button club-interest-button" type="button">Quero demonstrar interesse <span>↗</span></button>
-          <p class="club-price-foot">Não é uma compra. Nenhum cartão ou pagamento será solicitado.</p>
+          <button id="clubSubscribeButton" class="club-primary-button club-subscribe-button" type="button">Assinar por R$ 6/mês <span>↗</span></button>
+          <p class="club-price-foot">Pagamento processado pelo Asaas. O site não armazena os dados do seu cartão. A assinatura será liberada após confirmação do pagamento.</p>
+          <div id="clubSubscriptionPanel" class="club-subscription-panel" hidden>
+            <div class="club-subscription-panel-head"><span class="club-subscription-status-icon">✓</span><div><strong id="clubSubscriptionState">Clube</strong><small id="clubSubscriptionDate"></small></div></div>
+            <button id="clubCancelButton" class="club-cancel-button" type="button" hidden>Cancelar renovação</button>
+          </div>
+          <p id="clubPaymentStatus" class="club-interest-status" role="status" aria-live="polite" hidden></p>
+          <button id="clubInterestButton" class="club-interest-secondary" type="button">Quero acompanhar o lançamento <span>↗</span></button>
           <p id="clubInterestStatus" class="club-interest-status" role="status" aria-live="polite" hidden></p>
         </article>
       </div>
@@ -109,9 +115,9 @@
       <div class="club-wrap club-faq-layout">
         <div class="club-section-head"><span class="club-section-kicker">ANTES DE ENTRAR</span><h2>Transparente<br>desde o começo.</h2><p>As perguntas mais importantes enquanto o clube está sendo preparado.</p></div>
         <div class="club-faq-list">
-          <details><summary>Já posso pagar os R$ 5 por mês?</summary><p>Ainda não. R$ 5/mês é o preço proposto. A assinatura e a cobrança recorrente serão integradas em outra etapa, depois de definirmos e testarmos os benefícios.</p></details>
-          <details><summary>Demonstrar interesse me torna membro?</summary><p>Não. Isso apenas registra que você tem interesse no lançamento. Não cria uma assinatura, não cobra dinheiro e, por enquanto, não envia e-mails automáticos.</p></details>
-          <details><summary>O que acontece com meus dados?</summary><p>O interesse fica vinculado à sua conta para podermos medir o interesse pelo clube. Você poderá retirar esse interesse nesta página. Não informe dados de cartão nesta fase.</p></details>
+          <details><summary>Já posso pagar os R$ 6 por mês?</summary><p>O plano está definido em R$ 6/mês, mas o checkout só ficará ativo depois que a conta de recebimento e as notificações de pagamento estiverem configuradas e testadas.</p></details>
+          <details><summary>O que acontece quando eu clico em assinar?</summary><p>Você será encaminhado ao checkout seguro do Asaas. O Clube só será liberado quando o Asaas confirmar o pagamento por uma notificação segura; voltar à página de sucesso não é suficiente.</p></details>
+          <details><summary>O site guarda os dados do meu cartão?</summary><p>Não. Os dados do cartão são inseridos no checkout hospedado pelo Asaas. O site guarda apenas os identificadores e o estado da assinatura necessários para sincronizar o acesso.</p></details>
           <details><summary>Vou precisar gastar para conquistar insígnias?</summary><p>Não é essa a proposta. Queremos reconhecer exploração, organização e tempo de participação — não incentivar você a gastar mais dinheiro.</p></details>
         </div>
       </div>
