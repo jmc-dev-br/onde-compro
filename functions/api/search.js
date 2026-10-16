@@ -211,6 +211,145 @@ function hostMatches(host, domain) {
   return host === domain || host.endsWith("." + domain);
 }
 
+const AFFILIATE_SUPABASE_URL = "https://ynqtjkdoqmajxtfmpkbt.supabase.co";
+const AFFILIATE_SUPABASE_KEY = "sb_publishable_JA9F1w3ntSuPtRALACWnlA_H1wjixNt";
+
+function affiliateKey(rawUrl) {
+  try {
+    const parsed = new URL(rawUrl);
+    if (parsed.protocol !== "https:") return null;
+    parsed.hash = "";
+    const trackingParams = /^(utm_.+|gclid|fbclid|msclkid|mc_cid|mc_eid|ref_|ref|tag|linkcode|camp|creative|creativeasin|ascsubtag|matt_.+|spm|scm)$/i;
+    for (const key of Array.from(parsed.searchParams.keys())) {
+      if (trackingParams.test(key)) parsed.searchParams.delete(key);
+    }
+    parsed.searchParams.sort();
+    parsed.pathname = parsed.pathname.replace(/\\/+$/, "") || "/";
+    return parsed.toString().replace(/\\/$/, "").toLowerCase();
+  } catch { return null; }
+}
+
+async function getAffiliateMappings() {
+  try {
+    const url = AFFILIATE_SUPABASE_URL + "/rest/v1/affiliate_link_mappings?select=source_url,affiliate_url,network,store_domain&limit=1000";
+    const response = await fetch(url, {
+      headers: {
+        "apikey": AFFILIATE_SUPABASE_KEY,
+        "Authorization": "Bearer " + AFFILIATE_SUPABASE_KEY,
+        "Accept": "application/json"
+      }
+    });
+    if (!response.ok) return new Map();
+    const rows = await response.json();
+    const map = new Map();
+    if (Array.isArray(rows)) {
+      for (const row of rows) {
+        const source = affiliateKey(row.source_url);
+        let affiliate;
+        try { affiliate = new URL(row.affiliate_url); } catch { continue; }
+        if (source && affiliate.protocol === "https:" && row.network) {
+          map.set(source, { url: affiliate.href, network: String(row.network).slice(0, 80) });
+        }
+      }
+    }
+    return map;
+  } catch { return new Map(); }
+}
+
+function safeAffiliateUrl(rawUrl) {
+  try {
+    const parsed = new URL(String(rawUrl || ""));
+    if (parsed.protocol !== "https:" || parsed.username || parsed.password) return null;
+    return parsed.href;
+  } catch { return null; }
+}
+
+function addAmazonTag(rawUrl, associateTag) {
+  const safeTag = String(associateTag || "").trim();
+  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$/.test(safeTag)) return null;
+  try {
+    const parsed = new URL(rawUrl);
+    const host = parsed.hostname.replace(/^www\\./, "").toLowerCase();
+    if (host !== "amazon.com.br" && !host.endsWith(".amazon.com.br")) return null;
+    if (!isProductPath(parsed.href)) return null;
+    parsed.searchParams.set("tag", safeTag);
+    return parsed.href;
+  } catch { return null; }
+}
+
+async function generateShopeeAffiliateLink(originUrl, env) {
+  const appId = String(env.SHOPEE_AFFILIATE_APP_ID || "").trim();
+  const appSecret = String(env.SHOPEE_AFFILIATE_APP_SECRET || "").trim();
+  if (!appId || !appSecret) return null;
+  let parsed;
+  try { parsed = new URL(originUrl); } catch { return null; }
+  const host = parsed.hostname.replace(/^www\\./, "").toLowerCase();
+  if (host !== "shopee.com.br" && !host.endsWith(".shopee.com.br")) return null;
+
+  const query = "query { generateShortLink(input: { originUrl: " + JSON.stringify(parsed.href) + " }) { shortLink } }";
+  const body = JSON.stringify({ query });
+  const timestamp = String(Math.floor(Date.now() / 1000));
+  const encoder = new TextEncoder();
+  try {
+    const cryptoKey = await crypto.subtle.importKey(
+      "raw", encoder.encode(appSecret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+    );
+    const signatureBuffer = await crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(appId + timestamp + body));
+    const signature = Array.from(new Uint8Array(signatureBuffer)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    const response = await fetch("https://open-api.affiliate.shopee.com.br/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "SHA256 Credential=" + appId + ",Timestamp=" + timestamp + ",Signature=" + signature
+      },
+      body
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    const result = data && data.data && data.data.generateShortLink && data.data.generateShortLink.shortLink;
+    const safe = safeAffiliateUrl(result);
+    if (!safe) return null;
+    const resultHost = getHost(safe);
+    if (!resultHost || !(resultHost === "shopee.com.br" || resultHost.endsWith(".shopee.com.br"))) return null;
+    return safe;
+  } catch { return null; }
+}
+
+async function attachAffiliateLinks(items, env) {
+  const mappings = await getAffiliateMappings();
+  const associateTag = String(env.AMAZON_ASSOCIATES_TAG || "").trim();
+  let shopeeConversions = 0;
+  for (const item of items) {
+    const key = affiliateKey(item.url);
+    const manual = key ? mappings.get(key) : null;
+    if (manual) {
+      item.affiliateUrl = manual.url;
+      item.affiliateProgram = manual.network;
+      item.isAffiliate = true;
+      continue;
+    }
+    const amazonUrl = associateTag ? addAmazonTag(item.url, associateTag) : null;
+    if (amazonUrl) {
+      item.affiliateUrl = amazonUrl;
+      item.affiliateProgram = "Amazon Associados";
+      item.isAffiliate = true;
+      continue;
+    }
+    const host = getHost(item.url);
+    if (shopeeConversions < 3 && host && (host === "shopee.com.br" || host.endsWith(".shopee.com.br"))) {
+      const shopeeUrl = await generateShopeeAffiliateLink(item.url, env);
+      if (shopeeUrl) {
+        item.affiliateUrl = shopeeUrl;
+        item.affiliateProgram = "Shopee Afiliados";
+        item.isAffiliate = true;
+        shopeeConversions++;
+      }
+    }
+  }
+  return items;
+}
+
 function getHost(url) {
   try { return new URL(url).hostname.replace(/^www\./, "").toLowerCase(); }
   catch { return ""; }
@@ -858,10 +997,13 @@ export async function onRequestGet(context) {
     return a.title.localeCompare(b.title, "pt-BR");
   });
 
-  const topResults = results.slice(0, 12);
+  const topResults = await attachAffiliateLinks(results.slice(0, 12), env);
+  const hasAffiliateLinks = topResults.some((item) => item.isAffiliate === true);
   const response = json({
     query,
     results: topResults,
+    hasAffiliateLinks,
+    affiliateDisclosure: "Alguns links podem ser comissionados. Se você comprar por eles, o Onde compro? pode receber uma comissão sem custo adicional para você.",
     sort: "price_ascending_when_available",
     source: env.MERCADOLIVRE_ACCESS_TOKEN ? "Mercado Livre API + Tavily Search" : "Tavily Search",
     disclaimer: "As ofertas com preço de listagem são ordenadas do menor para o maior entre os resultados encontrados. Preços podem mudar; valores extraídos de snippets não são confirmação em tempo real. Confira anúncio, vendedor, estado, frete e total antes de comprar."
