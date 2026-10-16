@@ -18,7 +18,7 @@ Para ativar a API no Cloudflare Pages:
 
 1. Crie uma conta em https://www.tavily.com/ e gere uma API key.
 2. No Cloudflare, acesse **Workers & Pages → onde-compro → Settings → Variables and Secrets**.
-3. Adicione `TAVILY_API_KEY` como **Secret** no ambiente de produção.
+3. Adicione `TAVILY_API_KEY` como **Secret** no ambiente de produção. Depois de alterar o segredo, publique novamente para que a Function de busca receba a configuração atualizada.
 4. Faça um novo deploy do projeto.
 
 Mantenha a chave como secret do servidor. Nunca coloque a chave no HTML ou no repositório GitHub.
