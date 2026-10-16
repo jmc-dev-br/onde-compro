@@ -319,7 +319,7 @@ async function generateShopeeAffiliateLink(originUrl, env) {
 async function attachAffiliateLinks(items, env) {
   const mappings = await getAffiliateMappings();
   const associateTag = String(env.AMAZON_ASSOCIATES_TAG || "").trim();
-  let shopeeConversions = 0;
+  let shopeeAttempts = 0;
   for (const item of items) {
     const key = affiliateKey(item.url);
     const manual = key ? mappings.get(key) : null;
@@ -337,13 +337,13 @@ async function attachAffiliateLinks(items, env) {
       continue;
     }
     const host = getHost(item.url);
-    if (shopeeConversions < 3 && host && (host === "shopee.com.br" || host.endsWith(".shopee.com.br"))) {
+    if (shopeeAttempts < 3 && host && (host === "shopee.com.br" || host.endsWith(".shopee.com.br"))) {
+      shopeeAttempts++;
       const shopeeUrl = await generateShopeeAffiliateLink(item.url, env);
       if (shopeeUrl) {
         item.affiliateUrl = shopeeUrl;
         item.affiliateProgram = "Shopee Afiliados";
         item.isAffiliate = true;
-        shopeeConversions++;
       }
     }
   }
