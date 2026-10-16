@@ -1,41 +1,36 @@
 # Onde compro?
 
-Buscador de produtos em português para ajudar a encontrar páginas diretas de produtos comuns e itens difíceis de achar.
+Buscador de produtos em português para encontrar caminhos de compra, inclusive itens difíceis de achar.
 
-## Como funciona
+## O que a busca mostra
 
-1. A pessoa digita o produto.
-2. A API consulta resultados da web e prioriza links que parecem apontar para páginas de produtos e lojas conhecidas.
-3. O site exibe até três resultados, com links para abrir a página de origem e comprar diretamente na loja.
+- Até três resultados relevantes da web com link para a página de origem.
+- Foto do produto quando o buscador encontra imagens associadas à própria página.
+- Preço mencionado no resultado quando o trecho de texto permite identificar um valor em reais.
+- Uma explicação cautelosa do possível motivo de preço menor quando o texto cita promoção, cupom, desconto no Pix, frete grátis, produto usado/recondicionado, kit ou importação.
 
-A classificação é uma estimativa de relevância, não uma garantia de menor preço, qualidade ou confiabilidade do vendedor. Preços, frete, estoque, prazo e condições devem ser verificados no site da loja. A compra acontece fora do Onde compro?.
+As fotos e preços vêm do conteúdo indexado e podem estar incompletos ou desatualizados. A explicação de preço é apenas uma pista textual, não prova de que a oferta é a mais barata. O usuário deve confirmar o preço final, frete, vendedor, estado do produto, estoque, garantia e devolução no site da loja. A compra acontece fora do Onde compro?.
 
-## Busca
+## API de busca
 
-A API usa Tavily Search. O plano gratuito anunciado inclui 1.000 créditos por mês sem exigir cartão de crédito. Em geral, usar uma pesquisa básica ajuda a economizar créditos. Consulte os termos e limites atuais da Tavily antes de lançar para mais usuários.
+A API é implementada como Cloudflare Pages Function em `functions/api/search.js` e usa Tavily Search. Ela solicita imagens associadas a cada página e retorna dados extraídos de título e snippet.
 
-Para ativar a API no Cloudflare Pages:
+Para ativar:
+1. Gere uma API key em https://app.tavily.com/.
+2. No Cloudflare, vá a **Workers & Pages → onde-compro → Settings → Variables and Secrets**.
+3. No ambiente **Production**, crie o segredo `TAVILY_API_KEY`.
+4. Publique novamente o site.
 
-1. Crie uma conta em https://www.tavily.com/ e gere uma API key.
-2. No Cloudflare, acesse **Workers & Pages → onde-compro → Settings → Variables and Secrets**.
-3. Adicione `TAVILY_API_KEY` como **Secret** no ambiente de produção. Depois de alterar o segredo, publique novamente para que a Function de busca receba a configuração atualizada.
-4. Faça um novo deploy do projeto.
+Não coloque a API key no HTML nem no repositório.
 
-Mantenha a chave como secret do servidor. Nunca coloque a chave no HTML ou no repositório GitHub.
+## Desenvolvimento e publicação
 
-Quando a chave não está configurada ou a cota acaba, a interface mostra atalhos de busca como alternativa.
+Abra `index.html` no navegador para visualizar a página. Para testar a Function localmente, use Wrangler Pages com `TAVILY_API_KEY` configurada no ambiente local.
 
-## Executar localmente
+O workflow `.github/workflows/deploy.yml` publica `index.html`, os ativos e a pasta `functions/` no Cloudflare Pages após cada push para `main`.
 
-Abra `index.html` em um navegador para testar o layout. Para testar a busca real, rode o projeto com Pages Functions usando Wrangler e configure `TAVILY_API_KEY` no ambiente local.
-
-## Publicação automática
-
-O workflow `.github/workflows/deploy.yml` publica o projeto no Cloudflare Pages `onde-compro` quando houver um push para a branch `main`.
-
-Os secrets de repositório necessários para publicar são:
-
-- `CLOUDFLARE_API_TOKEN`: token com permissão de edição para Cloudflare Pages.
+Segredos do GitHub Actions necessários para publicar:
+- `CLOUDFLARE_API_TOKEN`: token da API com permissão de edição para Cloudflare Pages.
 - `CLOUDFLARE_ACCOUNT_ID`: ID da conta Cloudflare.
 
-Site: https://onde-compro.pages.dev/
+Site publicado: https://onde-compro.pages.dev/
