@@ -21,6 +21,12 @@ function canonicalUrl(raw){
   parsed.pathname=parsed.pathname.replace(/\/+$/,'')||'/';
   return parsed.toString().replace(/\/$/,'').toLowerCase();
 }
+function affiliateTargetUrl(raw){
+  const value=String(raw||'').trim();
+  const parsed=new URL(value);
+  if(parsed.protocol!=='https:'||parsed.username||parsed.password)throw new Error('O link afiliado deve usar HTTPS e não pode conter usuário ou senha na URL.');
+  return parsed.href;
+}
 function domainOf(raw){return new URL(raw).hostname.replace(/^www\./,'').toLowerCase()}
 function el(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=String(text);return node}
 function emptyList(title,description){const box=el('div','affiliate-admin-empty');box.append(el('strong','',title),el('p','',description));return box}
@@ -105,7 +111,7 @@ form.addEventListener('submit',async event=>{
   let sourceUrl,targetUrl;
   try{
     sourceUrl=canonicalUrl($('affiliateSourceUrl').value);
-    targetUrl=canonicalUrl($('affiliateTargetUrl').value);
+    targetUrl=affiliateTargetUrl($('affiliateTargetUrl').value);
   }catch(error){status(formStatus,error.message||'Confira os endereços informados.',true);return}
   if(sourceUrl===targetUrl){status(formStatus,'O link de afiliado precisa ser diferente do endereço original do produto.',true);return}
   const network=safeText($('affiliateNetwork').value);
