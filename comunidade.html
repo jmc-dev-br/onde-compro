@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102019">
+  <meta name="description" content="Encontre pessoas, siga amigos e participe de comunidades de compras no Onde compro?">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/assets/account.css">
+  <link rel="stylesheet" href="/assets/social.css">
+  <title>Comunidade — Onde compro?</title>
+</head>
+<body class="social-page">
+  <div class="social-topline"><div class="social-wrap"><span><i></i> UM LUGAR PARA QUEM GOSTA DE ENCONTRAR OFERTAS</span><a href="/">Voltar para o site ↗</a></div></div>
+  <header class="social-header">
+    <nav class="social-wrap social-nav" aria-label="Navegação principal">
+      <a class="social-brand" href="/" aria-label="Onde compro? página inicial"><img src="/assets/logo.svg" alt="Onde compro?" width="650" height="210"></a>
+      <div class="social-nav-links"><a href="/">Buscar produtos</a><a class="social-nav-current" href="/comunidade.html">Comunidade</a></div>
+      <a class="social-account-link" id="socialAccountLink" href="/?conta=1&amp;retorno=%2Fcomunidade.html">Entrar na conta ↗</a>
+    </nav>
+  </header>
+  <main>
+    <section class="social-hero">
+      <div class="social-wrap social-hero-grid">
+        <div>
+          <span class="social-eyebrow"><span>✳</span> O LADO SOCIAL DAS COMPRAS</span>
+          <h1>Comprar bem é bom.<br><em>Compartilhar é melhor.</em></h1>
+          <p>Encontre gente com os mesmos interesses, siga quem compartilha boas descobertas e forme comunidades para conversar sobre o que você gosta.</p>
+          <div class="social-hero-pills"><span>♧ Pessoas</span><span>✳ Comunidades</span><span>↗ Descobertas</span></div>
+        </div>
+        <div class="social-hero-art" aria-hidden="true">
+          <div class="social-orbit social-orbit-one"></div><div class="social-orbit social-orbit-two"></div>
+          <div class="social-floating social-floating-one"><span class="social-float-icon">♧</span><span><b>Novas conexões</b><small>Interesses em comum</small></span></div>
+          <div class="social-floating social-floating-two"><span class="social-float-icon">✳</span><span><b>Uma comunidade</b><small>Ideias compartilhadas</small></span></div>
+          <div class="social-center-mark"><svg viewBox="0 0 64 64" fill="none"><path d="M13 23h38l-3.5 30h-31L13 23Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M22 23v-7a10 10 0 0 1 20 0v7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M25 36c4 4 10 4 14 0" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+    </section>
+    <section class="social-main social-wrap">
+      <div id="socialLoginGate" class="social-login-gate" hidden>
+        <div class="social-gate-icon">♧</div>
+        <span class="social-section-kicker">SUA COMUNIDADE COMEÇA AQUI</span>
+        <h2>Entre para participar</h2>
+        <p>Faça login para seguir pessoas, entrar em comunidades e publicar mensagens. Sua conta do Onde compro? é a mesma.</p>
+        <a class="social-primary-button" href="/?conta=1&amp;retorno=%2Fcomunidade.html">Entrar ou criar conta ↗</a>
+      </div>
+      <div id="socialApp" hidden>
+        <div class="social-welcome-row">
+          <div><span class="social-section-kicker">SEU ESPAÇO SOCIAL</span><h2>Encontre sua turma</h2><p>Conecte-se com pessoas e comunidades em torno dos seus interesses.</p></div>
+          <div class="social-self-chip"><img id="socialSelfAvatar" alt="" hidden><span id="socialSelfInitial">♙</span><div><strong id="socialSelfName">Sua conta</strong><small id="socialSelfHandle">Seu perfil</small></div></div>
+        </div>
+        <div class="social-tabs" role="tablist" aria-label="Seções sociais">
+          <button class="social-tab is-active" data-social-view="people" id="socialPeopleTab" role="tab" aria-selected="true"><span>♧</span> Pessoas <b id="socialPeopleTabCount">0</b></button>
+          <button class="social-tab" data-social-view="communities" id="socialCommunitiesTab" role="tab" aria-selected="false"><span>✳</span> Comunidades <b id="socialCommunitiesTabCount">0</b></button>
+          <button class="social-tab" data-social-view="mine" id="socialMineTab" role="tab" aria-selected="false"><span>♡</span> Meu círculo</button>
+        </div>
+        <section id="socialPeopleView" class="social-view" role="tabpanel" aria-labelledby="socialPeopleTab">
+          <div class="social-view-heading"><div><h3>Descobrir pessoas</h3><p>Encontre alguém pelo nome, @usuário ou descrição.</p></div><span class="social-mini-count" id="socialPeopleCount">Carregando…</span></div>
+          <label class="social-search"><span>⌕</span><input id="socialPeopleSearch" type="search" placeholder="Buscar pessoas..." autocomplete="off"><kbd>⌘ K</kbd></label>
+          <div id="socialPeopleGrid" class="social-people-grid"></div>
+          <p id="socialPeopleStatus" class="social-status" role="status" aria-live="polite" hidden></p>
+        </section>
+        <section id="socialCommunitiesView" class="social-view" role="tabpanel" aria-labelledby="socialCommunitiesTab" hidden>
+          <div class="social-view-heading"><div><h3>Explore comunidades</h3><p>Junte-se a grupos e converse sobre seus assuntos favoritos.</p></div><button id="socialCreateCommunityOpen" class="social-secondary-button" type="button">＋ Criar comunidade</button></div>
+          <label class="social-search"><span>⌕</span><input id="socialCommunitySearch" type="search" placeholder="Buscar comunidades ou categorias..." autocomplete="off"><kbd>⌕</kbd></label>
+          <form id="socialCreateCommunityForm" class="social-create-panel" hidden>
+            <div class="social-create-heading"><div><span class="social-section-kicker">COMECE SEU GRUPO</span><h4>Criar comunidade</h4></div><button id="socialCreateCommunityClose" class="social-icon-button" type="button" aria-label="Fechar formulário">×</button></div>
+            <label>Nome da comunidade<input id="socialCommunityName" type="text" maxlength="60" minlength="3" required placeholder="Ex.: Setup e tecnologia"></label>
+            <label>Categoria<select id="socialCommunityCategory" required><option value="Geral">Geral</option><option value="Tecnologia">Tecnologia</option><option value="Games">Games</option><option value="Ofertas">Ofertas e promoções</option><option value="Casa">Casa</option><option value="Moda">Moda e estilo</option><option value="Livros">Livros</option><option value="Beleza">Beleza</option><option value="Esportes">Esportes</option><option value="Música">Música</option><option value="Finanças">Finanças pessoais</option><option value="Outros">Outros interesses</option></select></label>
+            <label>Descrição <span>opcional</span><textarea id="socialCommunityDescription" maxlength="500" rows="3" placeholder="Qual é a ideia do grupo? O que as pessoas podem compartilhar?"></textarea></label>
+            <button class="social-primary-button" id="socialCreateCommunitySubmit" type="submit">Criar comunidade ↗</button>
+            <p id="socialCreateCommunityStatus" class="social-status" role="status" aria-live="polite" hidden></p>
+          </form>
+          <div id="socialCommunitiesGrid" class="social-communities-grid"></div>
+          <p id="socialCommunitiesStatus" class="social-status" role="status" aria-live="polite" hidden></p>
+          <section id="socialCommunityDetail" class="social-community-detail" hidden>
+            <button id="socialCommunityBack" class="social-back-button" type="button">← Voltar às comunidades</button>
+            <div id="socialCommunityDetailHeader"></div>
+            <div id="socialCommunityDiscussion" class="social-community-discussion"></div>
+          </section>
+        </section>
+        <section id="socialMineView" class="social-view" role="tabpanel" aria-labelledby="socialMineTab" hidden>
+          <div class="social-view-heading"><div><h3>Seu círculo</h3><p>As pessoas que você segue e os grupos de que faz parte.</p></div></div>
+          <div class="social-stats-row">
+            <div class="social-stat-card"><span>Seguindo</span><strong id="socialFollowingCount">0</strong><small>Pessoas no seu radar</small></div>
+            <div class="social-stat-card"><span>Seguidores</span><strong id="socialFollowersCount">0</strong><small>Pessoas que acompanham você</small></div>
+            <div class="social-stat-card"><span>Comunidades</span><strong id="socialMyCommunitiesCount">0</strong><small>Grupos dos quais participa</small></div>
+          </div>
+          <div class="social-mine-columns">
+            <section><div class="social-subhead"><h4>Você segue</h4><button type="button" class="social-text-link" data-open-social-view="people">Encontrar pessoas ↗</button></div><div id="socialFollowingList" class="social-compact-list"></div></section>
+            <section><div class="social-subhead"><h4>Suas comunidades</h4><button type="button" class="social-text-link" data-open-social-view="communities">Explorar ↗</button></div><div id="socialMyCommunityList" class="social-compact-list"></div></section>
+          </div>
+        </section>
+        <p id="socialGlobalStatus" class="social-status" role="status" aria-live="polite" hidden></p>
+      </div>
+    </section>
+  </main>
+  <footer class="social-footer"><div class="social-wrap"><a class="social-footer-brand" href="/">Onde compro?</a><span>Conexões melhores. Compras mais conscientes.</span><a href="/">Voltar à busca ↑</a></div></footer>
+  <script type="module" src="/assets/social.js"></script>
+</body>
+</html>
