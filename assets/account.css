@@ -1,0 +1,39 @@
+/* Conta do usuário — Onde compro? */
+.nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.account-nav-button{appearance:none;border:1px solid #dce6d5;background:#eff7e5;color:#253c24;border-radius:12px;padding:12px 15px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap;transition:background .18s ease,transform .18s ease}
+.account-nav-button:hover{background:#dff3c7;transform:translateY(-1px)}
+.account-nav-button:focus-visible,.account-close:focus-visible,.account-tab:focus-visible,.account-action:focus-visible{outline:3px solid #82c93d;outline-offset:3px}
+.account-modal[hidden],.account-modal [hidden]{display:none!important}
+.account-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
+.account-backdrop{position:absolute;inset:0;background:rgba(5,16,10,.68);backdrop-filter:blur(7px)}
+.account-dialog{position:relative;z-index:1;width:min(100%,460px);max-height:min(90vh,850px);overflow:auto;background:#fff;border:1px solid #e2e9de;border-radius:26px;padding:28px;box-shadow:0 28px 90px #0005;color:#19271d}
+.account-close{position:absolute;top:17px;right:17px;width:38px;height:38px;border-radius:12px;border:1px solid #e1e8dd;background:#f8faf6;color:#344536;font-size:22px;line-height:1;cursor:pointer}
+.account-kicker{margin:0 45px 10px 0;color:#5d8135;font-size:10px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase}
+.account-dialog h2{font-size:29px;line-height:1.1;letter-spacing:-1px;margin:0 45px 10px 0}
+.account-description{font-size:13px;line-height:1.7;color:#6b786d;margin:0 0 21px}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;background:#f1f5ed;padding:4px;border-radius:13px;gap:4px;margin-bottom:18px}
+.account-tab{border:0;background:transparent;border-radius:10px;padding:11px 9px;font-size:12px;font-weight:850;color:#68756a;cursor:pointer}
+.account-tab.active{background:#fff;color:#203a22;box-shadow:0 2px 6px #10201410}
+.account-form{display:grid;gap:14px}
+.account-form label{display:grid;gap:7px;font-size:12px;font-weight:800;color:#39493b}
+.account-form input{width:100%;min-width:0;border:1px solid #dce5d8;background:#fff;border-radius:12px;padding:13px 14px;min-height:46px;color:#19271d;font:inherit;font-size:14px;outline:none}
+.account-form input:focus{border-color:#8dbc5b;box-shadow:0 0 0 3px #b8f35b30}
+.account-form input[readonly]{background:#f5f7f2;color:#657267}
+.account-inline-actions{display:flex;align-items:center;justify-content:flex-end;margin-top:-4px}
+.account-text-button{border:0;background:transparent;padding:6px 0;color:#4e762c;font-size:12px;font-weight:800;cursor:pointer}
+.account-action{width:100%;min-height:47px;border:0;border-radius:13px;background:linear-gradient(135deg,#c9ff78,#a9e84f);color:#19271d;padding:13px 15px;font-size:13px;font-weight:900;cursor:pointer;transition:filter .18s ease,transform .18s ease}
+.account-action:hover{filter:brightness(1.03);transform:translateY(-1px)}
+.account-action:disabled{opacity:.62;cursor:wait;transform:none}
+.account-status{margin:14px 0 0;padding:12px 13px;border:1px solid #dcebcf;border-radius:12px;background:#f3faeb;color:#38572b;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.account-status.is-error{background:#fff4f1;border-color:#f1d5cb;color:#8c3526}
+.account-small-note{font-size:11px;line-height:1.65;color:#859086;margin:17px 0 0;text-align:center}
+.account-profile-badge{display:inline-flex;align-items:center;gap:7px;border:1px solid #d9e8c9;background:#f1f8e9;color:#4b6e2e;border-radius:999px;padding:7px 10px;font-size:10px;font-weight:900;margin-bottom:14px}
+.account-profile-badge:before{content:"";width:7px;height:7px;border-radius:50%;background:#80bb42}
+.account-profile-info{display:grid;gap:5px;background:#f7f9f4;border:1px solid #e5ebdf;border-radius:13px;padding:13px;margin-bottom:16px}
+.account-profile-info span:first-child{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#7a877c;font-weight:800}
+.account-profile-info span:last-child{font-size:13px;color:#28392b;overflow-wrap:anywhere}
+.account-signout{width:100%;margin-top:11px;border:1px solid #e0e6dc;border-radius:12px;background:white;color:#667166;padding:12px;font-size:12px;font-weight:800;cursor:pointer}
+.account-signout:hover{background:#f8faf5}
+body.account-modal-open{overflow:hidden}
+@media(max-width:540px){.nav-actions{gap:6px}.account-nav-button{padding:10px 9px;font-size:11px;border-radius:10px}.account-dialog{padding:23px 19px;border-radius:21px}.account-dialog h2{font-size:26px}.account-modal{padding:12px}.brand-logo{width:140px}}
+@media(prefers-reduced-motion:reduce){.account-action,.account-nav-button{transition:none}}
