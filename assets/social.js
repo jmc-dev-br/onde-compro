@@ -567,16 +567,10 @@ $('socialCommunitySearch').addEventListener('input', () => {
   selectedCommunityId = null;
   renderCommunities();
 });
-$('socialAccountLink').addEventListener('click', (event) => {
-  if (currentUser) {
-    event.preventDefault();
-    window.location.href = '/';
-  }
-});
 function updateLoginLink() {
   const link = $('socialAccountLink');
   if (!link) return;
-  link.href = currentUser ? '/?conta=1&retorno=%2Fcomunidade.html' : '/?conta=1&retorno=%2Fcomunidade.html';
+  link.href = currentUser ? '/?conta=1' : '/?conta=1&retorno=%2Fcomunidade.html';
   link.textContent = currentUser ? 'Minha conta ↗' : 'Entrar na conta ↗';
 }
 async function startApp() {
