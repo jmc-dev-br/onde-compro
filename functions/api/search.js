@@ -773,7 +773,7 @@ export async function onRequestGet(context) {
 
   // If broad web search didn't find a direct product page, try only the known shopping domains.
   // This extra request runs only when the first pass found no offers, conserving free search credits.
-  if (candidates.length === 0 && env.TAVILY_API_KEY) {
+  if (candidates.filter((item) => item.directProductPage).length < 3 && env.TAVILY_API_KEY) {
     try {
       const targetedResponse = await fetch("https://api.tavily.com/search", {
         method: "POST",
