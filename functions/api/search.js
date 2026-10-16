@@ -235,7 +235,6 @@ async function getAffiliateMappings() {
     const response = await fetch(url, {
       headers: {
         "apikey": AFFILIATE_SUPABASE_KEY,
-        "Authorization": "Bearer " + AFFILIATE_SUPABASE_KEY,
         "Accept": "application/json"
       }
     });
