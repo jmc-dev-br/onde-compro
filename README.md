@@ -4,13 +4,13 @@ Buscador de produtos em português para encontrar ofertas e páginas diretas de 
 
 ## Diretório de lojas
 
-O site reúne **187 lojas, marketplaces, comparadores e serviços de nicho** organizados em 10 categorias, com um filtro para localizar uma plataforma pelo nome ou domínio. A seleção inclui marketplaces gerais e internacionais, comparadores de preço, tecnologia, casa e construção, moda, beleza e farmácias, supermercados e pets, automotivo, livros e games, agro e itens especializados.
+O site reúne **219 lojas, marketplaces, comparadores e serviços de nicho** organizados em 10 categorias, com um filtro para localizar uma plataforma pelo nome ou domínio. A seleção inclui marketplaces gerais e internacionais, comparadores de preço, tecnologia, casa e construção, moda, beleza e farmácias, supermercados e pets, automotivo, livros e games, agro e itens especializados.
 
 O diretório é uma curadoria ampla, não uma lista literalmente completa de todas as lojas existentes. Algumas lojas atendem apenas certas regiões; lojas internacionais podem exigir importação, frete e impostos adicionais.
 
 ## Busca de produtos
 
-Quando a pessoa pesquisa um item, a API tenta retornar até três páginas específicas de produtos, com foto e preço se esses dados estiverem disponíveis. Os resultados com preço identificado são ordenados do menor para o maior. Se a busca web não encontrar três links diretos, uma segunda consulta tenta pesquisar apenas nos domínios catalogados.
+Quando a pessoa pesquisa um item, a API tenta retornar até três páginas específicas de produtos, com foto e preço se esses dados estiverem disponíveis. Os resultados com preço identificado são ordenados do menor para o maior. A busca combina resultados gerais e, quando faltam ofertas com preço identificado ou variedade de lojas, faz uma segunda consulta nos domínios catalogados para ampliar a comparação.
 
 A integração web usa Tavily Search. Há uma busca geral e uma busca de recuperação que só roda quando são encontrados menos de três links diretos, para equilibrar cobertura e uso de créditos. A busca geral da web não garante que todo vendedor ou loja seja pesquisado em todas as consultas.
 
