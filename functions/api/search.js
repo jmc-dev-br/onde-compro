@@ -430,6 +430,7 @@ function isProductPath(url) {
       /\/produto\//i,
       /\/produtos\/[^/]+/i,
       /\/product\/[^/]+/i,
+      /\/products\/[^/]+/i,
       /\/p\/[A-Z0-9-]{5,}/i,
       /\/MLB-?\d{6,}/i,
       /[._-]i\.\d{3,}\.\d{3,}/i,
@@ -457,6 +458,9 @@ function looksLikeSearchOrHome(url) {
     if (!path) return true;
     if (/\/(search|busca|buscar|s|results|resultados|collections|collection|category|categories|categorias|departamentos|departamento|ofertas|promocoes|promocao|mais-vendidos|novidades|lancamentos|marcas|brands)$/i.test(path)) return true;
     if (/\/(blog|artigos?|noticias|news|ajuda|suporte|atendimento|institucional|sobre|about)(\/|$)/i.test(path)) return true;
+    const pathSegments = path.split("/").filter(Boolean);
+    const listingSegments = /^(search|busca|buscar|results|resultados|collections?|category|categories|categorias?|departamentos?|ofertas|promocoes|promocao|mais-vendidos|novidades|lancamentos|marcas|brands|blog|artigos?|noticias|news|ajuda|suporte|atendimento|institucional|sobre|about)$/i;
+    if (pathSegments.some((segment) => listingSegments.test(segment)) && !isProductPath(url)) return true;
     if ((parsed.searchParams.has("q") || parsed.searchParams.has("k") || parsed.searchParams.has("query") || parsed.searchParams.has("keyword")) &&
         !isProductPath(url)) return true;
     return false;
@@ -479,7 +483,8 @@ function scoreResult(result, query) {
   let pathSuggestsProduct = false;
   try {
     const segments = new URL(url).pathname.split("/").filter(Boolean);
-    pathSuggestsProduct = segments.some((segment) => segment.length >= 8);
+    const lastSegment = segments[segments.length - 1] || "";
+    pathSuggestsProduct = lastSegment.length >= 10;
   } catch { /* URL was validated above. */ }
   const direct = isProductPath(url) || hasProductSchema(result) || (store && !searchOrHome && pathSuggestsProduct);
   if (direct) score += 7;
