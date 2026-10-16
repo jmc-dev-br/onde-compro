@@ -42,6 +42,9 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html dist/index.html
+          if [[ -f comunidade.html ]]; then
+            cp comunidade.html dist/comunidade.html
+          fi
           if [[ -d assets ]]; then
             mkdir -p dist/assets
             cp -R assets/. dist/assets/
