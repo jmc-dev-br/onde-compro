@@ -693,7 +693,7 @@ subtitle.textContent='Ofertas com preço identificado estão ordenadas do menor 
 title.textContent='Ofertas diretas encontradas para: '+q;
 subtitle.textContent='Encontramos páginas específicas de produto, mas nenhuma trouxe um preço confiável no resultado de busca.';
 }
-setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.'+(items.some(function(item){return item.isAffiliate===true&&safeUrl(item.affiliateUrl);})?' Alguns links são comissionados: se você comprar por eles, o Onde compro? pode receber uma comissão sem custo adicional para você.':''),'');
+setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.'+(items.slice(0,3).some(function(item){return item.isAffiliate===true&&safeUrl(item.affiliateUrl);})?' Alguns links são comissionados: se você comprar por eles, o Onde compro? pode receber uma comissão sem custo adicional para você.':'' )+(items.slice(0,3).some(function(item){return item.isAffiliate===true&&item.affiliateProgram==='Amazon Associados'&&safeUrl(item.affiliateUrl);})?' Como Associado da Amazon, ganho com compras qualificadas.':''),'');
 }
 
 async function showResults(rawQuery){
