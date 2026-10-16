@@ -1,11 +1,16 @@
 const CACHE_SECONDS = 300;
 
 const KNOWN_STORES = [
-  "mercadolivre.com.br", "amazon.com.br", "shopee.com.br", "magazineluiza.com.br",
+  "mercadolivre.com.br", "amazon.com.br", "shopee.com.br", "temu.com",
+  "tiktok.com", "aliexpress.com", "shein.com", "magazineluiza.com.br",
   "magalu.com.br", "kabum.com.br", "pichau.com.br", "terabyteshop.com.br",
   "carrefour.com.br", "casasbahia.com.br", "americanas.com.br", "fastshop.com.br",
   "leroymerlin.com.br", "madeiramadeira.com.br", "lojadomecanico.com.br",
-  "kalunga.com.br", "webcontinental.com.br", "walmart.com", "bestbuy.com"
+  "kalunga.com.br", "webcontinental.com.br", "olx.com.br", "enjoei.com.br",
+  "netshoes.com.br", "dafiti.com.br", "zattini.com.br", "centauro.com.br",
+  "decathlon.com.br", "petlove.com.br", "cobasi.com.br", "rihappy.com.br",
+  "epocacosmeticos.com.br", "beleza na web.com.br", "drogasil.com.br",
+  "droga raia.com.br", "ebay.com", "etsy.com", "walmart.com", "bestbuy.com"
 ];
 
 const EXCLUDED_HOSTS = [
@@ -80,7 +85,8 @@ function scoreResult(result, query) {
   const url = String(result.url || "");
   const host = getHost(url);
   if (!host || !/^https:\/\//i.test(url)) return -100;
-  if (EXCLUDED_HOSTS.some((domain) => hostMatches(host, domain))) return -100;
+  const isTikTokShop = hostMatches(host, "tiktok.com") && /(?:shop|product|view\\/product)/i.test((() => { try { return new URL(url).pathname; } catch { return ""; } })());
+  if (EXCLUDED_HOSTS.some((domain) => hostMatches(host, domain)) && !isTikTokShop) return -100;
 
   let score = 0;
   const providerScore = Number(result.score || 0);
@@ -108,20 +114,27 @@ function scoreResult(result, query) {
 function storeLabel(host) {
   const labels = [
     ["mercadolivre.com.br", "Mercado Livre"], ["amazon.com.br", "Amazon Brasil"],
-    ["shopee.com.br", "Shopee"], ["magazineluiza.com.br", "Magazine Luiza"],
-    ["magalu.com.br", "Magalu"], ["kabum.com.br", "KaBuM!"],
-    ["pichau.com.br", "Pichau"], ["terabyteshop.com.br", "TerabyteShop"],
-    ["carrefour.com.br", "Carrefour"], ["casasbahia.com.br", "Casas Bahia"],
-    ["americanas.com.br", "Americanas"], ["fastshop.com.br", "Fast Shop"],
-    ["leroymerlin.com.br", "Leroy Merlin"], ["madeiramadeira.com.br", "MadeiraMadeira"],
-    ["lojadomecanico.com.br", "Loja do Mecânico"], ["kalunga.com.br", "Kalunga"],
-    ["webcontinental.com.br", "Webcontinental"]
+    ["shopee.com.br", "Shopee"], ["temu.com", "Temu"], ["tiktok.com", "TikTok Shop"],
+    ["aliexpress.com", "AliExpress"], ["shein.com", "Shein"],
+    ["magazineluiza.com.br", "Magazine Luiza"], ["magalu.com.br", "Magalu"],
+    ["kabum.com.br", "KaBuM!"], ["pichau.com.br", "Pichau"],
+    ["terabyteshop.com.br", "TerabyteShop"], ["carrefour.com.br", "Carrefour"],
+    ["casasbahia.com.br", "Casas Bahia"], ["americanas.com.br", "Americanas"],
+    ["fastshop.com.br", "Fast Shop"], ["leroymerlin.com.br", "Leroy Merlin"],
+    ["madeiramadeira.com.br", "MadeiraMadeira"], ["lojadomecanico.com.br", "Loja do Mecânico"],
+    ["kalunga.com.br", "Kalunga"], ["webcontinental.com.br", "Webcontinental"],
+    ["olx.com.br", "OLX"], ["enjoei.com.br", "Enjoei"], ["netshoes.com.br", "Netshoes"],
+    ["dafiti.com.br", "Dafiti"], ["zattini.com.br", "Zattini"], ["centauro.com.br", "Centauro"],
+    ["decathlon.com.br", "Decathlon"], ["petlove.com.br", "Petlove"], ["cobasi.com.br", "Cobasi"],
+    ["rihappy.com.br", "Ri Happy"], ["epocacosmeticos.com.br", "Época Cosméticos"],
+    ["drogasil.com.br", "Drogasil"], ["droga raia.com.br", "Droga Raia"],
+    ["ebay.com", "eBay"], ["etsy.com", "Etsy"], ["walmart.com", "Walmart"],
+    ["bestbuy.com", "Best Buy"]
   ];
-  const match = labels.find(([domain]) => hostMatches(host, domain));
+  const match = labels.find(([domain]) => hostMatches(host, domain.replace(/ /g, "")));
   if (match) return match[1];
   return host.replace(/^www\./, "");
 }
-
 
 function getPageFavicon(result) {
   const candidate = result && typeof result.favicon === "string" ? result.favicon : "";
