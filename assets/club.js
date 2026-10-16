@@ -42,7 +42,7 @@ function updateUI(){
       else date.textContent='';
     }
     if(icon){icon.textContent=active?'✓':subscription.status==='pending'?'…':'!';icon.classList.toggle('is-warning',!active)}
-    if(cancelBtn){cancelBtn.hidden=!['active','past_due'].includes(subscription.status);cancelBtn.disabled=cancelling||busy||!subscription.provider_subscription_id;cancelBtn.textContent=cancelling?'Cancelando…':'Cancelar renovação';cancelBtn.title=!subscription.provider_subscription_id?'Aguardando confirmação da assinatura pelo provedor.':''}
+    if(cancelBtn){cancelBtn.hidden=!['active','past_due'].includes(subscription.status);cancelBtn.disabled=cancelling||busy||!subscription.can_cancel;cancelBtn.textContent=cancelling?'Cancelando…':'Cancelar renovação';cancelBtn.title=!subscription.can_cancel?'Aguardando confirmação da assinatura pelo provedor.':''}
   }
   if(interestBtn){interestBtn.disabled=busy||cancelling;interestBtn.innerHTML=interest?'Interesse registrado <span>✓</span>':'Quero acompanhar o lançamento <span>↗</span>';interestBtn.classList.toggle('is-saved',interest)}
   if(subscription?.status==='active')setPlanBadge('ASSINATURA ATIVA');
@@ -57,8 +57,9 @@ async function loadInterest(){
 }
 async function loadSubscription(){
  if(!user){subscription=null;updateUI();return}
- const {data,error}=await supabase.from('club_subscriptions').select('id,status,provider_subscription_id,current_period_start,current_period_end,checkout_expires_at,price_cents,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1).maybeSingle();
- if(error)throw error;subscription=data||null;updateUI();
+ const {data,error}=await supabase.functions.invoke('club-status',{body:{}});
+ if(error)throw new Error(await functionError(error,'Não foi possível consultar sua assinatura.'));
+ subscription=data?.subscription||null;updateUI();
 }
 async function startCheckout(){
  if(busy||cancelling)return;
