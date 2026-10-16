@@ -662,9 +662,6 @@ const info=document.createElement('div');
 const h=document.createElement('h3');h.textContent=item.title||'Produto encontrado';
 const sm=document.createElement('small');sm.className='result-domain';sm.textContent=storeName;
 info.append(h,sm);
-if(affiliateHref){
- const affiliateBadge=document.createElement('small');affiliateBadge.className='result-affiliate-badge';affiliateBadge.textContent='Link comissionado · '+String(item.affiliateProgram||'afiliado');info.append(affiliateBadge);
-}
 top.append(logo,info);
 const kind=document.createElement('span');kind.className='result-kind'+(item.directProductPage?'':' related');kind.textContent=item.directProductPage?'Página do produto':'Resultado relacionado';
 const p=document.createElement('p');p.textContent=item.description||'Abra o link para conferir os detalhes, o preço e a disponibilidade diretamente na página de origem.';
@@ -682,7 +679,7 @@ const reasonTitle=document.createElement('strong');reasonTitle.textContent='Por 
 const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'O resultado não informa um motivo confirmado. Compare frete, condição do produto, vendedor e garantia.';
 reason.append(reasonTitle,reasonText);
 if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent='Indício mencionado pela página';reason.append(evidence);}
-const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel=affiliateHref?'sponsored nofollow noopener noreferrer':'nofollow noopener noreferrer';a.textContent=affiliateHref?'Ver oferta na loja ↗':'Ver produto na loja ↗';
+const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel=affiliateHref?'sponsored nofollow noopener noreferrer':'nofollow noopener noreferrer';a.textContent='Ver produto na loja ↗';
 article.append(photoWrap,top,kind,p,priceLine,reason,a);grid.append(article);
 });
 const priced=items.filter(function(item){return typeof item.priceValue==='number'&&Number.isFinite(item.priceValue);});
