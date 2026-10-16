@@ -162,7 +162,7 @@ async function showProfile() {
       .maybeSingle();
     if (error) throw error;
     if (data) {
-      currentProfile = data;
+      currentProfile = { ...currentProfile, ...data };
       $('accountProfileName').value = data.display_name || $('accountProfileName').value;
       $('accountProfileUsername').value = data.username || '';
       $('accountProfileBio').value = data.bio || '';
@@ -173,6 +173,7 @@ async function showProfile() {
   } catch (error) {
     setStatus(profileStatus, 'Não conseguimos carregar seu perfil agora. ' + friendlyAuthError(error), true);
   }
+  await refreshOwnerRole(currentUser.id);
   $('accountDialogTitleProfile').textContent = 'Seu cantinho';
   $('accountProfileDescription').textContent = 'Personalize seu perfil e deixe a experiência com a sua cara.';
   $('accountBioCount').textContent = String($('accountProfileBio').value.length);
@@ -183,9 +184,40 @@ async function showProfile() {
 function updateNav() {
   if (!openButton) return;
   const label = $('accountNavLabel');
+  const isOwner = Boolean(currentUser && currentProfile.is_owner === true);
+  const ownerMark = $('accountNavOwnerMark');
+  const ownerBadge = $('accountOwnerBadge');
   if (label) label.textContent = currentUser ? 'Minha conta' : 'Entrar';
-  openButton.setAttribute('aria-label', currentUser ? 'Abrir minha conta' : 'Entrar ou criar conta');
+  if (ownerMark) ownerMark.hidden = !isOwner;
+  if (ownerBadge && profileView && !profileView.hidden) ownerBadge.hidden = !isOwner;
+  openButton.setAttribute('aria-label', isOwner ? 'Abrir conta do criador do site' : currentUser ? 'Abrir minha conta' : 'Entrar ou criar conta');
   paintAvatar(currentProfile.avatar_url, currentProfile.display_name || currentUser?.user_metadata?.display_name || currentUser?.email);
+}
+async function refreshOwnerRole(userId = currentUser?.id) {
+  const badge = $('accountOwnerBadge');
+  const navMark = $('accountNavOwnerMark');
+  if (!userId || !currentUser || currentUser.id !== userId) {
+    if (badge) badge.hidden = true;
+    if (navMark) navMark.hidden = true;
+    currentProfile = { ...currentProfile, is_owner: false };
+    return;
+  }
+  let isOwner = false;
+  try {
+    const { data, error } = await supabase.from('user_roles')
+      .select('role')
+      .eq('user_id', userId)
+      .eq('role', 'owner')
+      .maybeSingle();
+    isOwner = !error && data?.role === 'owner';
+  } catch (_) {
+    isOwner = false;
+  }
+  if (currentUser?.id !== userId) return;
+  currentProfile = { ...currentProfile, is_owner: isOwner };
+  if (badge) badge.hidden = !isOwner;
+  if (navMark) navMark.hidden = !isOwner;
+  updateNav();
 }
 openButton?.addEventListener('click', openModal);
 $('accountClose')?.addEventListener('click', closeModal);
@@ -452,6 +484,7 @@ supabase.auth.onAuthStateChange((event, session) => {
   currentUser = session?.user || null;
   if (!currentUser || previousUserId !== currentUser.id) currentProfile = {};
   updateNav();
+  if (currentUser && previousUserId !== currentUser.id) void refreshOwnerRole(currentUser.id);
   if (event === 'PASSWORD_RECOVERY') {
     modal.hidden = false;
     document.body.classList.add('account-modal-open');
@@ -467,5 +500,6 @@ supabase.auth.onAuthStateChange((event, session) => {
   const { data } = await supabase.auth.getSession();
   currentUser = data?.session?.user || null;
   updateNav();
+  if (currentUser) await refreshOwnerRole(currentUser.id);
   // O evento PASSWORD_RECOVERY abre a tela da nova senha ao validar o link de recuperação.
 })();
