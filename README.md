@@ -4,7 +4,7 @@ Buscador de produtos em português para encontrar ofertas e páginas diretas de 
 
 ## Diretório de lojas
 
-O site reúne **219 lojas, marketplaces, comparadores e serviços de nicho** organizados em 10 categorias, com um filtro para localizar uma plataforma pelo nome ou domínio. A seleção inclui marketplaces gerais e internacionais, comparadores de preço, tecnologia, casa e construção, moda, beleza e farmácias, supermercados e pets, automotivo, livros e games, agro e itens especializados.
+O site reúne **253 lojas, marketplaces, comparadores e serviços de nicho** organizados em 10 categorias, com um filtro para localizar uma plataforma pelo nome ou domínio. A seleção inclui marketplaces gerais e internacionais, comparadores de preço, tecnologia, casa e construção, moda, beleza e farmácias, supermercados e pets, automotivo, livros e games, agro e itens especializados.
 
 O diretório é uma curadoria ampla, não uma lista literalmente completa de todas as lojas existentes. Algumas lojas atendem apenas certas regiões; lojas internacionais podem exigir importação, frete e impostos adicionais.
 
