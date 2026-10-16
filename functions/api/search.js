@@ -181,12 +181,6 @@ export async function onRequestGet(context) {
   const query = String(incoming.searchParams.get("q") || "").trim().replace(/\s+/g, " ");
   if (query.length < 2) return json({ error: "invalid_query", message: "Digite pelo menos 2 caracteres para pesquisar." }, 400);
   if (query.length > 120) return json({ error: "query_too_long", message: "A pesquisa deve ter no máximo 120 caracteres." }, 400);
-  if (!env.TAVILY_API_KEY) {
-    return json({
-      error: "search_not_configured",
-      message: "A busca direta ainda não foi ativada. Use os atalhos de lojas enquanto isso."
-    }, 503, { "Cache-Control": "no-store" });
-  }
 
   const normalized = query.toLocaleLowerCase("pt-BR");
   const cacheUrl = new URL(request.url);
@@ -198,92 +192,222 @@ export async function onRequestGet(context) {
     if (cached) return cached;
   } catch { /* Cache is an optimization, not a requirement. */ }
 
-  let upstream;
+  const candidates = [];
+  const problems = [];
+  const termWords = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
+  const queryTerms = Array.from(new Set(termWords));
+
+  function titleMatchRatio(title) {
+    const normalizedTitle = String(title || "").toLocaleLowerCase("pt-BR")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!queryTerms.length) return 1;
+    const matchCount = queryTerms.filter((word) => normalizedTitle.includes(word)).length;
+    return matchCount / queryTerms.length;
+  }
+
+  function secureImage(value) {
+    try {
+      const u = new URL(String(value || ""));
+      if (u.protocol === "http:") u.protocol = "https:";
+      return u.protocol === "https:" ? u.href : null;
+    } catch { return null; }
+  }
+
+  function money(value) {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
+  }
+
+  function imageForTavily(images, title, productQuery) {
+    if (!Array.isArray(images) || !images.length) return null;
+    const target = (String(title || "") + " " + String(productQuery || ""))
+      .toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const targetTerms = Array.from(new Set(target.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 3)));
+    let best = null;
+    let bestScore = 0;
+    for (const image of images) {
+      const description = String((image && (image.description || image.title || image.alt)) || "")
+        .toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const url = secureImage(image && (image.url || image.image_url || image.src));
+      if (!url || !description) continue;
+      const score = targetTerms.filter((word) => description.includes(word)).length;
+      if (score > bestScore) { bestScore = score; best = url; }
+    }
+    return bestScore > 0 ? best : null;
+  }
+
+  // First source: item listings with direct permalink, current price and thumbnail.
+  // If the public endpoint is temporarily unavailable, Tavily below provides a web-search fallback.
   try {
-    upstream = await fetch("https://api.tavily.com/search", {
-      method: "POST",
+    const mlUrl = new URL("https://api.mercadolibre.com/sites/MLB/search");
+    mlUrl.searchParams.set("q", query);
+    mlUrl.searchParams.set("sort", "price_asc");
+    mlUrl.searchParams.set("limit", "50");
+    const mlResponse = await fetch(mlUrl.toString(), {
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + env.TAVILY_API_KEY
-      },
-      body: JSON.stringify({
-        query: query + " comprar produto no Brasil",
-        topic: "general",
-        search_depth: "basic",
-        max_results: 20,
-        country: "brazil",
-        language: "pt",
-        include_answer: false,
-        include_raw_content: false,
-        include_images: true,
-        include_image_descriptions: true,
-        include_favicon: true
-      })
+        "User-Agent": "OndeCompro/1.0 (product comparison)"
+      }
     });
+    if (mlResponse.ok) {
+      const mlData = await mlResponse.json();
+      const listings = Array.isArray(mlData.results) ? mlData.results : [];
+      for (const item of listings) {
+        const title = String(item.title || "").trim();
+        const url = String(item.permalink || "");
+        const price = Number(item.price);
+        const ratio = titleMatchRatio(title);
+        if (!title || !/^https:\/\//i.test(url) || !Number.isFinite(price) || price <= 0) continue;
+        if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.34 : 0.5)) continue;
+        const imageUrl = secureImage(item.secure_thumbnail || item.thumbnail);
+        const condition = item.condition === "used" ? "usado" : "novo";
+        const originalPrice = Number(item.original_price);
+        const shippingFree = Boolean(item.shipping && item.shipping.free_shipping);
+        const reasonParts = [];
+        if (Number.isFinite(originalPrice) && originalPrice > price) {
+          reasonParts.push("O anúncio indica preço promocional: de " + money(originalPrice) + " por " + money(price) + ". Confira a validade e as regras na página do vendedor.");
+        }
+        if (condition === "usado") {
+          reasonParts.push("O anúncio está marcado como usado; o preço menor pode refletir a condição do produto. Confira fotos, descrição, garantia e devolução.");
+        }
+        if (shippingFree) {
+          reasonParts.push("O anúncio indica frete grátis, o que pode reduzir o custo final dependendo do seu CEP.");
+        }
+        if (!reasonParts.length) {
+          reasonParts.push("Este é um dos anúncios de menor preço retornados para a pesquisa. A API não informa um motivo confirmado para o valor; compare modelo, condição, vendedor, frete e garantia.");
+        }
+        const seller = item.seller && item.seller.nickname ? "Vendedor: " + item.seller.nickname + "." : "";
+        const conditionText = condition === "usado" ? "Condição informada: usado." : "Condição informada: novo.";
+        const descriptionParts = [seller, conditionText, shippingFree ? "Frete grátis indicado no anúncio." : ""].filter(Boolean);
+        candidates.push({
+          title: title.slice(0, 180),
+          url,
+          description: descriptionParts.join(" "),
+          domain: "mercadolivre.com.br",
+          store: "Mercado Livre",
+          imageUrl,
+          favicon: "https://www.mercadolivre.com.br/favicon.ico",
+          priceMention: money(price),
+          priceValue: price,
+          priceSource: "listing",
+          priceReason: reasonParts.join(" "),
+          priceReasonEvidence: reasonParts.length > 0 && (originalPrice > price || condition === "usado" || shippingFree),
+          directProductPage: true,
+          relevance: Math.round(Math.max(0, Math.min(1, ratio)) * 100),
+          sourceQuality: 2
+        });
+      }
+    } else {
+      problems.push("marketplace_" + mlResponse.status);
+    }
   } catch {
-    return json({ error: "search_unavailable", message: "Não foi possível consultar a busca agora. Tente novamente." }, 502, { "Cache-Control": "no-store" });
+    problems.push("marketplace_unavailable");
   }
 
-  if (!upstream.ok) {
-    if (upstream.status === 401 || upstream.status === 403) {
-      return json({ error: "search_auth_error", message: "A configuração do provedor de busca precisa ser verificada." }, 502, { "Cache-Control": "no-store" });
+  // Second source: direct product pages discovered on the wider web.
+  // A snippet price is explicitly labeled as a mention, because it can be stale.
+  if (env.TAVILY_API_KEY) {
+    try {
+      const tavilyResponse = await fetch("https://api.tavily.com/search", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + env.TAVILY_API_KEY
+        },
+        body: JSON.stringify({
+          query: query + " produto preço comprar no Brasil",
+          topic: "general",
+          search_depth: "basic",
+          max_results: 20,
+          country: "brazil",
+          language: "pt",
+          include_answer: false,
+          include_raw_content: false,
+          include_images: true,
+          include_image_descriptions: true,
+          include_favicon: true
+        })
+      });
+      if (tavilyResponse.ok) {
+        const tavilyData = await tavilyResponse.json();
+        const rawResults = Array.isArray(tavilyData.results) ? tavilyData.results : [];
+        const queryImages = Array.isArray(tavilyData.images) ? tavilyData.images : [];
+        for (const item of rawResults) {
+          const rating = scoreResult(item, query);
+          if (!rating || typeof rating !== "object" || !rating.direct || rating.score < 1) continue;
+          const url = String(item.url || "");
+          let parsed;
+          try { parsed = new URL(url); } catch { continue; }
+          if (parsed.protocol !== "https:" || looksLikeSearchOrHome(url)) continue;
+          const title = String(item.title || "Produto encontrado").trim();
+          const ratio = titleMatchRatio(title);
+          if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.34 : 0.5)) continue;
+          const content = String(item.content || item.description || "");
+          const pageText = title + " " + content;
+          const price = getPriceMention(pageText);
+          const priceWhy = explainPrice(pageText);
+          const imageUrl = getPageImage(item) || imageForTavily(queryImages, title, query);
+          candidates.push({
+            title: title.slice(0, 180),
+            url: parsed.href,
+            description: content.slice(0, 360),
+            domain: rating.host,
+            store: storeLabel(rating.host),
+            imageUrl,
+            favicon: getPageFavicon(item),
+            priceMention: price ? price.label : null,
+            priceValue: price ? price.value : null,
+            priceSource: price ? "snippet" : null,
+            priceReason: priceWhy.reason,
+            priceReasonEvidence: priceWhy.evidenceFound,
+            directProductPage: true,
+            relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
+            sourceQuality: 1
+          });
+        }
+      } else {
+        problems.push("web_search_" + tavilyResponse.status);
+      }
+    } catch {
+      problems.push("web_search_unavailable");
     }
-    if (upstream.status === 429 || upstream.status === 402 || upstream.status === 432) {
-      return json({ error: "search_limit", message: "O limite temporário de buscas foi atingido. Tente novamente mais tarde." }, 429, { "Cache-Control": "no-store" });
-    }
-    return json({ error: "search_unavailable", message: "A busca não respondeu corretamente. Tente novamente." }, 502, { "Cache-Control": "no-store" });
   }
 
-  let payload;
-  try { payload = await upstream.json(); }
-  catch { return json({ error: "invalid_search_response", message: "A busca retornou uma resposta inválida." }, 502, { "Cache-Control": "no-store" }); }
+  // Deduplicate direct URLs, preferring the exact listing data over search snippets.
+  const byUrl = new Map();
+  for (const item of candidates) {
+    const key = item.url.replace(/[?#].*$/, "").replace(/\/+$/, "").toLowerCase();
+    const previous = byUrl.get(key);
+    if (!previous || item.sourceQuality > previous.sourceQuality ||
+        (item.sourceQuality === previous.sourceQuality && item.priceValue !== null && (previous.priceValue === null || item.priceValue < previous.priceValue))) {
+      byUrl.set(key, item);
+    }
+  }
+  const results = Array.from(byUrl.values());
+  results.sort((a, b) => {
+    if (a.priceValue !== null && b.priceValue === null) return -1;
+    if (a.priceValue === null && b.priceValue !== null) return 1;
+    if (a.priceValue !== null && b.priceValue !== null && a.priceValue !== b.priceValue) return a.priceValue - b.priceValue;
+    if (a.sourceQuality !== b.sourceQuality) return b.sourceQuality - a.sourceQuality;
+    if (a.relevance !== b.relevance) return b.relevance - a.relevance;
+    return a.title.localeCompare(b.title, "pt-BR");
+  });
 
-  const rawResults = payload && Array.isArray(payload.results) ? payload.results : [];
-  const ranked = rawResults.map((item) => {
-    const rating = scoreResult(item, query);
-    return { item, rating };
-  }).filter(({ rating }) => typeof rating === "object" && rating.score > -20)
-    .sort((a, b) => b.rating.score - a.rating.score);
-
-  const results = [];
-  const seen = new Set();
-  for (const entry of ranked) {
-    const item = entry.item;
-    const rating = entry.rating;
-    let parsed;
-    try { parsed = new URL(item.url); } catch { continue; }
-    const canonical = parsed.href;
-    if (seen.has(canonical)) continue;
-    seen.add(canonical);
-    const pageText = String(item.title || "") + " " + String(item.content || item.description || "");
-    const price = getPriceMention(pageText);
-    const priceWhy = explainPrice(pageText);
-    const imageUrl = getPageImage(item);
-    results.push({
-      title: String(item.title || "Produto encontrado").slice(0, 180),
-      url: canonical,
-      description: String(item.content || item.description || "").slice(0, 360),
-      domain: rating.host,
-      store: storeLabel(rating.host),
-      imageUrl,
-      favicon: getPageFavicon(item),
-      priceMention: price ? price.label : null,
-      priceValue: price ? price.value : null,
-      priceReason: priceWhy.reason,
-      priceReasonEvidence: priceWhy.evidenceFound,
-      directProductPage: Boolean(rating.direct),
-      relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100)
-    });
-    if (results.length === 10) break;
+  const topResults = results.slice(0, 12);
+  if (!topResults.length && problems.length) {
+    return json({
+      error: "direct_results_unavailable",
+      message: "Não conseguimos obter ofertas diretas agora. Tente novamente em instantes ou refine o produto com marca e modelo."
+    }, 503, { "Cache-Control": "no-store" });
   }
 
   const response = json({
     query,
-    results,
-    hasDirectProductPages: results.some((item) => item.directProductPage),
-    source: "Tavily Search",
-    disclaimer: "Os links levam às páginas encontradas na web. Relevância não garante o menor preço nem a confiabilidade do vendedor."
+    results: topResults,
+    sort: "price_ascending_when_available",
+    source: "Mercado Livre API + Tavily Search",
+    disclaimer: "As ofertas com preço de listagem são ordenadas do menor para o maior entre os resultados encontrados. Preços podem mudar; valores extraídos de snippets não são confirmação em tempo real. Confira anúncio, vendedor, estado, frete e total antes de comprar."
   });
   try { context.waitUntil(caches.default.put(cacheKey, response.clone())); } catch { /* Cache is optional. */ }
   return response;
