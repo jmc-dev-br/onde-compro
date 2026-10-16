@@ -219,7 +219,41 @@ const KNOWN_STORES = [
   "artwalk.com.br",
   "worldtennis.com.br",
   "oscarcalcados.com.br",
-  "armarinhosfernando.com.br"
+  "armarinhosfernando.com.br",
+  "nagem.com.br",
+  "oficinadosbits.com.br",
+  "gigantec.com.br",
+  "bringit.com.br",
+  "fotoregis.com.br",
+  "lojaeletrica.com.br",
+  "ferramentasgerais.com.br",
+  "lojasmm.com.br",
+  "queroquero.com.br",
+  "tumelero.com.br",
+  "benoit.com.br",
+  "lebiscuit.com.br",
+  "lojastorra.com.br",
+  "authenticfeet.com.br",
+  "crocs.com.br",
+  "neweracap.com.br",
+  "trackandfield.com.br",
+  "mormaii.com.br",
+  "bikepointsc.com.br",
+  "sepha.com.br",
+  "kutiz.com.br",
+  "saojoaofarmacias.com.br",
+  "precopopular.com.br",
+  "growthsupplements.com.br",
+  "integralmedica.com.br",
+  "maxtitanium.com.br",
+  "duxnutrition.com",
+  "atacadao.com.br",
+  "tendaatacado.com.br",
+  "fortatacadista.com.br",
+  "supermercadosbh.com.br",
+  "petcamp.com.br",
+  "autozone.com.br",
+  "lojadopescador.com.br"
 ];
 
 const EXCLUDED_HOSTS = [
@@ -421,7 +455,8 @@ function looksLikeSearchOrHome(url) {
     const parsed = new URL(url);
     const path = parsed.pathname.toLowerCase().replace(/\/+$/, "");
     if (!path) return true;
-    if (/\/(search|busca|buscar|s|results|resultados|collections|category|categorias)$/i.test(path)) return true;
+    if (/\/(search|busca|buscar|s|results|resultados|collections|collection|category|categories|categorias|departamentos|departamento|ofertas|promocoes|promocao|mais-vendidos|novidades|lancamentos|marcas|brands)$/i.test(path)) return true;
+    if (/\/(blog|artigos?|noticias|news|ajuda|suporte|atendimento|institucional|sobre|about)(\/|$)/i.test(path)) return true;
     if ((parsed.searchParams.has("q") || parsed.searchParams.has("k") || parsed.searchParams.has("query") || parsed.searchParams.has("keyword")) &&
         !isProductPath(url)) return true;
     return false;
@@ -446,7 +481,7 @@ function scoreResult(result, query) {
     const segments = new URL(url).pathname.split("/").filter(Boolean);
     pathSuggestsProduct = segments.some((segment) => segment.length >= 8);
   } catch { /* URL was validated above. */ }
-  const direct = isProductPath(url) || (store && !searchOrHome && pathSuggestsProduct);
+  const direct = isProductPath(url) || hasProductSchema(result) || (store && !searchOrHome && pathSuggestsProduct);
   if (direct) score += 7;
   if (store) score += 4;
   if (searchOrHome) score -= 7;
@@ -679,7 +714,41 @@ function storeLabel(host) {
     ["artwalk.com.br", "Artwalk"],
     ["worldtennis.com.br", "World Tennis"],
     ["oscarcalcados.com.br", "Oscar Calçados"],
-    ["armarinhosfernando.com.br", "Armarinhos Fernando"]
+    ["armarinhosfernando.com.br", "Armarinhos Fernando"],
+    ["nagem.com.br", "Nagem"],
+    ["oficinadosbits.com.br", "Oficina dos Bits"],
+    ["gigantec.com.br", "Gigantec"],
+    ["bringit.com.br", "BringIT"],
+    ["fotoregis.com.br", "Foto Regis"],
+    ["lojaeletrica.com.br", "Loja Elétrica"],
+    ["ferramentasgerais.com.br", "Ferramentas Gerais"],
+    ["lojasmm.com.br", "Lojas MM"],
+    ["queroquero.com.br", "Quero-Quero"],
+    ["tumelero.com.br", "Tumelero"],
+    ["benoit.com.br", "Lojas Benoit"],
+    ["lebiscuit.com.br", "Le Biscuit"],
+    ["lojastorra.com.br", "Torra"],
+    ["authenticfeet.com.br", "Authentic Feet"],
+    ["crocs.com.br", "Crocs Brasil"],
+    ["neweracap.com.br", "New Era"],
+    ["trackandfield.com.br", "Track&Field"],
+    ["mormaii.com.br", "Mormaii"],
+    ["bikepointsc.com.br", "Bike Point SC"],
+    ["sepha.com.br", "Sepha"],
+    ["kutiz.com.br", "Kutiz"],
+    ["saojoaofarmacias.com.br", "Farmácias São João"],
+    ["precopopular.com.br", "Preço Popular"],
+    ["growthsupplements.com.br", "Growth Supplements"],
+    ["integralmedica.com.br", "Integralmédica"],
+    ["maxtitanium.com.br", "Max Titanium"],
+    ["duxnutrition.com", "DUX Nutrition"],
+    ["atacadao.com.br", "Atacadão"],
+    ["tendaatacado.com.br", "Tenda Atacado"],
+    ["fortatacadista.com.br", "Fort Atacadista"],
+    ["supermercadosbh.com.br", "Supermercados BH"],
+    ["petcamp.com.br", "PetCamp"],
+    ["autozone.com.br", "AutoZone Brasil"],
+    ["lojadopescador.com.br", "Loja do Pescador"]
   ];
   const match = labels.find(([domain]) => hostMatches(host, domain));
   if (match) return match[1];
