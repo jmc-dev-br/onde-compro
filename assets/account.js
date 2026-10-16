@@ -203,6 +203,7 @@ async function refreshClubMemberBadge(userId = currentUser?.id) {
     const { data, error } = await supabase.from('club_subscriptions')
       .select('status, current_period_end')
       .eq('user_id', userId)
+      .eq('provider_environment', 'production')
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle();
