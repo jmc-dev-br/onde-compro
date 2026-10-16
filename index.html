@@ -331,15 +331,8 @@ try{
 const response=await fetch('/api/search?q='+encodeURIComponent(q),{headers:{'Accept':'application/json'}});
 const data=await response.json().catch(function(){return {};});
 if(!response.ok){
-if(data.error==='search_not_configured'){
-makeFallback(q,'A busca de links diretos ainda precisa ser ativada pelo administrador. Enquanto isso, estes atalhos ajudam a encontrar o item.');
-return;
-}
-if(data.error==='search_limit'){
-makeFallback(q,'A busca automática atingiu seu limite temporário. Use os atalhos abaixo e tente novamente mais tarde.');
-return;
-}
-makeFallback(q,'Não conseguimos obter os resultados diretos agora. Você ainda pode pesquisar nas lojas abaixo.');
+const message=typeof data.message==='string'&&data.message.trim()?data.message:'A busca automática não conseguiu responder. Tente novamente em instantes.';
+makeFallback(q,message);
 return;
 }
 const results=Array.isArray(data.results)?data.results.filter(function(item){return safeUrl(item.url);}):[];
