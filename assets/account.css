@@ -110,3 +110,12 @@ body.account-modal-open{overflow:hidden}
 .account-owner-badge-copy strong{font-size:11px;letter-spacing:.05px;color:#2c4729}
 .account-owner-badge-copy small{font-size:10px;color:#74856c;line-height:1.4}
 .account-owner-verified{display:grid;place-items:center;width:19px;height:19px;margin-left:auto;flex-shrink:0;border-radius:50%;background:#4b7b30;color:#fff;font-size:12px;font-weight:900;box-shadow:0 0 0 3px #e0efcf}
+
+/* Selo de membro do Clube */
+.account-club-member-badge[hidden]{display:none!important}
+.account-club-member-badge{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;padding:9px 12px 9px 9px;margin:0 0 13px;border-radius:14px;border:1px solid #d8e8c6;background:linear-gradient(110deg,#f0f8e7,#fcfdf9);box-shadow:0 4px 12px #1e381006}
+.account-club-member-icon{width:35px;height:35px;display:grid;place-items:center;flex-shrink:0;border-radius:11px;background:linear-gradient(145deg,#d2ff91,#a8e34a);color:#244321;font-size:20px;box-shadow:0 3px 8px #172a1a13}
+.account-club-member-badge>span:nth-child(2){display:grid;gap:3px;min-width:0}
+.account-club-member-badge strong{font-size:11px;color:#34552e}
+.account-club-member-badge small{font-size:10px;color:#788871;line-height:1.4}
+.account-club-member-check{display:grid;place-items:center;width:19px;height:19px;margin-left:auto;flex-shrink:0;border-radius:50%;background:#4b7b30;color:#fff;font-size:12px;font-weight:900;box-shadow:0 0 0 3px #e1efcf}
