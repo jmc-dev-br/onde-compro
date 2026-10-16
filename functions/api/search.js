@@ -715,6 +715,73 @@ export async function onRequestGet(context) {
     }
   }
 
+  // If broad web search didn't find a direct product page, try only the known shopping domains.
+  // This extra request runs only when the first pass found no offers, conserving free search credits.
+  if (candidates.length === 0 && env.TAVILY_API_KEY) {
+    try {
+      const targetedResponse = await fetch("https://api.tavily.com/search", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + env.TAVILY_API_KEY
+        },
+        body: JSON.stringify({
+          query: query + " produto comprar preço",
+          topic: "general",
+          search_depth: "basic",
+          max_results: 20,
+          country: "brazil",
+          language: "pt",
+          include_domains: KNOWN_STORES,
+          include_answer: false,
+          include_raw_content: false,
+          include_images: true,
+          include_image_descriptions: true,
+          include_favicon: true
+        })
+      });
+      if (targetedResponse.ok) {
+        const targetedData = await targetedResponse.json();
+        const rawResults = Array.isArray(targetedData.results) ? targetedData.results : [];
+        const queryImages = Array.isArray(targetedData.images) ? targetedData.images : [];
+        for (const item of rawResults) {
+          const rating = scoreResult(item, query);
+          if (!rating || typeof rating !== "object" || !rating.direct || rating.score < 1) continue;
+          const url = String(item.url || "");
+          let parsed;
+          try { parsed = new URL(url); } catch { continue; }
+          if (parsed.protocol !== "https:" || looksLikeSearchOrHome(url)) continue;
+          const title = String(item.title || "Produto encontrado").trim();
+          const ratio = titleMatchRatio(title);
+          if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.34 : 0.5)) continue;
+          const content = String(item.content || item.description || "");
+          const price = getPriceMention(title + " " + content);
+          const priceWhy = explainPrice(title + " " + content);
+          candidates.push({
+            title: title.slice(0, 180),
+            url: parsed.href,
+            description: content.slice(0, 360),
+            domain: rating.host,
+            store: storeLabel(rating.host),
+            imageUrl: getPageImage(item) || imageForTavily(queryImages, title, query),
+            favicon: getPageFavicon(item),
+            priceMention: price ? price.label : null,
+            priceValue: price ? price.value : null,
+            priceSource: price ? "snippet" : null,
+            priceReason: priceWhy.reason,
+            priceReasonEvidence: priceWhy.evidenceFound,
+            directProductPage: true,
+            relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
+            sourceQuality: 1
+          });
+        }
+      }
+    } catch {
+      // Leave the no-result state in place; never invent an offer.
+    }
+  }
+
   // Deduplicate direct URLs, preferring the exact listing data over search snippets.
   const byUrl = new Map();
   for (const item of candidates) {
