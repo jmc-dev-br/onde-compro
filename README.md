@@ -42,3 +42,17 @@ Segredos do GitHub Actions necessários para publicar:
 
 Site: https://onde-compro.pages.dev/
 Repositório: https://github.com/jmc-dev-br/onde-compro
+
+## Links de afiliados
+
+O backend de busca suporta links comissionados sem modificar o destino dos resultados quando não há integração válida:
+
+- **Amazon Brasil:** define a secret `AMAZON_ASSOCIATES_TAG` no ambiente Production do Cloudflare. A tag é aplicada apenas a URLs HTTPS de páginas diretas de produto da Amazon Brasil.
+- **Shopee:** opcionalmente configura `SHOPEE_AFFILIATE_APP_ID` e `SHOPEE_AFFILIATE_APP_SECRET` no Production para pedir links pelo Affiliate Open API. Se a API falhar, o site preserva o link normal.
+- **Outros programas:** o proprietário pode cadastrar a URL original do produto e o link oficial de afiliado em [afiliados.html](https://onde-compro.pages.dev/afiliados.html). Os mapeamentos são protegidos por RLS; qualquer visitante pode lê-los para exibir os links, mas só a conta do proprietário pode modificá-los.
+- O cartão indica links comissionados e explica que o site pode receber comissão sem custo adicional para o usuário.
+- Para Mercado Livre, Temu, TikTok Shop, AliExpress, Awin, Impact e programas semelhantes, use o link gerado pelas ferramentas oficiais. Um mapeamento manual vale para o endereço canônico do produto que foi cadastrado; não inventa tags nem transforma automaticamente todos os produtos de uma loja.
+
+Guia de configuração: [CONFIGURAR-AFILIADOS.md](https://github.com/jmc-dev-br/onde-compro/blob/main/CONFIGURAR-AFILIADOS.md).
+
+**Importante:** o recurso só gera comissão quando a conta do proprietário estiver aprovada no programa e o programa reconhecer o link, o produto e a compra como elegíveis.
