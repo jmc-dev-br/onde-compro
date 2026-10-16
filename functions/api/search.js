@@ -140,7 +140,7 @@ function getPageImage(result) {
 
 function getPriceMention(text) {
   const value = String(text || "");
-  const match = value.match(/R\$\s?\d{1,3}(?:\.\d{3})*(?:,\d{2})?|R\$\s?\d+(?:,\d{2})?/i);
+  const match = value.match(/R\$\s?\d+(?:\.\d{3})*(?:,\d{2})?(?!\d)/i);
   if (!match) return null;
   const label = match[0].replace(/\s+/g, " ").trim();
   const number = Number(label.replace(/R\$\s?/i, "").replace(/\./g, "").replace(",", "."));
