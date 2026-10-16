@@ -307,6 +307,7 @@ footer{padding:31px 0;background:#fff}
         <span><strong>Membro do Clube</strong><small id="accountClubMemberSubtext">Assinatura ativa · Onde compro?</small></span>
         <span class="account-club-member-check" aria-label="Assinatura confirmada">✓</span>
       </div>
+      <a id="accountAffiliateAdminLink" class="account-affiliate-manage" href="/afiliados.html" hidden>Gerenciar links de afiliado <span>↗</span></a>
       <p class="account-description" id="accountProfileDescription">Personalize seu perfil e deixe a experiência com a sua cara.</p>
       <div class="profile-hero-card">
         <div class="profile-completion-head"><span>Seu perfil</span><strong id="accountProfileProgressText">0% completo</strong></div>
@@ -613,8 +614,10 @@ try{const u=new URL(value);return u.protocol==='https:'?u.href:null;}catch{retur
 function renderDirectResults(q,items){
 grid.replaceChildren();
 items.slice(0,3).forEach(function(item,index){
-const href=safeUrl(item.url);if(!href)return;
-const article=document.createElement('article');article.className='result';
+const productHref=safeUrl(item.url);if(!productHref)return;
+const affiliateHref=item.isAffiliate===true?safeUrl(item.affiliateUrl):null;
+const href=affiliateHref||productHref;
+const article=document.createElement('article');article.className='result'+(affiliateHref?' result-is-affiliate':'');
 const photoWrap=document.createElement('div');photoWrap.className='product-photo-wrap';
 const rank=document.createElement('span');rank.className='product-rank';rank.textContent=(item.priceValue!==null&&item.priceValue!==undefined)?(index===0?'Menor preço encontrado':(index+1)+'ª oferta por preço'):'Oferta direta';photoWrap.append(rank);
 const imageUrl=safeUrl(item.imageUrl);
@@ -648,7 +651,11 @@ logo.append(siteIcon);
 const info=document.createElement('div');
 const h=document.createElement('h3');h.textContent=item.title||'Produto encontrado';
 const sm=document.createElement('small');sm.className='result-domain';sm.textContent=storeName;
-info.append(h,sm);top.append(logo,info);
+info.append(h,sm);
+if(affiliateHref){
+ const affiliateBadge=document.createElement('small');affiliateBadge.className='result-affiliate-badge';affiliateBadge.textContent='Link comissionado · '+String(item.affiliateProgram||'afiliado');info.append(affiliateBadge);
+}
+top.append(logo,info);
 const kind=document.createElement('span');kind.className='result-kind'+(item.directProductPage?'':' related');kind.textContent=item.directProductPage?'Página do produto':'Resultado relacionado';
 const p=document.createElement('p');p.textContent=item.description||'Abra o link para conferir os detalhes, o preço e a disponibilidade diretamente na página de origem.';
 const priceLine=document.createElement('div');
@@ -665,7 +672,7 @@ const reasonTitle=document.createElement('strong');reasonTitle.textContent='Por 
 const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'O resultado não informa um motivo confirmado. Compare frete, condição do produto, vendedor e garantia.';
 reason.append(reasonTitle,reasonText);
 if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent='Indício mencionado pela página';reason.append(evidence);}
-const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver produto na loja ↗';
+const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel=affiliateHref?'sponsored nofollow noopener noreferrer':'nofollow noopener noreferrer';a.textContent=affiliateHref?'Ver oferta na loja ↗':'Ver produto na loja ↗';
 article.append(photoWrap,top,kind,p,priceLine,reason,a);grid.append(article);
 });
 const priced=items.filter(function(item){return typeof item.priceValue==='number'&&Number.isFinite(item.priceValue);});
@@ -676,7 +683,7 @@ subtitle.textContent='Ofertas com preço identificado estão ordenadas do menor 
 title.textContent='Ofertas diretas encontradas para: '+q;
 subtitle.textContent='Encontramos páginas específicas de produto, mas nenhuma trouxe um preço confiável no resultado de busca.';
 }
-setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.','');
+setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.'+(items.some(function(item){return item.isAffiliate===true&&safeUrl(item.affiliateUrl);})?' Alguns links são comissionados: se você comprar por eles, o Onde compro? pode receber uma comissão sem custo adicional para você.':''),'');
 }
 
 async function showResults(rawQuery){
