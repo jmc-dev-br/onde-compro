@@ -217,7 +217,7 @@ footer{padding:31px 0;background:#fff}
 <div class="examples"><span>Experimente:</span><button type="button" data-query="Teclado mecânico">Teclado mecânico</button><button type="button" data-query="Fone Bluetooth">Fone Bluetooth</button><button type="button" data-query="Peça de reposição difícil de encontrar">Peça difícil de achar</button></div>
 </div><div class="visual" aria-hidden="true"><div class="orb"><div class="bag"><svg viewBox="0 0 96 96" role="img" aria-label="Sacola com confirmação"><path d="M25 34h46l5 47H20l5-47Z" fill="none" stroke="#10201A" stroke-width="5" stroke-linejoin="round"/><path d="M34 35V25a14 14 0 0 1 28 0v10" fill="none" stroke="#10201A" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="53" r="14" fill="#10201A"/><path d="m41 53 5 5 10-11" fill="none" stroke="#B8F35B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="m71 17 5-6m4 18 8-1" fill="none" stroke="#10201A" stroke-width="4" stroke-linecap="round"/></svg></div></div><div class="float one"><small>Busque em vários lugares</small><b>Mais opções para comparar</b></div><div class="float two"><small>Não sabe onde procurar?</small><b>É só pesquisar.</b></div></div></div></section>
 <div class="trust-bar" aria-label="Benefícios"><div class="wrap trust-inner"><div><span class="trust-icon">↗</span><span><strong>Links diretos</strong><small>Abra a página na loja</small></span></div><div><span class="trust-icon">⌕</span><span><strong>Busca ampla</strong><small>Produtos comuns e difíceis</small></span></div><div><span class="trust-icon">✓</span><span><strong>Mais transparência</strong><small>Confira preço e condições</small></span></div></div></div>
-<section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Transparência:</strong> fotos, preços e motivos são extraídos do conteúdo disponibilizado pelo buscador e podem estar incompletos ou desatualizados. Só indicamos um possível motivo de preço menor quando há um sinal no texto; isso não prova que a oferta seja a mais barata. Confirme tudo na página da loja.</div></div></section>
+<section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Como ordenamos:</strong> comparamos os preços identificados nas ofertas retornadas e colocamos primeiro os menores. “Preço do anúncio” vem dos dados de listagem; “Preço mencionado na busca” vem de um trecho indexado e pode estar desatualizado. A busca não cobre todos os vendedores da internet nem garante o menor preço absoluto. Confirme modelo, vendedor, estado, frete e total no anúncio antes de comprar.</div></div></section>
 <section class="section" id="explorar"><div class="wrap"><div class="section-head"><div><div class="kicker">COMECE POR AQUI</div><h2>Um produto. Vários caminhos.</h2><p class="muted">Cada lugar tem um catálogo diferente. Pesquise em mais de uma fonte para ampliar suas chances de encontrar o item certo.</p></div></div><div class="cards">
 <article class="card"><div class="cardicon platform-icon"><img src="https://www.google.com/s2/favicons?domain=shopping.google.com&sz=128" alt="" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="platform-fallback" aria-hidden="true" style="display:none">G</span></div><h3>Google Shopping</h3><p>Compare produtos e anúncios encontrados na web.</p><a href="https://shopping.google.com.br/" target="_blank" rel="noopener noreferrer">Explorar produtos ↗</a></article>
 <article class="card"><div class="cardicon platform-icon"><img src="https://www.google.com/s2/favicons?domain=mercadolivre.com.br&sz=128" alt="" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="platform-fallback" aria-hidden="true" style="display:none">M</span></div><h3>Mercado Livre</h3><p>Busque anúncios novos, usados e itens de diferentes vendedores.</p><a href="https://www.mercadolivre.com.br/" target="_blank" rel="noopener noreferrer">Abrir marketplace ↗</a></article>
@@ -246,22 +246,9 @@ status.hidden=!message;status.className='search-status'+(kind?' '+kind:'');statu
 }
 function makeFallback(q,reason){
 grid.replaceChildren();
-fallbackStores.forEach(function(store){
-const article=document.createElement('article');article.className='result';
-const top=document.createElement('div');top.className='result-top';
-const logo=document.createElement('div');logo.className='logo';logo.textContent=store.letter;
-const info=document.createElement('div');
-const h=document.createElement('h3');h.textContent=store.name;
-const sm=document.createElement('small');sm.className='result-domain';sm.textContent='Pesquisa na loja';
-info.append(h,sm);top.append(logo,info);
-const kind=document.createElement('span');kind.className='result-kind related';kind.textContent='Busca na loja';
-const p=document.createElement('p');p.textContent=store.about;
-const a=document.createElement('a');a.className='result-link';a.href=store.url(q);a.target='_blank';a.rel='noopener noreferrer';a.textContent='Pesquisar item ↗';
-article.append(top,kind,p,a);grid.append(article);
-});
-title.textContent='Continue procurando: '+q;
-subtitle.textContent='Estes atalhos abrem a pesquisa do produto nas plataformas selecionadas; não são anúncios específicos.';
-setStatus(reason,'');
+title.textContent='Nenhum link direto confirmado';
+subtitle.textContent='Não vamos te mandar para uma página genérica de loja quando você pediu o anúncio do produto.';
+setStatus(reason+' Tente pesquisar com a marca e o modelo exatos para encontrarmos uma página específica.','');
 }
 function safeUrl(value){
 try{const u=new URL(value);return u.protocol==='https:'?u.href:null;}catch{return null;}
@@ -272,7 +259,7 @@ items.slice(0,3).forEach(function(item,index){
 const href=safeUrl(item.url);if(!href)return;
 const article=document.createElement('article');article.className='result';
 const photoWrap=document.createElement('div');photoWrap.className='product-photo-wrap';
-const rank=document.createElement('span');rank.className='product-rank';rank.textContent='Resultado '+(index+1);photoWrap.append(rank);
+const rank=document.createElement('span');rank.className='product-rank';rank.textContent=(item.priceValue!==null&&item.priceValue!==undefined)?(index===0?'Menor preço encontrado':(index+1)+'ª oferta por preço'):'Oferta direta';photoWrap.append(rank);
 const imageUrl=safeUrl(item.imageUrl);
 if(imageUrl){
 const photo=document.createElement('img');photo.className='product-photo';photo.src=imageUrl;photo.alt='Foto do produto: '+(item.title||q);photo.loading='lazy';photo.referrerPolicy='no-referrer';
@@ -310,7 +297,7 @@ const p=document.createElement('p');p.textContent=item.description||'Abra o link
 const priceLine=document.createElement('div');
 if(item.priceMention){
 priceLine.className='price-line';
-const priceLabel=document.createElement('span');priceLabel.className='price-label';priceLabel.textContent='Preço encontrado no texto';
+const priceLabel=document.createElement('span');priceLabel.className='price-label';priceLabel.textContent=item.priceSource==='listing'?'Preço do anúncio':'Preço mencionado na busca';
 const priceValue=document.createElement('span');priceValue.className='price-value';priceValue.textContent=item.priceMention;
 priceLine.append(priceLabel,priceValue);
 }else{
@@ -324,8 +311,14 @@ if(item.priceReasonEvidence){const evidence=document.createElement('span');evide
 const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver produto na loja ↗';
 article.append(photoWrap,top,kind,p,priceLine,reason,a);grid.append(article);
 });
-title.textContent='Top '+Math.min(3,items.length)+' resultados para: '+q;
-subtitle.textContent='Compare opções, confira o preço final e vá direto à página de origem.';
+const priced=items.filter(function(item){return typeof item.priceValue==='number'&&Number.isFinite(item.priceValue);});
+if(priced.length){
+title.textContent='Menores preços encontrados para: '+q;
+subtitle.textContent='Ofertas com preço identificado estão ordenadas do menor para o maior. Os links abrem a página específica do anúncio.';
+}else{
+title.textContent='Ofertas diretas encontradas para: '+q;
+subtitle.textContent='Encontramos páginas específicas de produto, mas nenhuma trouxe um preço confiável no resultado de busca.';
+}
 setStatus('A posição indica relevância estimada, não uma garantia de menor preço. Fotos e preços podem estar incompletos; confira frete, estoque, vendedor, condição do produto e garantia na loja.','');
 }
 
