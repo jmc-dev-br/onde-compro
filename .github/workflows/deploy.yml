@@ -48,6 +48,9 @@ jobs:
           if [[ -f clube.html ]]; then
             cp clube.html dist/clube.html
           fi
+          if [[ -f afiliados.html ]]; then
+            cp afiliados.html dist/afiliados.html
+          fi
           if [[ -d assets ]]; then
             mkdir -p dist/assets
             cp -R assets/. dist/assets/
