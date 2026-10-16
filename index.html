@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="color-scheme" content="light">
 <title>Onde compro? — Você procura. A gente compara.</title>
+<link rel="stylesheet" href="/assets/account.css">
 <style>
 :root{--ink:#15211c;--muted:#6b7770;--line:#e1e8e2;--paper:#f6f8f5;--green:#b8f35b;--dark:#111c1a;--white:#fff;--soft:#edf7df;--radius:20px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}a{color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
@@ -256,7 +257,85 @@ footer{padding:31px 0;background:#fff}
 </head>
 <body>
 <div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Encontre. Compare. Compre direto.</div></div></div>
-<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></nav></header>
+<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta">Entrar</button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
+<div class="account-modal" id="accountModal" hidden>
+  <div class="account-backdrop" data-close-account aria-hidden="true"></div>
+  <section class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="accountDialogTitle" aria-describedby="accountDialogDescription">
+    <button class="account-close" id="accountClose" type="button" aria-label="Fechar janela">×</button>
+    <div id="accountAuthView">
+      <p class="account-kicker">SUA CONTA · ONDE COMPRO?</p>
+      <h2 id="accountDialogTitle">Entre na sua conta</h2>
+      <p class="account-description" id="accountDialogDescription">Entre para acessar seu perfil e manter sua conta.</p>
+      <div class="account-tabs" role="group" aria-label="Escolha uma opção">
+        <button type="button" class="account-tab active" id="accountModeSignin" aria-pressed="true">Entrar</button>
+        <button type="button" class="account-tab" id="accountModeSignup" aria-pressed="false">Criar conta</button>
+      </div>
+      <form class="account-form" id="accountForm">
+        <label id="accountNameField" hidden>Seu nome
+          <input id="accountName" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Como podemos te chamar?">
+        </label>
+        <label>E-mail
+          <input id="accountEmailInput" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="voce@exemplo.com">
+        </label>
+        <label>Senha
+          <input id="accountPassword" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Pelo menos 8 caracteres">
+        </label>
+        <label id="accountConfirmField" hidden>Confirme a senha
+          <input id="accountPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente">
+        </label>
+        <div class="account-inline-actions" id="accountForgotRow">
+          <button class="account-text-button" type="button" id="accountForgotPassword">Esqueci minha senha</button>
+        </div>
+        <button class="account-action" id="accountSubmit" type="submit">Entrar</button>
+      </form>
+      <p class="account-status" id="accountStatus" role="status" aria-live="polite" hidden></p>
+      <p class="account-small-note">Seus dados de conta são usados para autenticar seu acesso ao Onde compro?.</p>
+    </div>
+    <div id="accountProfileView" hidden>
+      <p class="account-kicker">SUA ÁREA</p>
+      <h2 id="accountDialogTitleProfile">Minha conta</h2>
+      <p class="account-description">Confira e atualize as informações básicas do seu perfil.</p>
+      <div class="account-profile-badge">Conta conectada</div>
+      <div class="account-profile-info"><span>E-mail da conta</span><span id="accountEmail"></span></div>
+      <form class="account-form" id="accountProfileForm">
+        <label>Nome de exibição
+          <input id="accountProfileName" type="text" autocomplete="name" maxlength="80" required>
+        </label>
+        <button class="account-action" id="accountProfileSave" type="submit">Salvar alterações</button>
+      </form>
+      <p class="account-status" id="accountProfileStatus" role="status" aria-live="polite" hidden></p>
+      <button class="account-signout" id="accountSignout" type="button">Sair da conta</button>
+    </div>
+    <div id="accountResetView" hidden>
+      <p class="account-kicker">RECUPERAÇÃO DE ACESSO</p>
+      <h2>Redefina sua senha</h2>
+      <p class="account-description">Informe o e-mail usado no cadastro para receber as instruções.</p>
+      <form class="account-form" id="accountResetForm">
+        <label>E-mail
+          <input id="accountResetEmail" type="email" autocomplete="email" required maxlength="254" placeholder="voce@exemplo.com">
+        </label>
+        <button class="account-action" id="accountResetSubmit" type="submit">Enviar instruções</button>
+        <button class="account-text-button" id="accountBackToLogin" type="button">Voltar para entrar</button>
+      </form>
+      <p class="account-status" id="accountResetStatus" role="status" aria-live="polite" hidden></p>
+    </div>
+    <div id="accountNewPasswordView" hidden>
+      <p class="account-kicker">NOVA SENHA</p>
+      <h2>Escolha uma nova senha</h2>
+      <p class="account-description">Use pelo menos 8 caracteres e confirme a senha para salvar.</p>
+      <form class="account-form" id="accountNewPasswordForm">
+        <label>Nova senha
+          <input id="accountNewPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Pelo menos 8 caracteres">
+        </label>
+        <label>Confirme a nova senha
+          <input id="accountNewPasswordConfirm" type="password" autocomplete="new-password" minlength="8" required placeholder="Digite novamente">
+        </label>
+        <button class="account-action" id="accountNewPasswordSubmit" type="submit">Salvar nova senha</button>
+      </form>
+      <p class="account-status" id="accountNewPasswordStatus" role="status" aria-live="polite" hidden></p>
+    </div>
+  </section>
+</div>
 <main>
 <section class="hero" id="busca"><div class="wrap hero-grid"><div><div class="eyebrow"><span>✳</span> SUA PRÓXIMA COMPRA COMEÇA AQUI</div><h1>O que você quer comprar? <em>A gente procura.</em></h1><p class="lead">Pesquise praticamente qualquer produto e encontre caminhos para descobrir onde comprar. Do item do dia a dia àquela peça difícil de achar.</p>
 <form class="search" id="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="query" type="search" placeholder="Digite qualquer produto..." autocomplete="off" aria-label="Produto que deseja encontrar" required><button type="submit">Buscar agora</button></form>
@@ -601,5 +680,6 @@ document.querySelectorAll('[data-query]').forEach(function(button){button.addEve
 document.getElementById('closeResults').addEventListener('click',function(){section.style.display='none';document.getElementById('busca').scrollIntoView({behavior:'smooth'});});
 })();
 </script>
+<script type="module" src="/assets/account.js"></script>
 </body>
 </html>
