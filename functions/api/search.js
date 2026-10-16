@@ -253,7 +253,22 @@ const KNOWN_STORES = [
   "supermercadosbh.com.br",
   "petcamp.com.br",
   "autozone.com.br",
-  "lojadopescador.com.br"
+  "lojadopescador.com.br",
+  "carajas.com.br",
+  "milium.com.br",
+  "cassol.com.br",
+  "joli.com.br",
+  "shop2gether.com.br",
+  "asics.com.br",
+  "olympikus.com.br",
+  "mizuno.com.br",
+  "lojasguaibim.com.br",
+  "farmaconde.com.br",
+  "nespresso.com",
+  "livrariascuritiba.com.br",
+  "panini.com.br",
+  "casaevideo.com.br",
+  "compensamais.com.br"
 ];
 
 const EXCLUDED_HOSTS = [
@@ -427,18 +442,25 @@ function isProductPath(url) {
     const productPatterns = [
       /\/dp\/[A-Z0-9]{8,}/i,
       /\/gp\/product\/[A-Z0-9]{8,}/i,
-      /\/produto\//i,
-      /\/produtos\/[^/]+/i,
-      /\/product\/[^/]+/i,
-      /\/products\/[^/]+/i,
+      /\/(?:produto|produtos|product|products|item|items|goods|detail|details|pdp)\/[^/]+/i,
       /\/p\/[A-Z0-9-]{5,}/i,
       /\/MLB-?\d{6,}/i,
       /[._-]i\.\d{3,}\.\d{3,}/i,
-      /\/item\/[^/]+/i,
-      /\/itm\//i
+      /\/itm\/\d+/i,
+      /\/goods-p-\d+\.html?/i,
+      /\/(?:view\/)?product\/\d+(?:\/\d+)?/i,
+      /\/catalog\/product\/view\/id\/\d+/i,
+      /\/[^/]+\/p\/[^/]+$/i,
+      /(?:^|\/)[^/]{8,}-(?:produto|p)-\d+\.html?$/i
     ];
-    return productPatterns.some((pattern) => pattern.test(path)) ||
-      /(?:^|\/)[^/]{8,}-(?:produto|p)-\d+\.html?$/i.test(path);
+    if (productPatterns.some((pattern) => pattern.test(path))) return true;
+    const looksLikeListing = /(?:^|\/)(?:search|busca|buscar|results|resultados|category|categorias?|collections?)(?:\/|$)/i.test(path);
+    if (looksLikeListing) return false;
+    const productParams = ["sku", "sku_id", "skuid", "product_id", "productid", "goods_id", "item_id", "itemid", "offerid", "pid", "product_code"];
+    return productParams.some((key) => {
+      const value = parsed.searchParams.get(key);
+      return value !== null && /^[A-Za-z0-9_-]{4,}$/.test(value);
+    });
   } catch { return false; }
 }
 
@@ -753,6 +775,21 @@ function storeLabel(host) {
     ["supermercadosbh.com.br", "Supermercados BH"],
     ["petcamp.com.br", "PetCamp"],
     ["autozone.com.br", "AutoZone Brasil"],
+    ["carajas.com.br", "Carajás"],
+    ["milium.com.br", "Milium"],
+    ["cassol.com.br", "Cassol Centerlar"],
+    ["joli.com.br", "Joli"],
+    ["shop2gether.com.br", "Shop2gether"],
+    ["asics.com.br", "ASICS Brasil"],
+    ["olympikus.com.br", "Olympikus"],
+    ["mizuno.com.br", "Mizuno Brasil"],
+    ["lojasguaibim.com.br", "Lojas Guaibim"],
+    ["farmaconde.com.br", "Farma Conde"],
+    ["nespresso.com", "Nespresso"],
+    ["livrariascuritiba.com.br", "Livrarias Curitiba"],
+    ["panini.com.br", "Panini"],
+    ["casaevideo.com.br", "CASA&VIDEO"],
+    ["compensamais.com.br", "Compensa Mais"],
     ["lojadopescador.com.br", "Loja do Pescador"]
   ];
   const match = labels.find(([domain]) => hostMatches(host, domain));
@@ -1020,9 +1057,10 @@ export async function onRequestGet(context) {
       try { parsed = new URL(url); } catch { continue; }
       if (parsed.protocol !== "https:" || looksLikeSearchOrHome(url)) continue;
       const title = String(item.title || "Produto encontrado").trim();
-      const ratio = titleMatchRatio(title);
-      if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.34 : 0.5)) continue;
       const content = String(item.content || item.description || "");
+      // Compare the indexed snippet as well as the title; some shops use short product titles.
+      const ratio = titleMatchRatio(title + " " + content);
+      if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.25 : 0.5)) continue;
       const pageText = title + " " + content;
       const price = getPriceMention(pageText);
       const priceWhy = explainPrice(pageText);
@@ -1047,72 +1085,81 @@ export async function onRequestGet(context) {
     }
   }
 
-  // Run a store-focused comparison when the broad search has not found enough priced offers
-  // across a useful range of sellers. This avoids stopping after a few results from one store.
+  // Search store domains in separate batches if the first pass did not find enough useful offers.
+  // Splitting the domains helps discovery cover both major marketplaces and specialized/regional stores.
   const pricedDirectOffers = new Set(candidates.filter((item) => item.directProductPage && item.priceValue !== null).map((item) => item.url)).size;
   const pricedDirectStores = new Set(candidates.filter((item) => item.directProductPage && item.priceValue !== null).map((item) => item.domain || getHost(item.url))).size;
   if ((pricedDirectOffers < 8 || pricedDirectStores < 5) && env.TAVILY_API_KEY) {
-    try {
-      const targetedResponse = await fetch("https://api.tavily.com/search", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + env.TAVILY_API_KEY
-        },
-        body: JSON.stringify({
-          query: query + " produto comprar preço",
-          topic: "general",
-          search_depth: "basic",
-          max_results: 20,
-          country: "brazil",
-          language: "pt",
-          include_domains: KNOWN_STORES,
-          include_answer: false,
-          include_raw_content: false,
-          include_images: true,
-          include_image_descriptions: true,
-          include_favicon: true
-        })
-      });
-      if (targetedResponse.ok) {
-        const targetedData = await targetedResponse.json();
-        const rawResults = Array.isArray(targetedData.results) ? targetedData.results : [];
-        const queryImages = Array.isArray(targetedData.images) ? targetedData.images : [];
-        for (const item of rawResults) {
-          const rating = scoreResult(item, query);
-          if (!rating || typeof rating !== "object" || !rating.direct || rating.score < 1) continue;
-          const url = String(item.url || "");
-          let parsed;
-          try { parsed = new URL(url); } catch { continue; }
-          if (parsed.protocol !== "https:" || looksLikeSearchOrHome(url)) continue;
-          const title = String(item.title || "Produto encontrado").trim();
-          const ratio = titleMatchRatio(title);
-          if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.34 : 0.5)) continue;
-          const content = String(item.content || item.description || "");
-          const price = getPriceMention(title + " " + content);
-          const priceWhy = explainPrice(title + " " + content);
-          candidates.push({
-            title: title.slice(0, 180),
-            url: parsed.href,
-            description: content.slice(0, 360),
-            domain: rating.host,
-            store: storeLabel(rating.host),
-            imageUrl: getPageImage(item) || imageForTavily(queryImages, title, query),
-            favicon: getPageFavicon(item),
-            priceMention: price ? price.label : null,
-            priceValue: price ? price.value : null,
-            priceSource: price ? "snippet" : null,
-            priceReason: priceWhy.reason,
-            priceReasonEvidence: priceWhy.evidenceFound,
-            directProductPage: true,
-            relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
-            sourceQuality: 1
-          });
-        }
+    const targetStoreGroups = [
+      { domains: KNOWN_STORES.slice(0, 120), suffix: " produto preço loja online comprar" },
+      { domains: KNOWN_STORES.slice(120), suffix: " oferta menor preço comprar produto" }
+    ].filter((group) => group.domains.length);
+    const targetedResponses = await Promise.all(targetStoreGroups.map(async (group) => {
+      try {
+        const response = await fetch("https://api.tavily.com/search", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + env.TAVILY_API_KEY
+          },
+          body: JSON.stringify({
+            query: query + group.suffix,
+            topic: "general",
+            search_depth: "basic",
+            max_results: 20,
+            country: "brazil",
+            language: "pt",
+            include_domains: group.domains,
+            include_answer: false,
+            include_raw_content: false,
+            include_images: true,
+            include_image_descriptions: true,
+            include_favicon: true
+          })
+        });
+        if (!response.ok) return null;
+        return await response.json();
+      } catch {
+        return null;
       }
-    } catch {
-      // Leave the no-result state in place; never invent an offer.
+    }));
+
+    for (const targetedData of targetedResponses) {
+      if (!targetedData) continue;
+      const rawResults = Array.isArray(targetedData.results) ? targetedData.results : [];
+      const queryImages = Array.isArray(targetedData.images) ? targetedData.images : [];
+      for (const item of rawResults) {
+        const rating = scoreResult(item, query);
+        if (!rating || typeof rating !== "object" || !rating.direct || rating.score < 1) continue;
+        const url = String(item.url || "");
+        let parsed;
+        try { parsed = new URL(url); } catch { continue; }
+        if (parsed.protocol !== "https:" || looksLikeSearchOrHome(url)) continue;
+        const title = String(item.title || "Produto encontrado").trim();
+        const content = String(item.content || item.description || "");
+        const ratio = titleMatchRatio(title + " " + content);
+        if (queryTerms.length && ratio < (queryTerms.length > 2 ? 0.25 : 0.5)) continue;
+        const price = getPriceMention(title + " " + content);
+        const priceWhy = explainPrice(title + " " + content);
+        candidates.push({
+          title: title.slice(0, 180),
+          url: parsed.href,
+          description: content.slice(0, 360),
+          domain: rating.host,
+          store: storeLabel(rating.host),
+          imageUrl: getPageImage(item) || imageForTavily(queryImages, title, query),
+          favicon: getPageFavicon(item),
+          priceMention: price ? price.label : null,
+          priceValue: price ? price.value : null,
+          priceSource: price ? "snippet" : null,
+          priceReason: priceWhy.reason,
+          priceReasonEvidence: priceWhy.evidenceFound,
+          directProductPage: true,
+          relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
+          sourceQuality: 1
+        });
+      }
     }
   }
 
