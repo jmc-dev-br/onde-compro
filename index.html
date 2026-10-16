@@ -32,6 +32,21 @@ footer{padding:26px 0;color:#77847b;font-size:12px}.foot{display:flex;align-item
 .result .result-domain{overflow-wrap:anywhere}
 .result p{overflow-wrap:anywhere}
 
+.product-photo-wrap{height:190px;border-radius:14px;background:linear-gradient(145deg,#f7faf5,#edf3e8);border:1px solid #e6ece1;overflow:hidden;display:grid;place-items:center;position:relative}
+.product-photo{display:block;width:100%;height:100%;object-fit:contain;padding:12px}
+.product-photo-placeholder{display:grid;place-items:center;gap:8px;color:#71816f;font-size:12px;text-align:center}
+.product-photo-placeholder span{font-size:36px}
+.price-line{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;padding:10px 12px;background:#f4faed;border-radius:11px;border:1px solid #e5f0d9}
+.price-label{font-size:11px;color:#61745a}
+.price-value{font-size:22px;letter-spacing:-.7px;font-weight:900;color:#28451e}
+.price-missing{font-size:12px;line-height:1.5;color:#68756a}
+.price-reason{padding:12px;border:1px solid #e4e9df;background:#fbfcfa;border-radius:12px}
+.price-reason strong{display:block;color:#31482b;font-size:12px;margin-bottom:5px}
+.price-reason p{font-size:12px;color:#606e63;line-height:1.6;margin:0}
+.price-reason .evidence{display:inline-block;margin-top:8px;font-size:10px;font-weight:800;color:#4b732e;background:#eaf5de;border-radius:999px;padding:5px 8px}
+.result .result-link{width:100%;margin-top:auto}
+.result{min-width:0}
+
 @media(max-width:800px){.hero-grid{grid-template-columns:1fr;padding:54px 0 48px;gap:20px}.visual{min-height:260px}.orb{width:235px;height:235px}.bag{width:100px;height:100px;font-size:52px}.float.one{right:5px}.float.two{left:4px}.navlinks{display:none}.cards,.results-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr;gap:22px}.section{padding:43px 0}}
 @media(max-width:540px){.wrap{width:min(100% - 28px,1120px)}.top .wrap{font-size:10px}.top .right-note{display:none}nav{min-height:68px;gap:10px}.brand-logo{width:174px}header .result-link{padding:10px 11px;font-size:11px}.hero-grid{padding:43px 0 40px}h1{font-size:43px;letter-spacing:-2px}.lead{font-size:14px}.search{gap:5px}.search input{font-size:13px}.search button{padding:0 12px;font-size:12px}.visual{min-height:235px}.orb{width:205px;height:205px}.float{padding:10px 11px}.float b{font-size:13px}.float.one{top:10px}.float.two{bottom:12px}.cards,.results-grid{grid-template-columns:1fr}.section-head,.results-head{align-items:start;flex-direction:column}.close{align-self:flex-start}}
 </style>
@@ -44,7 +59,7 @@ footer{padding:26px 0;color:#77847b;font-size:12px}.foot{display:flex;align-item
 <form class="search" id="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="query" type="search" placeholder="Digite qualquer produto..." autocomplete="off" aria-label="Produto que deseja encontrar" required><button type="submit">Buscar agora</button></form>
 <div class="examples"><span>Experimente:</span><button type="button" data-query="Teclado mecânico">Teclado mecânico</button><button type="button" data-query="Fone Bluetooth">Fone Bluetooth</button><button type="button" data-query="Peça de reposição difícil de encontrar">Peça difícil de achar</button></div>
 </div><div class="visual" aria-hidden="true"><div class="orb"><div class="bag">🛍️</div></div><div class="float one"><small>Busque em vários lugares</small><b>Mais opções para comparar</b></div><div class="float two"><small>Não sabe onde procurar?</small><b>É só pesquisar.</b></div></div></div></section>
-<section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Como escolhemos:</strong> priorizamos páginas específicas de produtos e resultados relevantes de lojas conhecidas. Isso não garante o menor preço nem confirma a reputação do vendedor. Confira condição, frete, prazo e preço final antes de comprar.</div></div></section>
+<section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Transparência:</strong> fotos, preços e motivos são extraídos do conteúdo disponibilizado pelo buscador e podem estar incompletos ou desatualizados. Só indicamos um possível motivo de preço menor quando há um sinal no texto; isso não prova que a oferta seja a mais barata. Confirme tudo na página da loja.</div></div></section>
 <section class="section" id="explorar"><div class="wrap"><div class="section-head"><div><div class="kicker">COMECE POR AQUI</div><h2>Um produto. Vários caminhos.</h2><p class="muted">Cada lugar tem um catálogo diferente. Pesquise em mais de uma fonte para ampliar suas chances de encontrar o item certo.</p></div></div><div class="cards">
 <article class="card"><div class="cardicon">⌕</div><h3>Google Shopping</h3><p>Compare produtos e anúncios encontrados na web.</p><a href="https://shopping.google.com.br/" target="_blank" rel="noopener noreferrer">Explorar produtos ↗</a></article>
 <article class="card"><div class="cardicon">🛍</div><h3>Mercado Livre</h3><p>Busque anúncios novos, usados e itens de diferentes vendedores.</p><a href="https://www.mercadolivre.com.br/" target="_blank" rel="noopener noreferrer">Abrir marketplace ↗</a></article>
@@ -98,6 +113,15 @@ grid.replaceChildren();
 items.slice(0,3).forEach(function(item,index){
 const href=safeUrl(item.url);if(!href)return;
 const article=document.createElement('article');article.className='result';
+const photoWrap=document.createElement('div');photoWrap.className='product-photo-wrap';
+const imageUrl=safeUrl(item.imageUrl);
+if(imageUrl){
+const photo=document.createElement('img');photo.className='product-photo';photo.src=imageUrl;photo.alt='Foto do produto: '+(item.title||q);photo.loading='lazy';photo.referrerPolicy='no-referrer';
+photo.addEventListener('error',function(){photo.remove();const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='Foto indisponível na fonte';placeholder.append(icon,text);photoWrap.append(placeholder);},{once:true});
+photoWrap.append(photo);
+}else{
+const placeholder=document.createElement('div');placeholder.className='product-photo-placeholder';const icon=document.createElement('span');icon.textContent='▧';const text=document.createElement('div');text.textContent='A página não forneceu uma foto';placeholder.append(icon,text);photoWrap.append(placeholder);
+}
 const top=document.createElement('div');top.className='result-top';
 const logo=document.createElement('div');logo.className='logo';logo.textContent=String(item.store||item.domain||'W').slice(0,1).toUpperCase();
 const info=document.createElement('div');
@@ -106,13 +130,28 @@ const sm=document.createElement('small');sm.className='result-domain';sm.textCon
 info.append(h,sm);top.append(logo,info);
 const kind=document.createElement('span');kind.className='result-kind'+(item.directProductPage?'':' related');kind.textContent=item.directProductPage?'Página do produto':'Resultado relacionado';
 const p=document.createElement('p');p.textContent=item.description||'Abra o link para conferir os detalhes, o preço e a disponibilidade diretamente na página de origem.';
-const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Abrir página direta ↗';
-article.append(top,kind,p,a);grid.append(article);
-});
-title.textContent='Top '+Math.min(3,items.length)+' links para: '+q;
-subtitle.textContent='Links diretos para as páginas encontradas; priorizamos páginas de produto e lojas relevantes.';
-setStatus('Os resultados foram classificados por relevância e sinais de página de produto. Preços e estoque precisam ser conferidos no site de origem.','');
+const priceLine=document.createElement('div');
+if(item.priceMention){
+priceLine.className='price-line';
+const priceLabel=document.createElement('span');priceLabel.className='price-label';priceLabel.textContent='Preço mencionado';
+const priceValue=document.createElement('span');priceValue.className='price-value';priceValue.textContent=item.priceMention;
+priceLine.append(priceLabel,priceValue);
+}else{
+priceLine.className='price-missing';priceLine.textContent='Preço não identificado no trecho da página. Confira no site da loja.';
 }
+const reason=document.createElement('div');reason.className='price-reason';
+const reasonTitle=document.createElement('strong');reasonTitle.textContent='Por que pode estar mais barato?';
+const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'Não há informação suficiente no resultado para apontar um motivo confiável. Compare frete, condição, vendedor e garantia.';
+reason.append(reasonTitle,reasonText);
+if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent='Sinal identificado no texto da página';reason.append(evidence);}
+const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver produto na loja ↗';
+article.append(photoWrap,top,kind,p,priceLine,reason,a);grid.append(article);
+});
+title.textContent='Top '+Math.min(3,items.length)+' resultados para: '+q;
+subtitle.textContent='Foto e preço aparecem quando a página encontrada fornece esses dados. O link abre a origem do anúncio.';
+setStatus('O motivo do preço é uma indicação baseada no texto indexado, não uma garantia de que a oferta seja mais barata. Confira preço final, frete, estoque, estado do produto, vendedor e garantia na loja.','');
+}
+
 async function showResults(rawQuery){
 const q=clean(rawQuery);if(!q){input.focus();return;}
 input.value=q;section.style.display='block';section.scrollIntoView({behavior:'smooth',block:'start'});
