@@ -1022,6 +1022,7 @@ async function verifyLivePagePrice(item) {
     if (explanation.evidenceFound) {
       item.priceReason = explanation.reason;
       item.priceReasonEvidence = true;
+      item.priceReasonSource = "page";
     }
   } catch { /* Dynamic stores or anti-bot protection may block live verification. */ }
   finally { clearTimeout(timer); }
@@ -1150,6 +1151,7 @@ export async function onRequestGet(context) {
             priceMax: price,
             priceReason: reasonParts.join(" "),
             priceReasonEvidence: (Number.isFinite(originalPrice) && originalPrice > price) || condition === "used" || shippingFree,
+            priceReasonSource: ((Number.isFinite(originalPrice) && originalPrice > price) || condition === "used" || shippingFree) ? "listing" : null,
             directProductPage: true,
             relevance: Math.round(Math.max(0, Math.min(1, ratio)) * 100),
             sourceQuality: 2
@@ -1264,6 +1266,7 @@ export async function onRequestGet(context) {
         priceSource: price ? (price.type === "range" ? "snippet_range" : "snippet") : null,
         priceReason: priceWhy.reason,
         priceReasonEvidence: priceWhy.evidenceFound,
+        priceReasonSource: priceWhy.evidenceFound ? "snippet" : null,
         directProductPage: true,
         relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
         sourceQuality: 1
@@ -1344,6 +1347,7 @@ export async function onRequestGet(context) {
           priceSource: price ? (price.type === "range" ? "snippet_range" : "snippet") : null,
           priceReason: priceWhy.reason,
           priceReasonEvidence: priceWhy.evidenceFound,
+          priceReasonSource: priceWhy.evidenceFound ? "snippet" : null,
           directProductPage: true,
           relevance: Math.round(Math.max(0, Math.min(1, rating.score / 15)) * 100),
           sourceQuality: 1
