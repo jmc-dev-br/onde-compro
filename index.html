@@ -462,6 +462,162 @@ footer{background:#fff;border-top:1px solid #e6ece2}
 }
 @media(prefers-reduced-motion:reduce){.mascot-art{animation:none}}
 
+
+/* Brand system v2 — calmer neutrals, forest green and warm tangerine */
+:root{
+ --ink:#202B24;
+ --muted:#66736B;
+ --line:#E2E7DF;
+ --paper:#FBF9F4;
+ --green:#276749;
+ --dark:#173C2C;
+ --soft:#EAF2E8;
+ --accent:#E8794C;
+ --radius:22px;
+}
+html{scroll-padding-top:90px}
+body{background:var(--paper);color:var(--ink)}
+.top{background:#173C2C;color:#F3F5EF}
+.top b{color:#F4B08B}
+.dot{background:#9ED5AB;box-shadow:0 0 0 4px #9ED5AB22}
+header{background:rgba(255,255,255,.96);border-bottom-color:#E7E8DF;box-shadow:0 3px 16px #233A2B08}
+.navlinks{color:#4A5B50}
+header .result-link{background:#276749;color:#fff;box-shadow:none}
+header .result-link:hover{background:#1E5239}
+.hero{
+ background:
+  radial-gradient(ellipse at 78% 30%,#E5EFE0 0,transparent 31%),
+  radial-gradient(ellipse at 97% 82%,#F9E9DF 0,transparent 27%),
+  #FBF9F4;
+ color:var(--ink);
+ border-bottom:1px solid #E5E6DD;
+}
+.hero:before,.hero:after{display:none}
+.hero-grid{padding:67px 0 59px;gap:48px}
+.eyebrow{color:#276749;letter-spacing:1.35px}
+.eyebrow span{background:#E8F1E5;border:1px solid #D8E7D3;color:#276749}
+h1{color:#202B24;letter-spacing:-3.2px;line-height:1.02}
+h1 em{color:#276749;text-shadow:none}
+.lead{color:#5D6B61;line-height:1.8}
+.search{border-color:#DCE4D9;background:#fff;box-shadow:0 10px 28px #2139290D,0 1px 0 #fff inset}
+.search button{background:#276749;color:#fff;box-shadow:none}
+.search button:hover{background:#1F563C;color:#fff}
+.product-filters label{color:#4D5D52}
+.product-filters select,.product-filters input{border-color:#DCE4D9;background:#fff}
+.examples{color:#738075}
+.examples button{border-color:#DDE5D9;background:#fff;color:#4B6251}
+.examples button:hover{border-color:#9CBE9C;background:#F1F6EE;color:#245E3F}
+.hero-assurance{color:#5A6B5F}
+.assurance-check{background:#E6F0E2;color:#276749}
+
+/* Give the mascot its own quiet stage instead of several competing circles */
+.visual.mascot-stage{
+ min-height:430px;
+ overflow:visible;
+ isolation:isolate;
+ position:relative;
+ border:1px solid #E1E8DE;
+ border-radius:30px;
+ background:linear-gradient(145deg,#F0F5ED 0%,#F8F4EB 100%);
+ box-shadow:0 14px 34px #263C2C08;
+}
+.mascot-halo{display:none}
+.mascot-orbit{display:none}
+.mascot-art{
+ position:absolute;
+ width:min(94%,405px);
+ height:auto;
+ max-height:420px;
+ object-fit:contain;
+ left:50%;
+ bottom:0;
+ transform:translateX(-50%);
+ filter:drop-shadow(0 13px 12px #233B2710);
+ animation:comprinho-float 5s ease-in-out infinite;
+}
+.mascot-float{
+ z-index:2;
+ display:flex;
+ align-items:center;
+ gap:10px;
+ max-width:196px;
+ padding:12px 14px;
+ background:#fff;
+ border:1px solid #E0E7DC;
+ border-radius:14px;
+ box-shadow:0 7px 22px #253C2B10;
+}
+.mascot-float-a{top:34px;left:-18px}
+.mascot-float-b{right:-15px;bottom:52px}
+.mascot-float small{color:#6D7A70;font-size:9px;letter-spacing:.45px}
+.mascot-float b{color:#25382B;font-size:12px;line-height:1.4}
+.mascot-float-icon{width:32px;height:32px;border-radius:10px}
+.price-icon{background:#EAF3E7;color:#276749}
+.link-icon{background:#FBEDE5;color:#B75D34}
+.mascot-signature{display:none}
+
+.trust-bar{background:#fff;border-color:#E5E8DF;box-shadow:none}
+.trust-inner{min-height:86px}
+.trust-icon{background:#EDF4E9;border-color:#E0EBDD;color:#276749}
+.trust-inner strong{color:#26382C}
+.trust-inner small{color:#737F74}
+.section{background:var(--paper)}
+.kicker{color:#8B603D}
+.section h2,.results-head h2{color:#202F25}
+.muted{color:#69766B}
+.card{background:#fff;border-color:#E4E8DF;box-shadow:0 5px 18px #223A2907}
+.card:after{background:#E7F0E3}
+.card:hover{border-color:#BED4B9;box-shadow:0 14px 30px #223A2910}
+.cardicon{background:#EDF4E9;border-color:#E2EBDD;color:#276749}
+.card a,.result-link{background:#276749;color:#fff}
+.card a:hover,.result-link:hover{background:#1F563C}
+#results{background:linear-gradient(180deg,#F0F5ED 0%,#FBF9F4 100%);border-color:#E1E8DC}
+.result{background:#fff;border-color:#E2E7DE;box-shadow:0 6px 20px #23392A07}
+.result:hover{border-color:#BFD5BA;box-shadow:0 15px 30px #23392A10}
+.product-photo-wrap{background:linear-gradient(145deg,#FCFBF8,#F1F4EC);border-color:#E9ECE5}
+.price-line{background:#EDF5E8;border-color:#DCE9D5}
+.price-value{color:#235D3C}
+.price-reason{background:#FBFAF6;border-color:#E9E8DF}
+.price-reason strong{color:#355840}
+.result-kind{background:#EDF5E8;color:#2A6544}
+.result-kind.related{background:#F5EEE8;color:#8A614B}
+.result-affiliate-badge{background:#F1F6EA;border-color:#DDE9D3;color:#416B42}
+.result-is-affiliate{border-color:#CCDCC0}
+.result-is-affiliate .result-link{background:#7D5239}
+.result-is-affiliate .result-link:hover{background:#68432F}
+.note{background:#fff;border-color:#E1E6DD;color:#667267}
+.how{background:#fff;border-color:#E6E9E1}
+.step{background:#FBFAF6;border-color:#E5E9E0}
+.num{background:#E8F1E4;color:#276749}
+footer{background:#FBF9F4}
+.foot{border-color:#E3E7DE}
+.platform-icon{border-color:#E5E9E1}
+.store-card:after{background:#E9F2E5}
+.group-count{background:#EAF2E6;color:#386349}
+.directory-search{border-color:#DCE4D9;box-shadow:0 4px 14px #23392A05}
+.directory-search span{color:#66826B}
+.directory-count strong{color:#276749}
+@media(max-width:800px){
+ .hero-grid{padding:44px 0 40px;gap:24px}
+ .visual.mascot-stage{min-height:375px;max-width:500px;margin:0 auto;width:100%}
+ .mascot-art{width:min(86%,345px);max-height:360px}
+ .mascot-float-a{top:22px;left:8px}
+ .mascot-float-b{right:8px;bottom:30px}
+}
+@media(max-width:540px){
+ .hero-grid{padding:37px 0 30px}
+ h1{letter-spacing:-2.3px}
+ .visual.mascot-stage{min-height:330px;border-radius:24px}
+ .mascot-art{width:min(82%,285px);max-height:315px}
+ .mascot-float{max-width:157px;padding:9px 10px;gap:7px;border-radius:12px}
+ .mascot-float-a{top:15px;left:6px}
+ .mascot-float-b{right:6px;bottom:17px}
+ .mascot-float-icon{width:27px;height:27px;font-size:15px}
+ .mascot-float small{font-size:7px}
+ .mascot-float b{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.mascot-art{animation:none}}
+
 </style>
 </head>
 <body>
