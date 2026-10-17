@@ -1103,7 +1103,7 @@ chatMessages.replaceChildren();
 appendChatMessage('assistant','Oi! Posso ajudar a entender quais preços foram encontrados, explicar os indícios de uma oferta e comparar o que realmente importa. Vou separar informações encontradas de estimativas — sem inventar valores.');
 }
 if(chatSend)chatSend.disabled=false;
-if(chatInput)chatInput.value='';
+if(chatInput){chatInput.disabled=false;chatInput.value='';}
 if(chatQuickPrompts)chatQuickPrompts.forEach(function(button){button.disabled=false;});
 }
 async function sendShoppingChat(rawMessage){
@@ -1243,10 +1243,18 @@ sendShoppingChat(queryText);
 const a=document.createElement('a');a.className='result-link';a.href=href;a.target='_blank';a.rel=affiliateHref?'sponsored nofollow noopener noreferrer':'nofollow noopener noreferrer';a.textContent='Ver produto na loja ↗';
 article.append(photoWrap,top,kind,p,priceLine,priceMeta,reason,ask,a);grid.append(article);
 });
-const priced=items.filter(function(item){return (typeof item.priceValue==='number'&&Number.isFinite(item.priceValue))||(typeof item.priceMin==='number'&&Number.isFinite(item.priceMin));});
-if(priced.length){
-title.textContent='Menores preços encontrados para: '+q;
-subtitle.textContent='Preços obtidos por API e dados estruturados aparecem com fonte identificada; faixas e menções indexadas ficam marcadas. Os links abrem páginas específicas dos produtos.';
+const currentPrices=items.filter(function(item){return (item.priceSource==='listing'||item.priceSource==='page_live')&&typeof item.priceValue==='number'&&Number.isFinite(item.priceValue);});
+const pageRanges=items.filter(function(item){return item.priceSource==='page_range'&&typeof item.priceMin==='number'&&Number.isFinite(item.priceMin)&&typeof item.priceMax==='number'&&Number.isFinite(item.priceMax);});
+const indexedReferences=items.filter(function(item){return (item.priceSource==='snippet'||item.priceSource==='snippet_range')&&typeof item.priceMin==='number'&&Number.isFinite(item.priceMin);});
+if(currentPrices.length){
+title.textContent='Preços identificados para: '+q;
+subtitle.textContent='Valores consultados na API ou encontrados nos dados da página aparecem primeiro; faixas publicadas e referências indexadas são marcadas separadamente.';
+}else if(pageRanges.length){
+title.textContent='Faixas de preço publicadas para: '+q;
+subtitle.textContent='Estas fontes publicam uma faixa, não um único preço. Confirme a variante selecionada e o total no checkout.';
+}else if(indexedReferences.length){
+title.textContent='Referências de preço para: '+q;
+subtitle.textContent='Só encontramos valores em trechos indexados, que podem estar desatualizados. O chat pode ajudar a avaliar referências, sem tratá-las como preços garantidos.';
 }else{
 title.textContent='Ofertas diretas encontradas para: '+q;
 subtitle.textContent='Encontramos páginas de produto, mas nenhuma informou preço confiável. Use o chat para avaliar referências sem tratar estimativas como valores garantidos.';
