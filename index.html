@@ -1274,14 +1274,24 @@ const parsedMaxPrice=rawMaxPrice!==''?Number(rawMaxPrice):null;
 const maxPrice=parsedMaxPrice!==null&&Number.isFinite(parsedMaxPrice)&&parsedMaxPrice>0?parsedMaxPrice:null;
 if(maxPrice!==null){
   results=results.filter(function(item){
-    if(typeof item.priceValue==='number'&&Number.isFinite(item.priceValue)&&item.priceValue>0)return item.priceValue<=maxPrice;
-    const low=typeof item.priceMin==='number'&&Number.isFinite(item.priceMin)?item.priceMin:null;
-    const high=typeof item.priceMax==='number'&&Number.isFinite(item.priceMax)?item.priceMax:null;
-    return low!==null&&high!==null&&high<=maxPrice;
+    if((item.priceSource==='listing'||item.priceSource==='page_live')&&typeof item.priceValue==='number'&&Number.isFinite(item.priceValue)&&item.priceValue>0)return item.priceValue<=maxPrice;
+    if(item.priceSource==='page_range'){
+      const high=typeof item.priceMax==='number'&&Number.isFinite(item.priceMax)?item.priceMax:null;
+      return high!==null&&high<=maxPrice;
+    }
+    return false;
   });
 }
 if(sortOrderInput&&sortOrderInput.value==='price'){
+  const confidence=function(item){
+    if(item.priceSource==='listing'||item.priceSource==='page_live')return 0;
+    if(item.priceSource==='page_range')return 1;
+    if(item.priceSource==='snippet'||item.priceSource==='snippet_range')return 2;
+    return 3;
+  };
   results.sort(function(a,b){
+    const ac=confidence(a),bc=confidence(b);
+    if(ac!==bc)return ac-bc;
     const ap=typeof a.priceValue==='number'&&Number.isFinite(a.priceValue)?a.priceValue:(typeof a.priceMin==='number'&&Number.isFinite(a.priceMin)?a.priceMin:Infinity);
     const bp=typeof b.priceValue==='number'&&Number.isFinite(b.priceValue)?b.priceValue:(typeof b.priceMin==='number'&&Number.isFinite(b.priceMin)?b.priceMin:Infinity);
     return ap-bp;
