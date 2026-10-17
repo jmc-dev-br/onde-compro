@@ -264,11 +264,178 @@ footer{padding:31px 0;background:#fff}
 .account-affiliate-manage:hover{background:#e5f3d8}
 .account-affiliate-manage span{font-size:15px}
 @media(max-width:540px){.result-affiliate-badge{font-size:8px!important}.account-affiliate-manage{font-size:10px}}
+
+/* Redesign 2026 — identidade visual clara e mascote Comprinho */
+:root{--ink:#15251b;--muted:#667568;--line:#e2e9df;--paper:#f6f8f3;--green:#0b8341;--dark:#123522;--soft:#edf7e7;--radius:22px}
+body{background:#f7f9f5;color:var(--ink);letter-spacing:-.12px}
+.wrap{width:min(1240px,calc(100% - 56px))}
+.top{background:#102d1d;color:#e9f3eb;font-size:11px;letter-spacing:.15px}
+.top .wrap{min-height:34px}
+.top b{color:#b4ed6c}
+header{background:rgba(255,255,255,.94);border-bottom:1px solid #e7ede4;box-shadow:0 6px 22px #18342007}
+nav{min-height:76px}
+.brand-logo{width:218px}
+.navlinks{gap:24px;font-size:12px;color:#405546}
+.navlinks a{font-weight:750}
+header .result-link{background:#0b8341;border-radius:12px;padding:12px 17px;font-size:12px;box-shadow:0 5px 13px #08733918}
+header .result-link:hover{background:#086b35}
+.hero{background:radial-gradient(ellipse at 82% 42%,#dbefc8 0,transparent 28%),radial-gradient(ellipse at 6% 8%,#edf6e7 0,transparent 35%),linear-gradient(115deg,#fbfcf8 0%,#f7faf4 55%,#f2f8ec 100%);color:var(--ink);border-bottom:1px solid #e5ecdf;isolation:isolate}
+.hero:before{z-index:-1;opacity:.46;background-image:linear-gradient(#8cae7910 1px,transparent 1px),linear-gradient(90deg,#8cae7910 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,#0000,#000 80%)}
+.hero:after{width:440px;height:440px;right:2%;top:4%;border:1px solid #83b95e20;box-shadow:0 0 0 38px #83b95e08,0 0 0 80px #83b95e05}
+.hero-grid{max-width:1240px;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:38px;padding:61px 0 49px}
+.eyebrow{color:#267346;font-size:10px;letter-spacing:1.55px;gap:6px}
+.eyebrow span{background:#e8f5dc;color:#33773d;border:1px solid #d8eacb;width:25px;height:25px;border-radius:9px;margin-right:5px}
+h1{max-width:700px;font-size:clamp(44px,4.6vw,67px);line-height:1.015;letter-spacing:-3.6px;margin:20px 0 19px;color:#15251b}
+h1 em{color:#108344;text-shadow:none}
+.lead{max-width:620px;color:#526358;font-size:15px;line-height:1.78}
+.search{margin-top:25px;max-width:710px;gap:10px;padding:7px;border:1px solid #dce7d8;border-radius:17px;box-shadow:0 12px 32px #234d2410,0 1px 0 #fff inset}
+.search svg{color:#536958}
+.search input{height:49px;font-size:14px}
+.search button{height:49px;background:linear-gradient(135deg,#0c9349,#08753b);color:#fff;padding:0 21px;border-radius:12px;box-shadow:0 5px 12px #08753b20}
+.search button:hover{background:#076934;color:#fff;box-shadow:0 8px 20px #08753b2b}
+.product-filters{margin-top:12px;gap:11px}
+.product-filters label{color:#4d5f50;font-size:11px}
+.product-filters select,.product-filters input{border-color:#dfe7dc;background:#fff;border-radius:10px}
+.product-filters input{width:152px}
+.examples{margin-top:16px;color:#68776a;font-size:11px}
+.examples button{border-color:#dae5d4;background:#fff;color:#3f5b42;padding:8px 12px;border-radius:999px}
+.examples button:hover{background:#f0f8e9;border-color:#afd294;color:#1b7438}
+.hero-assurance{display:flex;align-items:center;gap:8px;margin-top:19px;color:#536957;font-size:11px;line-height:1.5}
+.assurance-check{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#e6f4dc;color:#218045;font-weight:900;flex-shrink:0}
+.visual.mascot-stage{min-height:410px;overflow:visible;isolation:isolate}
+.mascot-halo{position:absolute;z-index:-2;width:330px;height:330px;top:38px;left:50%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 50% 46%,#fff 0,#fff9 48%,#dff0ce80 70%,#e4f0d900 73%);box-shadow:0 0 0 1px #e4efda,0 0 0 19px #ffffff70,0 18px 70px #416d3212}
+.mascot-orbit{position:absolute;z-index:-1;border:1px dashed #8ab56f59;border-radius:50%;transform:rotate(-19deg)}
+.mascot-orbit-a{width:405px;height:290px;left:50%;top:58px;margin-left:-202px}
+.mascot-orbit-b{width:435px;height:330px;left:50%;top:43px;margin-left:-218px;transform:rotate(35deg);border-color:#d7a15c45}
+.mascot-art{position:absolute;width:min(100%,425px);height:auto;max-height:435px;object-fit:contain;left:50%;bottom:0;transform:translateX(-50%);filter:drop-shadow(0 18px 24px #273f271a);animation:comprinho-float 5s ease-in-out infinite}
+@keyframes comprinho-float{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.mascot-float{z-index:2;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e3ebde;border-radius:15px;padding:12px 14px;box-shadow:0 12px 30px #183b2415;font-size:11px;transform:none;max-width:190px}
+.mascot-float small{display:block;margin-bottom:4px;color:#728071;font-size:9px;letter-spacing:.4px;text-transform:uppercase}
+.mascot-float b{display:block;color:#233e2a;font-size:12px;line-height:1.35}
+.mascot-float-icon{display:grid;place-items:center;width:34px;height:34px;flex-shrink:0;border-radius:11px;font-size:20px;font-weight:900}
+.price-icon{background:#edf8df;color:#267e3d}
+.link-icon{background:#eaf3ff;color:#3677c5}
+.mascot-float-a{position:absolute;top:54px;left:-5px}
+.mascot-float-b{position:absolute;right:-4px;bottom:76px}
+.mascot-signature{position:absolute;bottom:1px;right:12px;display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:13px;background:#fff;border:1px solid #e1e9db;box-shadow:0 8px 22px #21391b0d}
+.mascot-sparkle{font-size:20px;color:#e5a53f}
+.mascot-signature strong,.mascot-signature small{display:block}
+.mascot-signature strong{font-size:11px;color:#213e28}
+.mascot-signature small{margin-top:2px;font-size:9px;color:#748074}
+.trust-bar{background:#fff;border-bottom:1px solid #e5ebe2;box-shadow:0 4px 22px #18342004}
+.trust-inner{min-height:91px;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.trust-inner>div{justify-content:flex-start;gap:10px}
+.trust-icon{width:38px;height:38px;background:#f0f7e9;border:1px solid #e2eed9;color:#25763a;border-radius:12px;font-size:19px}
+.trust-inner strong{font-size:11px;color:#253d2b}
+.trust-inner small{font-size:10px;color:#738074;line-height:1.45}
+.section{padding:65px 0}
+.section-head{margin-bottom:26px}
+.kicker{color:#39804b;font-size:10px;letter-spacing:1.5px}
+.section h2{color:#1c3022;font-size:clamp(29px,3vw,38px);letter-spacing:-1.4px}
+.muted{color:#68776b;font-size:13px;line-height:1.78}
+.card{border-color:#e2eadd;border-radius:20px;box-shadow:0 8px 25px #1d3e1a06}
+.card:hover{border-color:#c5ddb7;box-shadow:0 18px 38px #193d1c10}
+.cardicon{background:linear-gradient(145deg,#f2f8eb,#e5f3dc);border:1px solid #e3eed9;color:#37663a}
+.card h3{color:#213827}
+.card a,.result-link{background:#153b25}
+.card a:hover,.result-link:hover{background:#0c7d3e}
+#results{background:linear-gradient(180deg,#f1f7ed 0%,#f9faf6 100%);border-top:1px solid #e0ead9;border-bottom:1px solid #e0ead9}
+.results-head h2{color:#183321}
+.result{border-color:#e0e9db;border-radius:21px;box-shadow:0 10px 28px #16381b08}
+.result:hover{border-color:#c6ddb8;box-shadow:0 20px 42px #16381b12}
+.result .result-link{background:linear-gradient(135deg,#0d8140,#106b38);box-shadow:0 6px 14px #087a3a19}
+.result .result-link:hover{background:#075f31}
+.product-photo-wrap{background:radial-gradient(ellipse at 50% 40%,#fff 0%,#fbfcf9 62%,#eff5e9 100%);border-color:#e9eee5}
+.price-line{background:linear-gradient(135deg,#f5faee,#eaf6df);border-color:#dcebd0}
+.price-value{color:#17713a}
+.note{border-color:#e1e9dc;background:#ffffffd9;color:#657264}
+.how{background:#fff;border-color:#e6ece2}
+.step{border-color:#e3eadd;border-radius:18px;background:linear-gradient(135deg,#fff,#fbfcf8)}
+.num{background:#e8f5dc;color:#1a7438;border:1px solid #d7eac8}
+footer{background:#fff;border-top:1px solid #e6ece2}
+.foot{border-color:#e5ebe1}
+.directory-search{border-color:#dce7d6;box-shadow:0 8px 20px #1d3d1b05}
+.store-card{min-height:186px}
+.store-card a{background:#153b25}
+.store-card a:hover{background:#0c7d3e}
+@media(max-width:1000px){
+  .wrap{width:min(1160px,calc(100% - 38px))}
+  .navlinks{gap:15px}
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:18px;padding:54px 0 43px}
+  .mascot-float-a{left:-3px;top:39px}
+  .mascot-float-b{right:-3px;bottom:57px}
+  .mascot-art{width:min(100%,380px)}
+  .mascot-halo{width:290px;height:290px}
+}
+@media(max-width:800px){
+  .wrap{width:min(100% - 34px,1160px)}
+  .hero-grid{grid-template-columns:1fr;padding:50px 0 38px;gap:4px}
+  .hero-copy{max-width:720px;margin:0 auto;width:100%}
+  h1{font-size:clamp(42px,7vw,58px);max-width:680px}
+  .visual.mascot-stage{min-height:380px;width:min(100%,540px);margin:0 auto}
+  .mascot-art{width:min(100%,390px);max-height:390px}
+  .mascot-halo{width:295px;height:295px;top:28px}
+  .mascot-float-a{left:4px;top:46px}
+  .mascot-float-b{right:3px;bottom:66px}
+  .mascot-signature{right:22px;bottom:0}
+  .trust-inner{grid-template-columns:repeat(2,minmax(0,1fr));padding:18px 0}
+  .navlinks{display:none}
+}
+@media(max-width:540px){
+  .wrap{width:calc(100% - 28px)}
+  .top .wrap{font-size:9px}
+  .brand-logo{width:160px}
+  nav{min-height:68px}
+  header .result-link{padding:10px 11px;font-size:10px}
+  .hero-grid{padding:39px 0 25px;gap:0}
+  .eyebrow{font-size:9px;letter-spacing:1px}
+  h1{font-size:clamp(37px,10.5vw,48px);letter-spacing:-2.4px;margin:18px 0 15px;line-height:1.02}
+  .lead{font-size:13px;line-height:1.7}
+  .search{margin-top:20px;gap:3px;padding:5px}
+  .search input{height:44px;font-size:11px}
+  .search button{height:44px;padding:0 10px;font-size:10px}
+  .search button span{display:none}
+  .product-filters{display:grid;grid-template-columns:1fr;gap:8px}
+  .product-filters label{justify-content:space-between;font-size:10px}
+  .product-filters select,.product-filters input{flex:1;width:145px;min-width:0;min-height:37px;padding:8px;font-size:11px}
+  .examples{gap:6px;font-size:10px}
+  .examples button{padding:7px 9px;font-size:9px}
+  .hero-assurance{font-size:10px;margin-top:13px}
+  .visual.mascot-stage{min-height:305px;margin-top:8px}
+  .mascot-art{width:min(100%,315px);max-height:320px}
+  .mascot-halo{width:230px;height:230px;top:26px}
+  .mascot-orbit-a{width:310px;height:220px;top:39px;margin-left:-155px}
+  .mascot-orbit-b{width:328px;height:246px;top:24px;margin-left:-164px}
+  .mascot-float{gap:6px;padding:8px 9px;border-radius:12px;max-width:153px}
+  .mascot-float-icon{width:26px;height:26px;font-size:15px;border-radius:8px}
+  .mascot-float small{font-size:7px}
+  .mascot-float b{font-size:9px}
+  .mascot-float-a{left:0;top:29px}
+  .mascot-float-b{right:0;bottom:44px}
+  .mascot-signature{right:6px;bottom:0;padding:7px 9px}
+  .mascot-sparkle{font-size:15px}
+  .mascot-signature strong{font-size:9px}
+  .mascot-signature small{font-size:7px}
+  .trust-inner{grid-template-columns:1fr;gap:13px;padding:17px 0}
+  .trust-inner>div{justify-content:flex-start}
+  .section,#results{padding:45px 0}
+  .section h2,.results-head h2{font-size:27px;letter-spacing:-.8px}
+  .directory-tools{align-items:stretch;flex-direction:column}
+  .store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:365px){
+  .mascot-float b{font-size:8px}
+  .mascot-float{max-width:137px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mascot-art{animation:none}
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
 <div class="top"><div class="wrap"><div><b>Onde compro?</b> — encontre caminhos para comprar melhor.</div><div class="right-note"><span class="dot"></span> Encontre. Compare. Compre direto.</div></div></div>
-<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Explorar buscas</a><a href="/comunidade.html">Comunidade</a><a href="/clube.html">Clube</a><a href="#como-funciona">Como funciona</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta"><span class="account-nav-avatar-fallback" id="accountNavAvatarIcon" aria-hidden="true">♙</span><img id="accountNavAvatar" class="account-nav-avatar" alt="" hidden><span id="accountNavLabel">Entrar</span><span id="accountNavOwnerMark" class="account-nav-owner-mark" title="Criador do site" aria-label="Criador do site" hidden>✳</span></button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
+<header><nav class="wrap"><a class="brand" href="#" aria-label="Onde compro página inicial"><img class="brand-logo" src="/assets/logo.svg" alt="Onde compro? — Você procura. A gente compara." width="650" height="210"></a><div class="navlinks"><a href="#explorar">Lojas e categorias</a><a href="#results">Como comparar</a><a href="/comunidade.html">Comunidade</a><a href="/clube.html">Clube</a></div><div class="nav-actions"><button class="account-nav-button" id="openAccountDialog" type="button" aria-label="Entrar ou criar conta"><span class="account-nav-avatar-fallback" id="accountNavAvatarIcon" aria-hidden="true">♙</span><img id="accountNavAvatar" class="account-nav-avatar" alt="" hidden><span id="accountNavLabel">Entrar</span><span id="accountNavOwnerMark" class="account-nav-owner-mark" title="Criador do site" aria-label="Criador do site" hidden>✳</span></button><a class="result-link" href="#busca" style="align-self:auto">Buscar produto ↗</a></div></nav></header>
 <div class="account-modal" id="accountModal" hidden>
   <div class="account-backdrop" data-close-account aria-hidden="true"></div>
   <section class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="accountDialogTitle" aria-describedby="accountDialogDescription">
@@ -407,22 +574,47 @@ footer{padding:31px 0;background:#fff}
   </section>
 </div>
 <main>
-<section class="hero" id="busca"><div class="wrap hero-grid"><div><div class="eyebrow"><span>✳</span> SUA PRÓXIMA COMPRA COMEÇA AQUI</div><h1>O que você quer comprar? <em>A gente procura.</em></h1><p class="lead">Pesquise praticamente qualquer produto e encontre caminhos para descobrir onde comprar. Do item do dia a dia àquela peça difícil de achar.</p>
-<form class="search" id="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="query" type="search" placeholder="Digite qualquer produto..." autocomplete="off" aria-label="Produto que deseja encontrar" required><button type="submit">Buscar agora</button></form>
-<div class="product-filters" aria-label="Filtros de produto">
-  <label>Preço máximo (R$)
-    <input id="maxPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Digite seu limite" aria-label="Preço máximo em reais">
-  </label>
-  <label>Ordenar por
-    <select id="sortOrder" aria-label="Ordenar resultados">
-      <option value="price" selected>Menor preço primeiro</option>
-      <option value="relevance">Mais relevantes</option>
-    </select>
-  </label>
-</div>
-<div class="examples"><span>Experimente:</span><button type="button" data-query="Teclado mecânico">Teclado mecânico</button><button type="button" data-query="Fone Bluetooth">Fone Bluetooth</button><button type="button" data-query="Peça de reposição difícil de encontrar">Peça difícil de achar</button></div>
-</div><div class="visual" aria-hidden="true"><div class="orb"><div class="bag"><svg viewBox="0 0 96 96" role="img" aria-label="Sacola com confirmação"><path d="M25 34h46l5 47H20l5-47Z" fill="none" stroke="#10201A" stroke-width="5" stroke-linejoin="round"/><path d="M34 35V25a14 14 0 0 1 28 0v10" fill="none" stroke="#10201A" stroke-width="5" stroke-linecap="round"/><circle cx="48" cy="53" r="14" fill="#10201A"/><path d="m41 53 5 5 10-11" fill="none" stroke="#B8F35B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="m71 17 5-6m4 18 8-1" fill="none" stroke="#10201A" stroke-width="4" stroke-linecap="round"/></svg></div></div><div class="float one"><small>Busque em vários lugares</small><b>Mais opções para comparar</b></div><div class="float two"><small>Não sabe onde procurar?</small><b>É só pesquisar.</b></div></div></div></section>
-<div class="trust-bar" aria-label="Benefícios"><div class="wrap trust-inner"><div><span class="trust-icon">↗</span><span><strong>Links diretos</strong><small>Abra a página na loja</small></span></div><div><span class="trust-icon">⌕</span><span><strong>Busca ampla</strong><small>Produtos comuns e difíceis</small></span></div><div><span class="trust-icon">✓</span><span><strong>Mais transparência</strong><small>Confira preço e condições</small></span></div></div></div>
+<section class="hero" id="busca">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow"><span aria-hidden="true">✳</span> COMPARE MELHOR. ECONOMIZE DE VERDADE.</div>
+      <h1>Encontre o menor preço. <em>Sem perder tempo.</em></h1>
+      <p class="lead">Pesquise praticamente qualquer produto e compare ofertas de várias lojas. A gente prioriza anúncios específicos para você clicar e chegar ao produto que viu — e não à página inicial da loja.</p>
+      <form class="search" id="searchForm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input id="query" type="search" placeholder="Ex.: cadeira gamer, fone JBL, SSD de 1 TB..." autocomplete="off" aria-label="Produto que deseja encontrar" required>
+        <button type="submit">Buscar ofertas <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="product-filters" aria-label="Filtros de produto">
+        <label>Preço máximo (R$)
+          <input id="maxPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Sem limite" aria-label="Preço máximo em reais">
+        </label>
+        <label>Ordenar por
+          <select id="sortOrder" aria-label="Ordenar resultados">
+            <option value="price" selected>Menor preço primeiro</option>
+            <option value="relevance">Mais relevantes</option>
+          </select>
+        </label>
+      </div>
+      <div class="examples"><span>Pesquise, por exemplo:</span><button type="button" data-query="Cadeira gamer">Cadeira gamer</button><button type="button" data-query="Fone Bluetooth JBL">Fone Bluetooth</button><button type="button" data-query="SSD 1 TB">SSD 1 TB</button></div>
+      <div class="hero-assurance"><span class="assurance-check" aria-hidden="true">✓</span> Sem limitar a busca a lojas afiliadas. O foco é encontrar boas ofertas.</div>
+    </div>
+    <div class="visual mascot-stage" aria-label="Comprinho, a raposinha que ajuda você a economizar">
+      <div class="mascot-halo"></div>
+      <div class="mascot-orbit mascot-orbit-a"></div><div class="mascot-orbit mascot-orbit-b"></div>
+      <div class="float mascot-float mascot-float-a"><span class="mascot-float-icon price-icon" aria-hidden="true">↓</span><span><small>Ordem da busca</small><b>Menor preço primeiro</b></span></div>
+      <img class="mascot-art" src="/assets/mascote-comprinho.svg" alt="Comprinho, uma raposinha laranja de óculos verdes, jaqueta verde e cesta de compras">
+      <div class="float mascot-float mascot-float-b"><span class="mascot-float-icon link-icon" aria-hidden="true">↗</span><span><small>Sem desvios</small><b>Link direto ao anúncio</b></span></div>
+      <div class="mascot-signature"><span class="mascot-sparkle" aria-hidden="true">✦</span><span><strong>Comprinho</strong><small>Seu parceiro de economia</small></span></div>
+    </div>
+  </div>
+</section>
+<div class="trust-bar" aria-label="Como ajudamos você a comprar melhor"><div class="wrap trust-inner">
+  <div><span class="trust-icon">↗</span><span><strong>Links para o anúncio</strong><small>Chegue ao produto encontrado</small></span></div>
+  <div><span class="trust-icon">↓</span><span><strong>Preço em destaque</strong><small>Menores valores primeiro</small></span></div>
+  <div><span class="trust-icon">◎</span><span><strong>Muitas categorias</strong><small>Das compras do dia a dia a nichos</small></span></div>
+  <div><span class="trust-icon">♡</span><span><strong>Busca independente</strong><small>Sem priorizar apenas afiliados</small></span></div>
+</div></div>
 <section class="section" id="results"><div class="wrap"><div class="results-head"><div><div class="kicker">BUSCA INTELIGENTE</div><h2 id="resultTitle">Top 3 links para seu produto</h2><p id="resultSubtitle" class="muted">Pesquisamos na web e priorizamos páginas de produto com links diretos.</p></div><button class="close" id="closeResults" type="button">Fechar resultados ×</button></div><div id="searchStatus" class="search-status" role="status" aria-live="polite" hidden></div><div class="results-grid" id="resultsGrid"></div><div class="note"><strong>Como ordenamos:</strong> comparamos os preços identificados nas ofertas retornadas e colocamos primeiro os menores. “Preço do anúncio” vem dos dados de listagem; “Preço mencionado na busca” vem de um trecho indexado e pode estar desatualizado. A busca não cobre todos os vendedores da internet nem garante o menor preço absoluto. Confirme modelo, vendedor, estado, frete e total no anúncio antes de comprar.</div></div></section>
 <section class="section" id="explorar"><div class="wrap">
 <div class="section-head"><div><div class="kicker">DIRETÓRIO DE LOJAS</div><h2>Um produto. O máximo de lugares para comparar.</h2><p class="muted">Explore marketplaces, lojas oficiais e especialistas por categoria. Use a busca principal para procurar anúncios; estes atalhos ajudam a abrir lojas e comparadores específicos.</p></div></div>
@@ -605,9 +797,9 @@ footer{padding:31px 0;background:#fff}
 </div>
 <div id="noStoresFound" class="no-stores" hidden>Nenhuma loja corresponde a essa busca. Tente outra palavra.</div>
 </div></section>
-<section class="section how" id="como-funciona"><div class="wrap"><div class="section-head"><div><div class="kicker">SIMPLES ASSIM</div><h2>Como funciona</h2></div></div><div class="steps"><div class="step"><div class="num">1</div><div><h3>Digite o produto</h3><p>Use o nome, a marca, o modelo ou até uma descrição do item que está procurando.</p></div></div><div class="step"><div class="num">2</div><div><h3>Escolha onde pesquisar</h3><p>O site monta buscas para mecanismos e marketplaces conhecidos usando o termo digitado.</p></div></div><div class="step"><div class="num">3</div><div><h3>Compare antes de comprar</h3><p>Confira vendedor, condição do produto, frete, prazo, políticas de devolução e preço final no destino.</p></div></div></div></div></section>
+<section class="section how" id="como-funciona"><div class="wrap"><div class="section-head"><div><div class="kicker">SIMPLES ASSIM</div><h2>Como funciona</h2></div></div><div class="steps"><div class="step"><div class="num">1</div><div><h3>Digite o produto</h3><p>Use o nome, a marca, o modelo ou até uma descrição do item que está procurando.</p></div></div><div class="step"><div class="num">2</div><div><h3>Compare preços e anúncios</h3><p>Veja os resultados encontrados, confira se correspondem ao modelo certo e compare os valores disponíveis.</p></div></div><div class="step"><div class="num">3</div><div><h3>Compare antes de comprar</h3><p>Confira vendedor, condição do produto, frete, prazo, políticas de devolução e preço final no destino.</p></div></div></div></div></section>
 </main>
-<footer><div class="wrap foot"><div><strong>Onde compro?</strong> — Você procura. A gente compara.</div><div>Protótipo em desenvolvimento · Não vendemos produtos diretamente.</div><div class="home-footer-links"><a href="/comunidade.html">Comunidade</a> · <a href="/clube.html">Clube</a></div></div></footer>
+<footer><div class="wrap foot"><div><strong>Onde compro?</strong> — Você procura. A gente compara.</div><div>Comparador independente · A compra acontece diretamente na loja.</div><div class="home-footer-links"><a href="/comunidade.html">Comunidade</a> · <a href="/clube.html">Clube</a></div></div></footer>
 <script>
 (function(){
 const form=document.getElementById('searchForm');
