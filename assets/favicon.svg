@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#10201A"/>
-  <path d="M21 23v-5a11 11 0 0 1 22 0v5" fill="none" stroke="#B8F35B" stroke-width="4" stroke-linecap="round"/>
-  <path d="M17 22h30l4 31H13l4-31Z" fill="#B8F35B"/>
-  <circle cx="31" cy="36" r="11" fill="#10201A" stroke="#FFFFFF" stroke-width="3.5"/>
-  <path d="m39 44 8 8" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-  <path d="m26 36 4 4 7-8" fill="none" stroke="#B8F35B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Onde compro?</title>
+  <rect width="64" height="64" rx="16" fill="#173C2C"/>
+  <path d="M21 23v-5a11 11 0 0 1 22 0v5" fill="none" stroke="#A8C7A3" stroke-width="4" stroke-linecap="round"/>
+  <path d="M17 22h30l4 31H13l4-31Z" fill="#E5EFE1"/>
+  <circle cx="31" cy="36" r="11" fill="#173C2C" stroke="#fff" stroke-width="3.5"/>
+  <path d="m39 44 8 8" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <path d="m26 36 4 4 7-8" fill="none" stroke="#E8794C" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
