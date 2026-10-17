@@ -96,16 +96,16 @@
   <path d="M245 249C237 259 225 260 217 251M245 249C253 259 265 260 273 251" stroke="#4D3A2C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 
   <!-- Basket handle behind the products -->
-  <path d="M185 388C183 342 206 325 244 325C282 325 304 344 303 388" stroke="#1E5239" stroke-width="9" stroke-linecap="round"/>
+  <path d="M185 388C183 370 196 355 216 351M272 351C292 355 304 370 303 388" stroke="#1E5239" stroke-width="8" stroke-linecap="round"/>
   <path d="M196 387L203 349C204 342 210 338 217 339L235 342L239 387Z" fill="#F3C875" stroke="#9A6E35" stroke-width="3.5" stroke-linejoin="round"/>
   <path d="M208 351H228" stroke="#FFEDB8" stroke-width="3.5" stroke-linecap="round"/>
   <path d="M251 387V347C251 341 255 337 261 337H282C288 337 292 341 292 347V387Z" fill="#F9F7ED" stroke="#627D65" stroke-width="3.5" stroke-linejoin="round"/>
   <path d="M260 350H281M260 360H275" stroke="#C1D5BE" stroke-width="3" stroke-linecap="round"/>
 
   <!-- Basket body is a single, stable shape with even grid spacing -->
-  <path d="M151 378H338L319 449C317 456 311 460 302 460H188C179 460 173 456 171 449Z" fill="url(#basket)" stroke="#1D5238" stroke-width="6.5" stroke-linejoin="round"/>
-  <path d="M161 397H329M166 419H323M172 441H317" stroke="#8AB98C" stroke-width="4.5" stroke-linecap="round"/>
-  <path d="M191 383L198 452M231 382L234 456M272 382L268 456M310 383L300 452" stroke="#8AB98C" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>
+  <path d="M151 378H338L319 432C317 439 311 443 302 443H188C179 443 173 439 171 432Z" fill="url(#basket)" stroke="#1D5238" stroke-width="6.5" stroke-linejoin="round"/>
+  <path d="M161 396H329M166 414H323M172 431H317" stroke="#8AB98C" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M191 383L198 435M231 382L234 439M272 382L268 439M310 383L300 435" stroke="#8AB98C" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>
   <path d="M151 378H338" stroke="#A9D3A0" stroke-width="7" stroke-linecap="round"/>
   <path d="M157 378H332" stroke="#D6E9BF" stroke-width="2.5" stroke-linecap="round"/>
 
