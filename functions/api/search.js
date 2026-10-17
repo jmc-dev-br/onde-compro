@@ -823,12 +823,30 @@ function getPageImage(result) {
 
 function getPriceMention(text) {
   const value = String(text || "");
-  const match = value.match(/R\$\s?\d+(?:\.\d{3})*(?:,\d{2})?(?!\d)/i);
+  const amount = "R\\$\\s?\\d+(?:\\.\\d{3})*(?:,\\d{2})?";
+  const rangeMatch = value.match(new RegExp("(" + amount + ")\\s*(?:a|até|[-–—])\\s*(?:" + amount + ")", "i"));
+  const parseLocal = (label) => {
+    const number = Number(String(label || "").replace(/R\\$\\s?/i, "").replace(/\\./g, "").replace(",", "."));
+    return Number.isFinite(number) && number > 0 && number <= 100000000 ? number : null;
+  };
+  if (rangeMatch) {
+    const labels = rangeMatch[0].match(new RegExp(amount, "ig")) || [];
+    if (labels.length >= 2) {
+      const low = parseLocal(labels[0]);
+      const high = parseLocal(labels[1]);
+      if (low !== null && high !== null && high >= low) {
+        return { type: "range", label: labels[0] + " – " + labels[1], value: null, min: low, max: high };
+      }
+    }
+  }
+  // Prefer the final sale price in phrases such as "de R$ 299 por R$ 249".
+  const saleMatch = value.match(new RegExp("(?:por|agora|a partir de|preço atual|oferta por)\\s*(" + amount + ")", "i"));
+  const match = saleMatch ? [saleMatch[0], saleMatch[1]] : value.match(new RegExp(amount, "i"));
   if (!match) return null;
-  const label = match[0].replace(/\s+/g, " ").trim();
-  const number = Number(label.replace(/R\$\s?/i, "").replace(/\./g, "").replace(",", "."));
-  if (!Number.isFinite(number) || number <= 0 || number > 100000000) return null;
-  return { label, value: number };
+  const label = (saleMatch ? saleMatch[1] : match[0]).replace(/\\s+/g, " ").trim();
+  const number = parseLocal(label);
+  if (number === null) return null;
+  return { type: "mention", label, value: number, min: number, max: number };
 }
 
 function explainPrice(text) {
@@ -848,6 +866,167 @@ function explainPrice(text) {
     reason: "A página não deixa claro por que o preço pode ser menor. Compare o preço final com frete, vendedor, estado do produto, garantia e devolução.",
     evidenceFound: false
   };
+}
+
+
+function parsePriceNumber(value) {
+  if (typeof value === "number") return Number.isFinite(value) && value > 0 && value <= 100000000 ? value : null;
+  let raw = String(value ?? "").trim().replace(/(?:R\$|BRL)/ig, "").replace(/\s/g, "");
+  if (!raw) return null;
+  if (/^\d{1,3}(?:\.\d{3})*,\d{1,2}$/.test(raw)) raw = raw.replace(/\./g, "").replace(",", ".");
+  else if (/^\d+,\d{1,2}$/.test(raw)) raw = raw.replace(",", ".");
+  const number = Number(raw);
+  return Number.isFinite(number) && number > 0 && number <= 100000000 ? number : null;
+}
+
+function typeHas(node, type) {
+  const values = Array.isArray(node && node["@type"]) ? node["@type"] : [node && node["@type"]];
+  return values.some((value) => String(value || "").toLowerCase().includes(type.toLowerCase()));
+}
+
+function extractSchemaPrice(root) {
+  const products = [];
+  const seen = new Set();
+  function walk(value, depth) {
+    if (!value || depth > 18) return;
+    if (Array.isArray(value)) { value.slice(0, 100).forEach((entry) => walk(entry, depth + 1)); return; }
+    if (typeof value !== "object" || seen.has(value)) return;
+    seen.add(value);
+    if (typeHas(value, "Product")) products.push(value);
+    Object.keys(value).slice(0, 100).forEach((key) => walk(value[key], depth + 1));
+  }
+  walk(root, 0);
+  for (const product of products) {
+    const rawOffers = product.offers || product.offer || [];
+    const offers = Array.isArray(rawOffers) ? rawOffers : [rawOffers];
+    for (const offer of offers.slice(0, 20)) {
+      if (!offer || typeof offer !== "object") continue;
+      const rawSpecs = offer.priceSpecification || offer.price_specification;
+      const specs = Array.isArray(rawSpecs) ? rawSpecs : (rawSpecs ? [rawSpecs] : []);
+      const spec = specs[0] || {};
+      const currency = String(offer.priceCurrency || offer.pricecurrency || spec.priceCurrency || spec.pricecurrency || "").toUpperCase();
+      if (currency !== "BRL") continue;
+      const availability = String(offer.availability || "").toLowerCase();
+      if (/outofstock|soldout|discontinued/.test(availability)) continue;
+      if (typeHas(offer, "AggregateOffer") || (offer.lowPrice != null && offer.highPrice != null)) {
+        const low = parsePriceNumber(offer.lowPrice);
+        const high = parsePriceNumber(offer.highPrice);
+        if (low !== null && high !== null && high >= low) {
+          return low === high ? { type: "exact", value: low } : { type: "range", min: low, max: high };
+        }
+      }
+      const exact = parsePriceNumber(offer.price != null ? offer.price : spec.price);
+      if (exact !== null) return { type: "exact", value: exact };
+    }
+  }
+  return null;
+}
+
+function readHtmlAttr(tag, attribute) {
+  const pattern = new RegExp(attribute + "\\s*=\\s*(['\\"])(.*?)\\1", "i");
+  const match = String(tag || "").match(pattern);
+  return match ? match[2].replace(/&amp;/g, "&").replace(/&quot;/g, '"').trim() : "";
+}
+
+function extractLivePagePrice(html) {
+  const scripts = String(html || "").matchAll(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi);
+  for (const match of scripts) {
+    const block = match[1].trim().replace(/^<!--|-->$/g, "")
+      .replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&#39;/g, "'");
+    try {
+      const found = extractSchemaPrice(JSON.parse(block));
+      if (found) return found;
+    } catch { /* Invalid or partial JSON-LD is common on storefront pages. */ }
+  }
+
+  const values = {};
+  for (const match of String(html || "").matchAll(/<meta\b[^>]*>/gi)) {
+    const tag = match[0];
+    const key = (readHtmlAttr(tag, "property") || readHtmlAttr(tag, "itemprop") || readHtmlAttr(tag, "name")).toLowerCase();
+    const content = readHtmlAttr(tag, "content");
+    if (key && content) values[key] = content;
+  }
+  const currency = String(values["product:price:currency"] || values["og:price:currency"] || values["pricecurrency"] || "").toUpperCase();
+  const rawPrice = values["product:price:amount"] || values["og:price:amount"] || values["price"] || "";
+  if (currency === "BRL" || /R\$/.test(rawPrice)) {
+    const value = parsePriceNumber(rawPrice);
+    if (value !== null) return { type: "exact", value };
+  }
+  return null;
+}
+
+async function readTextWithinLimit(response, maxBytes = 750000) {
+  if (!response.body) return null;
+  const reader = response.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) { await reader.cancel(); return null; }
+      chunks.push(value);
+    }
+  } catch {
+    try { await reader.cancel(); } catch { /* Ignore stream cleanup errors. */ }
+    return null;
+  }
+  const buffer = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) { buffer.set(chunk, offset); offset += chunk.byteLength; }
+  return new TextDecoder().decode(buffer);
+}
+
+async function verifyLivePagePrice(item) {
+  if (!item || item.priceSource === "listing" || !item.directProductPage) return item;
+  let target;
+  try { target = new URL(String(item.url || "")); } catch { return item; }
+  if (target.protocol !== "https:" || !KNOWN_STORES.some((domain) => hostMatches(target.hostname.toLowerCase(), domain))) return item;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 3200);
+  try {
+    const response = await fetch(target.href, {
+      method: "GET",
+      redirect: "follow",
+      signal: controller.signal,
+      headers: { "Accept": "text/html,application/xhtml+xml;q=0.9" }
+    });
+    if (!response.ok || !/text\/html|application\/xhtml\+xml/i.test(response.headers.get("content-type") || "")) return item;
+    let finalUrl;
+    try { finalUrl = new URL(response.url || target.href); } catch { return item; }
+    if (finalUrl.protocol !== "https:" || !KNOWN_STORES.some((domain) => hostMatches(finalUrl.hostname.toLowerCase(), domain))) return item;
+    const html = await readTextWithinLimit(response);
+    if (!html) return item;
+    const found = extractLivePagePrice(html);
+    if (!found) return item;
+    const formatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+    item.priceCheckedAt = new Date().toISOString();
+    item.priceVerified = true;
+    if (found.type === "range") {
+      item.priceMin = found.min;
+      item.priceMax = found.max;
+      item.priceValue = null;
+      item.priceMention = formatter.format(found.min) + " – " + formatter.format(found.max);
+      item.priceSource = "page_range";
+    } else {
+      item.priceValue = found.value;
+      item.priceMin = found.value;
+      item.priceMax = found.value;
+      item.priceMention = formatter.format(found.value);
+      item.priceSource = "page_live";
+    }
+    const pageText = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style\b[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/\s+/g, " ").slice(0, 12000);
+    const explanation = explainPrice(pageText);
+    if (explanation.evidenceFound) {
+      item.priceReason = explanation.reason;
+      item.priceReasonEvidence = true;
+    }
+  } catch { /* Dynamic stores or anti-bot protection may block live verification. */ }
+  finally { clearTimeout(timer); }
+  return item;
 }
 
 export async function onRequestGet(context) {
@@ -966,6 +1145,10 @@ export async function onRequestGet(context) {
             priceMention: money(price),
             priceValue: price,
             priceSource: "listing",
+            priceVerified: true,
+            priceCheckedAt: new Date().toISOString(),
+            priceMin: price,
+            priceMax: price,
             priceReason: reasonParts.join(" "),
             priceReasonEvidence: (Number.isFinite(originalPrice) && originalPrice > price) || condition === "used" || shippingFree,
             directProductPage: true,
@@ -1075,8 +1258,11 @@ export async function onRequestGet(context) {
         imageUrl,
         favicon: getPageFavicon(item),
         priceMention: price ? price.label : null,
-        priceValue: price ? price.value : null,
-        priceSource: price ? "snippet" : null,
+        priceValue: price && price.type !== "range" ? price.value : null,
+        priceMin: price ? (price.type === "range" ? price.min : price.value) : null,
+        priceMax: price ? (price.type === "range" ? price.max : price.value) : null,
+        priceVerified: false,
+        priceSource: price ? (price.type === "range" ? "snippet_range" : "snippet") : null,
         priceReason: priceWhy.reason,
         priceReasonEvidence: priceWhy.evidenceFound,
         directProductPage: true,
@@ -1175,10 +1361,19 @@ export async function onRequestGet(context) {
     }
   }
   const results = Array.from(byUrl.values());
+  // Verify up to five direct product pages against live structured price data.
+  // When a store blocks extraction, preserve the indexed value but keep its source label honest.
+  const priceChecks = results.filter((item) => item.directProductPage && item.priceSource !== "listing").slice(0, 5);
+  await Promise.all(priceChecks.map((item) => verifyLivePagePrice(item)));
+  const sortablePrice = (item) => {
+    if (Number.isFinite(item.priceValue) && item.priceValue > 0) return item.priceValue;
+    if (Number.isFinite(item.priceMin) && item.priceMin > 0) return item.priceMin;
+    return Infinity;
+  };
   results.sort((a, b) => {
-    if (a.priceValue !== null && b.priceValue === null) return -1;
-    if (a.priceValue === null && b.priceValue !== null) return 1;
-    if (a.priceValue !== null && b.priceValue !== null && a.priceValue !== b.priceValue) return a.priceValue - b.priceValue;
+    const ap = sortablePrice(a);
+    const bp = sortablePrice(b);
+    if (ap !== bp) return ap - bp;
     if (a.sourceQuality !== b.sourceQuality) return b.sourceQuality - a.sourceQuality;
     if (a.relevance !== b.relevance) return b.relevance - a.relevance;
     return a.title.localeCompare(b.title, "pt-BR");
