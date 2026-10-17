@@ -10,16 +10,26 @@ O diretório é uma curadoria ampla, não uma lista literalmente completa de tod
 
 ## Busca de produtos
 
-Quando a pessoa pesquisa um item, a API tenta retornar até três páginas específicas de produtos, com foto e preço se esses dados estiverem disponíveis. Os resultados com preço identificado são ordenados do menor para o maior. A busca combina resultados gerais e, quando faltam ofertas com preço identificado ou variedade de lojas, faz uma segunda consulta nos domínios catalogados para ampliar a comparação.
+Quando a pessoa pesquisa um item, a API tenta retornar até três páginas específicas de produtos, com foto e preço se os dados estiverem disponíveis. A busca combina resultados gerais e, quando faltam ofertas precificadas ou variedade de lojas, duas consultas direcionadas em grupos de domínios para ampliar a comparação.
 
-A integração web usa Tavily Search. Há uma busca geral e, quando faltam ofertas precificadas ou variedade de lojas, duas consultas direcionadas em grupos de domínios para ampliar a cobertura. A busca geral da web não garante que todo vendedor ou loja seja pesquisado em todas as consultas.
+A integração web usa Tavily Search. Além dos dados de API de marketplace quando configurados, o backend tenta conferir até cinco páginas diretas por consulta, lendo dados estruturados de produto (Schema.org Product/Offer/AggregateOffer e metadados de preço em BRL). Quando a fonte publica um valor exato, ele é marcado como encontrado na página; quando publica um AggregateOffer com limite inferior e superior, mostramos a faixa. Se a loja bloquear o acesso ou não publicar os metadados, um valor encontrado somente em um trecho indexado fica explicitamente marcado como referência não confirmada.
+
+Os preços são ordenados por confiança: valor retornado pela API/listagem ou encontrado nos dados estruturados da página primeiro, faixa declarada pela página depois, e menções em trechos indexados por último. O filtro de orçamento aceita apenas preço exato identificado por fonte confiável ou uma faixa publicada cujo limite máximo esteja dentro do orçamento. A busca não cobre todos os vendedores nem garante o menor preço absoluto.
+
+### Chat do Comprinho
+
+A página inicial inclui um chat contextual para ajudar a comparar as ofertas da busca atual, explicar indícios de preço, diferenciar valor confirmado de referência e lembrar o que verificar antes da compra. O endpoint é `/api/chat`.
+
+- O chat usa o binding Workers AI chamado `AI` quando configurado. Para habilitar respostas conversacionais com modelo: Cloudflare → Workers & Pages → projeto `onde-compro` → Settings → Bindings → Add → Workers AI → nome da variável `AI`; salve e faça um novo deploy.
+- Se o binding não estiver habilitado, o endpoint tenta usar uma resposta baseada na web com a chave `TAVILY_API_KEY`, e mantém uma resposta de contingência fundamentada nos resultados atuais quando a pesquisa falhar.
+- O chat não deve inventar preços, estoque, frete ou motivos de desconto. Mesmo um preço extraído da página pode variar no checkout.
 
 ### Limitações importantes
 
-- Os links devem levar à página específica do anúncio, mas nem todos os resultados de busca permitem confirmar isso automaticamente.
-- Um preço extraído de texto indexado pode estar desatualizado; preços de listagem estruturados são preferíveis.
-- A explicação de possível preço menor é baseada em sinais textuais (promoção, cupom, Pix, frete, usado, kit ou importado) e não prova que o anúncio seja a melhor oferta.
-- O usuário deve confirmar modelo, vendedor, condição, estoque, frete, prazo, garantia e valor final na página da loja. A compra ocorre fora do Onde compro?.
+- Sites com conteúdo dinâmico, proteção anti-bot ou sem metadados estruturados podem não permitir conferência automática do preço.
+- Um preço extraído de texto indexado pode estar desatualizado; a interface identifica esses valores como referência não confirmada.
+- A explicação de possível preço menor usa sinais textuais (promoção, cupom, Pix, frete, usado, kit ou importado). Só é exibida como indício quando a fonte contém uma menção correspondente; isso não prova que a oferta seja a melhor.
+- O usuário deve confirmar modelo/variante, vendedor, condição, estoque, frete, prazo, garantia e valor final na página da loja. A compra ocorre fora do Onde compro?.
 
 ## Configuração da API
 
