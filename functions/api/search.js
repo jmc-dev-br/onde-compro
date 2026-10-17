@@ -826,7 +826,7 @@ function getPriceMention(text) {
   const amount = "R\\$\\s?\\d+(?:\\.\\d{3})*(?:,\\d{2})?";
   const rangeMatch = value.match(new RegExp("(" + amount + ")\\s*(?:a|até|[-–—])\\s*(?:" + amount + ")", "i"));
   const parseLocal = (label) => {
-    const number = Number(String(label || "").replace(/R\\$\\s?/i, "").replace(/\\./g, "").replace(",", "."));
+    const number = Number(String(label || "").replace(/R\$\s?/i, "").replace(/\./g, "").replace(",", "."));
     return Number.isFinite(number) && number > 0 && number <= 100000000 ? number : null;
   };
   if (rangeMatch) {
@@ -843,12 +843,11 @@ function getPriceMention(text) {
   const saleMatch = value.match(new RegExp("(?:por|agora|a partir de|preço atual|oferta por)\\s*(" + amount + ")", "i"));
   const match = saleMatch ? [saleMatch[0], saleMatch[1]] : value.match(new RegExp(amount, "i"));
   if (!match) return null;
-  const label = (saleMatch ? saleMatch[1] : match[0]).replace(/\\s+/g, " ").trim();
+  const label = (saleMatch ? saleMatch[1] : match[0]).replace(/\s+/g, " ").trim();
   const number = parseLocal(label);
   if (number === null) return null;
   return { type: "mention", label, value: number, min: number, max: number };
 }
-
 function explainPrice(text) {
   const value = String(text || "");
   const checks = [
