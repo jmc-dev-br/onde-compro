@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="590" viewBox="0 0 560 590" fill="none">
+  <defs>
+    <linearGradient id="fur" x1="132" y1="102" x2="380" y2="330" gradientUnits="userSpaceOnUse"><stop stop-color="#FFB454"/><stop offset=".52" stop-color="#F58A32"/><stop offset="1" stop-color="#DD5C20"/></linearGradient>
+    <linearGradient id="cream" x1="183" y1="194" x2="345" y2="326" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFDF2"/><stop offset="1" stop-color="#F4E8D2"/></linearGradient>
+    <linearGradient id="jacket" x1="177" y1="340" x2="376" y2="505" gradientUnits="userSpaceOnUse"><stop stop-color="#247344"/><stop offset="1" stop-color="#12462B"/></linearGradient>
+    <linearGradient id="basket" x1="164" y1="415" x2="404" y2="519" gradientUnits="userSpaceOnUse"><stop stop-color="#C8F46B"/><stop offset="1" stop-color="#76B837"/></linearGradient>
+    <linearGradient id="goggle" x1="174" y1="90" x2="365" y2="146" gradientUnits="userSpaceOnUse"><stop stop-color="#234B33"/><stop offset="1" stop-color="#0F2C1D"/></linearGradient>
+    <filter id="shadow" x="35" y="34" width="490" height="540" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <ellipse cx="283" cy="531" rx="177" ry="25" fill="#183A20" opacity=".14" filter="url(#shadow)"/>
+  <!-- fluffy tail -->
+  <path d="M345 359c61-5 116 34 125 85 7 39-22 68-58 55-24-9-34-33-24-56-28 8-50-8-54-31-4-19 0-38 11-53Z" fill="url(#fur)" stroke="#A94E23" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M404 434c21 3 36 20 30 37-4 12-17 18-31 13 8-11 8-24 1-35Z" fill="#FFF5DF"/>
+  <!-- ears -->
+  <path d="M126 205 91 72c-4-15 12-25 24-14l119 100Z" fill="url(#fur)" stroke="#A94E23" stroke-width="6" stroke-linejoin="round"/>
+  <path d="m122 161-17-65 58 52Z" fill="#F8B1A0"/>
+  <path d="M318 153 403 62c11-12 30-4 29 12l-5 139Z" fill="url(#fur)" stroke="#A94E23" stroke-width="6" stroke-linejoin="round"/>
+  <path d="m365 150 42-47-5 69Z" fill="#F8B1A0"/>
+  <!-- body and jacket -->
+  <path d="M168 326c-28 19-47 62-45 121 1 38 25 62 63 68l158-1c43-7 66-35 63-72-3-48-24-87-60-110Z" fill="url(#jacket)" stroke="#103B25" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M218 330c7 37 36 59 68 58 33-1 54-21 61-54l-26-17h-83Z" fill="#F4A33E" stroke="#A94E23" stroke-width="5"/>
+  <path d="M193 353c-16 27-25 60-24 97 19 11 36 10 51-2l18-75Z" fill="#2C8450"/>
+  <path d="M353 357c19 25 28 59 26 94-18 12-35 10-51-3l-15-74Z" fill="#2C8450"/>
+  <!-- head shape -->
+  <path d="M114 199c0-83 66-142 166-142s166 59 166 142c0 80-44 143-106 162-39 12-82 12-121-1-62-21-105-83-105-161Z" fill="url(#fur)" stroke="#A94E23" stroke-width="7"/>
+  <!-- forehead highlight -->
+  <path d="M162 120c26-30 62-45 105-44-37 8-66 27-84 53-7 9-16 8-21-9Z" fill="#FFD08A" opacity=".7"/>
+  <!-- cream face blaze and cheeks -->
+  <path d="M250 158c-43 2-74 31-81 71-9 47 14 97 47 120 17 12 38 17 58 17 23 0 44-9 61-25 29-27 41-69 29-107-11-37-48-69-90-76-7-1-16-1-24 0Z" fill="url(#cream)"/>
+  <path d="M145 250c-23 4-35 27-27 49 8 22 31 35 55 28l34-31-9-34Z" fill="url(#cream)"/>
+  <path d="M369 250c23 4 35 27 27 49-8 22-31 35-55 28l-34-31 9-34Z" fill="url(#cream)"/>
+  <!-- goggles strap -->
+  <path d="M142 124c51-38 223-39 280 7" stroke="#203D2B" stroke-width="19" stroke-linecap="round"/>
+  <g transform="rotate(-8 218 121)">
+    <rect x="165" y="85" width="91" height="57" rx="22" fill="url(#goggle)" stroke="#0E2B1B" stroke-width="7"/>
+    <rect x="177" y="96" width="67" height="35" rx="15" fill="#9BD5AE" stroke="#D3F0B5" stroke-width="3"/>
+    <path d="M187 124c9-16 25-24 44-22" stroke="#E8FFCD" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+  </g>
+  <g transform="rotate(8 329 121)">
+    <rect x="281" y="84" width="89" height="58" rx="22" fill="url(#goggle)" stroke="#0E2B1B" stroke-width="7"/>
+    <rect x="293" y="96" width="65" height="35" rx="15" fill="#9BD5AE" stroke="#D3F0B5" stroke-width="3"/>
+    <path d="M302 124c8-16 25-24 43-22" stroke="#E8FFCD" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+  </g>
+  <path d="M254 113h27" stroke="#0E2B1B" stroke-width="9" stroke-linecap="round"/>
+  <!-- eyes and brows -->
+  <path d="M166 214c11-12 28-15 43-8" stroke="#783E22" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="189" cy="242" rx="18" ry="25" fill="#FFF"/>
+  <ellipse cx="195" cy="245" rx="10" ry="17" fill="#153323"/>
+  <ellipse cx="199" cy="238" rx="4.5" ry="6" fill="#FFF"/>
+  <path d="M314 208c14-7 30-3 40 9" stroke="#783E22" stroke-width="7" stroke-linecap="round"/>
+  <path d="M321 229c11 14 12 31 2 42" stroke="#153323" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="333" cy="228" r="4" fill="#FFF"/>
+  <!-- muzzle and nose -->
+  <ellipse cx="259" cy="286" rx="49" ry="34" fill="#FFF9ED"/>
+  <ellipse cx="307" cy="286" rx="42" ry="32" fill="#FFF9ED"/>
+  <path d="M263 271c-1-6 7-12 17-12 11 0 20 6 19 13-1 7-12 14-19 14-7 0-16-8-17-15Z" fill="#263328"/>
+  <path d="M280 283v13c-8 9-19 8-26 1" stroke="#4D3428" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M280 296c9 10 20 10 28 2" stroke="#4D3428" stroke-width="5" stroke-linecap="round"/>
+  <path d="M228 309c10 13 25 20 42 20" stroke="#E8D2B7" stroke-width="4" stroke-linecap="round"/>
+  <path d="M303 313c-8 10-18 15-29 16" stroke="#E8D2B7" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="160" cy="281" rx="20" ry="11" fill="#F28E79" opacity=".35"/>
+  <ellipse cx="356" cy="281" rx="20" ry="11" fill="#F28E79" opacity=".35"/>
+  <!-- jacket details -->
+  <path d="M238 389 279 423l39-34" stroke="#B5E65F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M279 424v48" stroke="#B5E65F" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="279" cy="484" r="8" fill="#F9C76A" stroke="#143D25" stroke-width="4"/>
+  <!-- arms -->
+  <path d="M176 388c-31 18-42 48-23 66 13 12 32 8 47-4l38-33" fill="#F58A32" stroke="#A94E23" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M370 388c30 16 43 42 26 62-12 14-32 10-47-2l-36-31" fill="#F58A32" stroke="#A94E23" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M158 445c11-13 27-16 42-5l8 8c-9 14-26 21-40 12-7-4-10-9-10-15Z" fill="#FFF3DD" stroke="#A94E23" stroke-width="5"/>
+  <path d="M363 444c12-12 27-13 40-1l-8 16c-9 9-24 8-35-1Z" fill="#FFF3DD" stroke="#A94E23" stroke-width="5"/>
+  <!-- shopping tote held in front -->
+  <path d="M175 430h211l-23 93c-3 10-11 15-22 15H224c-12 0-20-5-23-16Z" fill="url(#basket)" stroke="#275D2E" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M213 434c-1-37 27-57 67-57s68 20 67 57" stroke="#275D2E" stroke-width="9" stroke-linecap="round"/>
+  <path d="M190 457h180M196 480h168M203 503h156" stroke="#3D8B36" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+  <path d="M238 438v83M280 438v87M322 438v83" stroke="#3D8B36" stroke-width="5" stroke-linecap="round" opacity=".65"/>
+  <!-- products in bag -->
+  <path d="m224 431-8-52c-1-8 5-14 13-14h35l9 66Z" fill="#F3C66C" stroke="#895F27" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M235 383h23" stroke="#FFF0BD" stroke-width="5" stroke-linecap="round"/>
+  <path d="M287 432v-58c0-7 6-13 13-13h32c7 0 13 6 13 13v58Z" fill="#F8F8F1" stroke="#3F6045" stroke-width="4"/>
+  <path d="M297 384h28M297 396h21" stroke="#C5D8C4" stroke-width="4" stroke-linecap="round"/>
+  <!-- coin / savings star -->
+  <circle cx="382" cy="384" r="29" fill="#FFD66F" stroke="#B57921" stroke-width="5"/>
+  <path d="m382 365 6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2Z" fill="#A86D1E"/>
+  <path d="m427 345 7-17m-2 28 16 2M156 357l-7-14m-8 25-15 5" stroke="#E4A244" stroke-width="5" stroke-linecap="round"/>
+  <!-- feet -->
+  <path d="M204 523c-6 21-1 34 20 36h37c12-1 18-8 14-18l-9-18Z" fill="#F8F0D9" stroke="#163E26" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M293 523c-2 17 4 30 23 34h37c13 0 18-8 12-19l-13-19Z" fill="#F8F0D9" stroke="#163E26" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M220 545h34M313 546h35" stroke="#D2A982" stroke-width="4" stroke-linecap="round"/>
+  <!-- brand sparkles -->
+  <path d="M90 286v24m-12-12h24M441 245v26m-13-13h26M432 142v16m-8-8h16" stroke="#98D64A" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="111" cy="331" r="5" fill="#F6C35D"/><circle cx="438" cy="302" r="5" fill="#F6C35D"/>
+</svg>
