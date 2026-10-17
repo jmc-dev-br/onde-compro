@@ -66,14 +66,18 @@ function basicGroundedAnswer(message, query, products) {
   return "Posso ajudar a comparar preço, loja, modelo, vendedor, frete e garantia. Pergunte, por exemplo: “Qual preço está confirmado?”, “Por que essa oferta pode ser mais barata?” ou “Qual parece ter melhor custo-benefício?”. Vou separar dados confirmados de estimativas e não inventar valores.";
 }
 
-async function askTavily(env, message, query, products) {
+async function askTavily(env, message, query, products, history) {
   if (!env.TAVILY_API_KEY) return null;
   const productContext = products.slice(0, 3).map((p) =>
     [p.store, p.title, p.priceMention || "preço não identificado"].filter(Boolean).join(" — ")
   ).join("; ");
+  const conversationContext = Array.isArray(history) ? history.slice(-4).map((turn) =>
+    (turn.role === "assistant" ? "assistente" : "comprador") + ": " + trimText(turn.content, 100)
+  ).join(" | ") : "";
   const previousContext = (query ? "Produto pesquisado: " + query + ". " : "") +
-    (productContext ? "Ofertas mostradas: " + productContext + ". " : "");
-  const searchQuery = trimText(previousContext + "Dúvida do comprador: " + message, 420);
+    (productContext ? "Ofertas mostradas: " + productContext + ". " : "") +
+    (conversationContext ? "Contexto recente: " + conversationContext + ". " : "");
+  const searchQuery = trimText(previousContext + "Dúvida atual do comprador: " + message, 480);
   try {
     const response = await fetch("https://api.tavily.com/search", {
       method: "POST",
@@ -163,7 +167,7 @@ export async function onRequestPost(context) {
   }
 
   // Tavily can provide a web-backed answer when Workers AI has not been enabled.
-  const webAnswer = await askTavily(env, message, query, products);
+  const webAnswer = await askTavily(env, message, query, products, history);
   if (webAnswer) return json({ answer: webAnswer, mode: "web" });
 
   return json({ answer: basicGroundedAnswer(message, query, products), mode: "basic" });
