@@ -506,7 +506,8 @@ function scoreResult(result, query) {
   try {
     const segments = new URL(url).pathname.split("/").filter(Boolean);
     const lastSegment = segments[segments.length - 1] || "";
-    pathSuggestsProduct = lastSegment.length >= 10;
+    // Product slugs vary by store; shorter final slugs can still be direct product pages.
+    pathSuggestsProduct = lastSegment.length >= 6;
   } catch { /* URL was validated above. */ }
   const direct = isProductPath(url) || hasProductSchema(result) || (store && !searchOrHome && pathSuggestsProduct);
   if (direct) score += 7;
