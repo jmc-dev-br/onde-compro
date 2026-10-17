@@ -1127,7 +1127,7 @@ message:message,query:activeChatQuery,history:previousHistory,
 results:activeChatResults.slice(0,3).map(function(item){return {
 title:item.title,store:item.store,description:item.description,priceMention:item.priceMention,
 priceValue:item.priceValue,priceMin:item.priceMin,priceMax:item.priceMax,priceSource:item.priceSource,
-priceReason:item.priceReason,priceReasonEvidence:item.priceReasonEvidence===true
+priceReason:item.priceReason,priceReasonEvidence:item.priceReasonEvidence===true,priceReasonSource:item.priceReasonSource
 };})
 })});
 const data=await response.json().catch(function(){return {};});
@@ -1232,7 +1232,11 @@ const reason=document.createElement('div');reason.className='price-reason';
 const reasonTitle=document.createElement('strong');reasonTitle.textContent='O que sabemos sobre este preço?';
 const reasonText=document.createElement('p');reasonText.textContent=item.priceReason||'Não encontrei uma explicação confirmada para uma possível diferença de preço. Compare modelo, vendedor, condição, frete e garantia.';
 reason.append(reasonTitle,reasonText);
-if(item.priceReasonEvidence){const evidence=document.createElement('span');evidence.className='evidence';evidence.textContent=item.priceVerified?'Indício encontrado na página consultada':'Indício encontrado no texto do resultado';reason.append(evidence);}
+if(item.priceReasonEvidence){
+const evidence=document.createElement('span');evidence.className='evidence';
+evidence.textContent=item.priceReasonSource==='page'?'Indício encontrado na página consultada':item.priceReasonSource==='listing'?'Informação do anúncio':'Indício encontrado no texto do resultado';
+reason.append(evidence);
+}
 const ask=document.createElement('button');ask.type='button';ask.className='result-ask-chat';ask.textContent='Perguntar ao Comprinho ↗';
 ask.addEventListener('click',function(){
 activeChatResults=[item].concat(items.filter(function(other){return other.url!==item.url;})).slice(0,3);
