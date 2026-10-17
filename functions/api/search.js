@@ -1368,12 +1368,21 @@ export async function onRequestGet(context) {
   // When a store blocks extraction, preserve the indexed value but keep its source label honest.
   const priceChecks = results.filter((item) => item.directProductPage && item.priceSource !== "listing").slice(0, 5);
   await Promise.all(priceChecks.map((item) => verifyLivePagePrice(item)));
+  const priceConfidence = (item) => {
+    if (item.priceSource === "listing" || item.priceSource === "page_live") return 0;
+    if (item.priceSource === "page_range") return 1;
+    if (item.priceSource === "snippet" || item.priceSource === "snippet_range") return 2;
+    return 3;
+  };
   const sortablePrice = (item) => {
     if (Number.isFinite(item.priceValue) && item.priceValue > 0) return item.priceValue;
     if (Number.isFinite(item.priceMin) && item.priceMin > 0) return item.priceMin;
     return Infinity;
   };
   results.sort((a, b) => {
+    const ca = priceConfidence(a);
+    const cb = priceConfidence(b);
+    if (ca !== cb) return ca - cb;
     const ap = sortablePrice(a);
     const bp = sortablePrice(b);
     if (ap !== bp) return ap - bp;
