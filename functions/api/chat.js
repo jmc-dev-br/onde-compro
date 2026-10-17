@@ -128,9 +128,9 @@ export async function onRequestPost(context) {
     store: trimText(item && item.store, 80),
     description: trimText(item && item.description, 400),
     priceMention: trimText(item && item.priceMention, 100),
-    priceValue: Number.isFinite(Number(item && item.priceValue)) && item.priceValue !== null ? Number(item.priceValue) : null,
-    priceMin: Number.isFinite(Number(item && item.priceMin)) && item.priceMin !== null ? Number(item.priceMin) : null,
-    priceMax: Number.isFinite(Number(item && item.priceMax)) && item.priceMax !== null ? Number(item.priceMax) : null,
+    priceValue: item && item.priceValue != null && Number.isFinite(Number(item.priceValue)) ? Number(item.priceValue) : null,
+    priceMin: item && item.priceMin != null && Number.isFinite(Number(item.priceMin)) ? Number(item.priceMin) : null,
+    priceMax: item && item.priceMax != null && Number.isFinite(Number(item.priceMax)) ? Number(item.priceMax) : null,
     priceSource: ["listing", "page_live", "page_range", "snippet", "snippet_range"].includes(item && item.priceSource) ? item.priceSource : null,
     priceReason: trimText(item && item.priceReason, 400),
     priceReasonEvidence: item && item.priceReasonEvidence === true
