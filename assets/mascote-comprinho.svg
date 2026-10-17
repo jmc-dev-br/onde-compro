@@ -87,7 +87,5 @@
   <path d="M204 523c-6 21-1 34 20 36h37c12-1 18-8 14-18l-9-18Z" fill="#F8F0D9" stroke="#163E26" stroke-width="6" stroke-linejoin="round"/>
   <path d="M293 523c-2 17 4 30 23 34h37c13 0 18-8 12-19l-13-19Z" fill="#F8F0D9" stroke="#163E26" stroke-width="6" stroke-linejoin="round"/>
   <path d="M220 545h34M313 546h35" stroke="#D2A982" stroke-width="4" stroke-linecap="round"/>
-  <!-- brand sparkles -->
-  <path d="M90 286v24m-12-12h24M441 245v26m-13-13h26M432 142v16m-8-8h16" stroke="#98D64A" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="111" cy="331" r="5" fill="#F6C35D"/><circle cx="438" cy="302" r="5" fill="#F6C35D"/>
+
 </svg>
