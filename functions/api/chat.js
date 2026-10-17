@@ -12,7 +12,7 @@ function json(data, status = 200) {
 }
 
 function trimText(value, length) {
-  return String(value ?? "").replace(/[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]/g, "").trim().slice(0, length);
+  return String(value ?? "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").trim().slice(0, length);
 }
 
 function formatMoney(value) {
