@@ -431,6 +431,37 @@ footer{background:#fff;border-top:1px solid #e6ece2}
   .mascot-art{animation:none}
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+/* Mascot stage refinement: fewer decorations, clearer hierarchy */
+.visual.mascot-stage{min-height:430px;padding:8px 0;overflow:visible}
+.mascot-halo{width:354px;height:354px;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fbfff7 45%,#e8f4df 76%,#e8f4df00 78%);box-shadow:0 0 0 1px #e1ecd8,0 0 0 14px #ffffff99}
+.mascot-orbit{display:none}
+.mascot-art{width:min(100%,390px);max-height:420px;bottom:-2px;filter:drop-shadow(0 16px 20px #1d39200f)}
+.mascot-float{min-width:168px;max-width:205px;gap:11px;padding:13px 15px;border-radius:14px;box-shadow:0 8px 25px #19381b12}
+.mascot-float-a{top:50px;left:0}
+.mascot-float-b{right:0;bottom:67px}
+.mascot-signature{display:none}
+@media(max-width:800px){
+ .hero-grid{grid-template-columns:minmax(0,1fr);padding:43px 0 38px;gap:14px}
+ .visual.mascot-stage{min-height:380px;max-width:500px;margin:0 auto;width:100%}
+ .mascot-halo{width:290px;height:290px}
+ .mascot-art{width:min(82%,340px);max-height:360px}
+ .mascot-float-a{top:20px;left:0}
+ .mascot-float-b{right:0;bottom:34px}
+}
+@media(max-width:540px){
+ .visual.mascot-stage{min-height:330px}
+ .mascot-art{width:min(80%,280px);max-height:315px}
+ .mascot-float{min-width:0;max-width:160px;padding:10px 11px;gap:8px}
+ .mascot-float-icon{width:28px;height:28px;font-size:17px;border-radius:9px}
+ .mascot-float small{font-size:8px;margin-bottom:3px}
+ .mascot-float b{font-size:10px}
+ .mascot-float-a{top:16px;left:0}
+ .mascot-float-b{right:0;bottom:24px}
+ .mascot-halo{width:250px;height:250px}
+}
+@media(prefers-reduced-motion:reduce){.mascot-art{animation:none}}
+
 </style>
 </head>
 <body>
