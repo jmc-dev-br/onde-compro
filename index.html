@@ -827,7 +827,7 @@ footer{background:#FBF9F4}
         </label>
         <label>Ordenar por
           <select id="sortOrder" aria-label="Ordenar resultados">
-            <option value="price" selected>Menor preço primeiro</option>
+            <option value="price" selected>Menor preço confirmado primeiro</option>
             <option value="relevance">Mais relevantes</option>
           </select>
         </label>
@@ -847,7 +847,7 @@ footer{background:#FBF9F4}
 </section>
 <div class="trust-bar" aria-label="Como ajudamos você a comprar melhor"><div class="wrap trust-inner">
   <div><span class="trust-icon">↗</span><span><strong>Links para o anúncio</strong><small>Chegue ao produto encontrado</small></span></div>
-  <div><span class="trust-icon">↓</span><span><strong>Preço em destaque</strong><small>Menores valores primeiro</small></span></div>
+  <div><span class="trust-icon">↓</span><span><strong>Preço em destaque</strong><small>Fonte confiável antes de referências</small></span></div>
   <div><span class="trust-icon">◎</span><span><strong>Muitas categorias</strong><small>Das compras do dia a dia a nichos</small></span></div>
   <div><span class="trust-icon">♡</span><span><strong>Busca independente</strong><small>Sem priorizar apenas afiliados</small></span></div>
 </div></div>
@@ -1304,6 +1304,8 @@ if(sortOrderInput&&sortOrderInput.value==='price'){
     const bp=typeof b.priceValue==='number'&&Number.isFinite(b.priceValue)?b.priceValue:(typeof b.priceMin==='number'&&Number.isFinite(b.priceMin)?b.priceMin:Infinity);
     return ap-bp;
   });
+}else if(sortOrderInput&&sortOrderInput.value==='relevance'){
+  results.sort(function(a,b){return (Number(b.relevance)||0)-(Number(a.relevance)||0);});
 }
 if(!results.length){
 makeFallback(q,maxPrice!==null?'Não encontramos preços de fonte confiável nem faixas publicadas inteiramente dentro de R$ '+maxPrice.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'. Valores citados apenas em trechos indexados não são usados para afirmar que uma oferta cabe no orçamento.':'Não encontramos páginas diretas suficientes para esta pesquisa. Tente outra descrição ou continue nas lojas abaixo.');
