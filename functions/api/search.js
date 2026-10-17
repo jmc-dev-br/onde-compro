@@ -923,7 +923,7 @@ function extractSchemaPrice(root) {
 }
 
 function readHtmlAttr(tag, attribute) {
-  const pattern = new RegExp(attribute + "\\s*=\\s*(['\\"])(.*?)\\1", "i");
+  const pattern = new RegExp(attribute + "\\s*=\\s*(['\"])(.*?)\\1", "i");
   const match = String(tag || "").match(pattern);
   return match ? match[2].replace(/&amp;/g, "&").replace(/&quot;/g, '"').trim() : "";
 }
