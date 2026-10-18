@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173c2c">
+<meta name="description" content="FairBasket helps community organisations compare essential goods and preserve verifiable procurement evidence.">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<title>FairBasket — Transparent community buying</title>
+<style>
+:root{--ink:#1c2d22;--muted:#65746a;--line:#dfe7dc;--paper:#f6f7f1;--white:#fff;--green:#276749;--deep:#173c2c;--mint:#eaf3e6;--orange:#e8794c;--gold:#e8bd6c;--shadow:0 14px 38px #233b2810}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.1px}button,input,select{font:inherit}button,a{touch-action:manipulation}a{color:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8794c88;outline-offset:2px}.wrap{width:min(1180px,calc(100% - 42px));margin:auto}
+.topline{background:var(--deep);color:#e9f0e8;font-size:11px}.topline .wrap{display:flex;justify-content:space-between;gap:14px;align-items:center;min-height:36px}.topline b{color:#f5bb98}.top-badge{display:inline-flex;gap:7px;align-items:center;color:#cbdcc9}.top-badge i{width:6px;height:6px;border-radius:50%;background:#9bc89f}
+header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{display:flex;gap:10px;align-items:center;text-decoration:none;font-weight:900;letter-spacing:-.8px;font-size:19px}.brand-mark{width:36px;height:36px;border-radius:12px;background:var(--deep);color:#f3c6a7;display:grid;place-items:center;font-size:21px}.brand small{display:block;font-size:9px;letter-spacing:1.25px;color:#718075;font-weight:850;text-transform:uppercase;margin-top:-2px}.nav-links{display:flex;gap:22px;align-items:center}.nav-links a{text-decoration:none;color:#526257;font-weight:700;font-size:12px}.nav-links a:hover{color:var(--green)}.nav-actions{display:flex;align-items:center;gap:9px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;padding:11px 15px;font-size:11px;line-height:1.35;font-weight:850;text-decoration:none;transition:transform .15s ease,background .15s ease,border-color .15s ease}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--green);color:white}.btn-primary:hover{background:#1c5738}.btn-dark{background:var(--deep);color:white}.btn-outline{border-color:#dbe5d7;background:white;color:#31563c}.btn-outline:hover{background:#f1f6ed;border-color:#b8ceb1}.btn-warm{background:#faeee5;color:#945231;border-color:#f0dfd2}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.hero{background:radial-gradient(ellipse at 80% 10%,#dfeadb 0,transparent 30%),radial-gradient(ellipse at 95% 98%,#f9e4d8 0,transparent 30%),linear-gradient(110deg,#fbfaf5,#f2f6ed);border-bottom:1px solid #e3e9df;overflow:hidden}.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:52px;align-items:center;padding:63px 0 56px}.eyebrow{display:flex;align-items:center;gap:8px;color:#32694a;font-size:10px;font-weight:900;letter-spacing:1.45px;text-transform:uppercase}.eyebrow span{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:#e5f0df;color:#276749;font-size:15px}h1{font-size:clamp(37px,4.7vw,61px);line-height:1.02;letter-spacing:-3px;margin:17px 0;color:#1b2d21;max-width:680px}h1 em{color:#276749;font-style:normal}.hero-lead{max-width:610px;color:#596a5d;font-size:14px;line-height:1.9;margin:0}.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0}.hero-points{display:flex;flex-wrap:wrap;gap:15px;margin-top:22px;color:#627268;font-size:10px}.hero-points span{display:flex;align-items:center;gap:6px}.hero-points b{color:#276749}.hero-panel{padding:22px;border:1px solid #e0e8dc;background:#ffffffd9;border-radius:24px;box-shadow:var(--shadow);position:relative}.panel-top{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:18px}.panel-kicker{color:#748176;font-size:9px;font-weight:900;letter-spacing:1.25px;text-transform:uppercase}.panel-top h2{margin:5px 0 0;font-size:17px;letter-spacing:-.5px}.demo-pill{padding:6px 8px;border-radius:999px;border:1px solid #f0dfc7;background:#fff6e9;color:#90602d;font-size:8px;font-weight:900;white-space:nowrap}.hero-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{padding:15px;border:1px solid #e6ebe2;background:#fff;border-radius:15px;min-width:0}.metric span{display:block;color:#718074;font-size:9px;font-weight:800;letter-spacing:.45px;text-transform:uppercase}.metric strong{display:block;font-size:25px;line-height:1.2;letter-spacing:-1px;margin:7px 0 4px;color:#234b34}.metric small{display:block;color:#899287;font-size:9px;line-height:1.5}.panel-progress{margin-top:14px;padding:14px;border-radius:15px;background:#eff5eb}.progress-copy{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#5a6e5d;margin-bottom:9px}.progress-track{height:7px;background:#dce7d7;border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:82%;background:linear-gradient(90deg,#2f7550,#8dbb86);border-radius:99px}.panel-foot{margin-top:12px;color:#718074;font-size:9px;line-height:1.6}
+.section{padding:65px 0}.section-head{display:flex;justify-content:space-between;gap:22px;align-items:end;margin-bottom:25px}.kicker{font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#8d623f}h2{font-size:clamp(25px,3vw,36px);letter-spacing:-1.45px;line-height:1.12;margin:8px 0 11px}.section-head p{max-width:720px;margin:0;color:var(--muted);font-size:12px;line-height:1.8}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.step{padding:23px;border:1px solid var(--line);border-radius:19px;background:white;box-shadow:0 4px 20px #233b2805}.step-number{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:#eaf2e7;color:#276749;font-weight:900;margin-bottom:15px}.step h3{margin:0 0 8px;font-size:15px;letter-spacing:-.4px}.step p{font-size:11px;color:#66746a;line-height:1.8;margin:0}.impact-strip{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:12px;padding:20px;border:1px solid #dce5d7;background:#eaf2e7;border-radius:20px;margin-top:18px}.impact-intro{padding:4px 8px}.impact-intro strong{font-size:13px;display:block;margin-bottom:6px}.impact-intro span{font-size:10px;color:#68776b;line-height:1.65;display:block}.impact-stat{padding:13px 14px;border-radius:14px;border:1px solid #d8e4d2;background:#ffffffb3}.impact-stat b{font-size:20px;letter-spacing:-.6px;display:block;color:#255a3c}.impact-stat span{font-size:9px;line-height:1.55;color:#6f7c6f;display:block;margin-top:4px}
+.workbench{background:#fff;border-top:1px solid #e0e8dc;border-bottom:1px solid #e0e8dc}.workbench .section-head{align-items:start}.workbench-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.card{border:1px solid #e0e7dc;border-radius:20px;background:#fff;box-shadow:0 7px 24px #243c2706;overflow:hidden;min-width:0}.card-head{padding:18px 20px;border-bottom:1px solid #e8ede5;display:flex;justify-content:space-between;align-items:start;gap:12px}.card-head h3{font-size:14px;letter-spacing:-.35px;margin:0 0 4px}.card-head p{font-size:10px;color:#768277;margin:0;line-height:1.6}.card-body{padding:18px 20px}.tag{display:inline-flex;align-items:center;gap:5px;border:1px solid #e2e8df;border-radius:999px;padding:5px 8px;background:#f8faf6;color:#5d6d60;font-size:8px;font-weight:900;letter-spacing:.3px}.tag-demo{background:#fff6e9;color:#926033;border-color:#f0e0c9}.tag-green{background:#eaf4e6;color:#2c6d46;border-color:#d8e9d2}.campaign-details{display:flex;align-items:start;gap:12px}.campaign-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#173c2c;color:#f1c2a5;font-size:20px;flex-shrink:0}.campaign-details h4{margin:1px 0 5px;font-size:14px;letter-spacing:-.3px}.campaign-details p{margin:0;color:#748174;font-size:10px;line-height:1.65}.campaign-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0}.summary-box{padding:12px 10px;background:#f7f9f4;border:1px solid #e8ece4;border-radius:12px}.summary-box span{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.55px;font-weight:850;color:#7a8579}.summary-box strong{display:block;margin-top:5px;font-size:16px;letter-spacing:-.4px;overflow-wrap:anywhere}.budget-line{display:flex;justify-content:space-between;gap:9px;color:#657468;font-size:10px;margin-bottom:8px}.budget-line strong{color:#285c3c}.budget-track{height:7px;background:#ecf0e8;border-radius:99px;overflow:hidden}.budget-fill{height:100%;width:82%;background:var(--green);border-radius:99px;transition:width .2s ease}.data-note{padding:11px 12px;border-radius:12px;background:#fff8ec;border:1px solid #f0e1c7;color:#8e683d;font-size:9px;line-height:1.65;margin:13px 0 0}.need-list{display:grid;gap:0}.need-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #eef1eb}.need-row:last-child{border-bottom:0;padding-bottom:0}.need-name{font-size:11px;font-weight:850;line-height:1.45}.need-meta{margin-top:4px;color:#7b867b;font-size:9px;line-height:1.5}.need-values{text-align:right;white-space:nowrap}.need-values strong{display:block;font-size:12px;color:#2a4f35}.need-values span{font-size:9px;color:#818c81}.need-state{display:inline-flex;border-radius:7px;padding:4px 6px;margin-top:5px;font-size:8px;font-weight:850}.state-planned{background:#f2f2ec;color:#737c70}.state-quoted{background:#eaf4e7;color:#2d6b43}.state-reference{background:#fff4e6;color:#996633}
+.search-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}.input,.select{width:100%;min-width:0;border:1px solid #dae4d7;border-radius:11px;background:#fff;color:#24382a;padding:12px 13px;font-size:11px}.input::placeholder{color:#98a297}.form-stack{display:grid;gap:8px}.form-label{display:grid;gap:6px;font-size:9px;font-weight:850;color:#5f6e62}.search-results{display:grid;gap:10px;margin-top:15px}.offer{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding:12px;border:1px solid #e2e9de;border-radius:14px;background:#fff}.offer-logo{width:50px;height:50px;border-radius:13px;border:1px solid #e7ede3;background:#f2f6ee;display:grid;place-items:center;color:#356747;font-size:16px;font-weight:900}.offer-title{font-size:11px;line-height:1.55;font-weight:850}.offer-store{font-size:9px;color:#758175;margin-top:3px}.offer-price{font-size:16px;letter-spacing:-.3px;font-weight:900;color:#285b3b;margin-top:7px}.offer-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.offer-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.offer-actions .btn{padding:8px 10px;font-size:9px}.confidence{display:inline-flex;align-items:center;gap:5px;padding:4px 6px;border-radius:7px;font-size:8px;font-weight:900}.confidence-exact{background:#eaf4e7;color:#2a6e45}.confidence-range{background:#f0f3e8;color:#687344}.confidence-reference{background:#fff2e4;color:#986135}.confidence-none{background:#f1f2ee;color:#677267}.muted-small{font-size:9px;color:#819081;line-height:1.7}
+.audit-list{display:grid;gap:10px}.audit-entry{padding:13px;border:1px solid #e1e8dd;border-radius:14px;background:#fbfcf9}.audit-top{display:flex;align-items:start;justify-content:space-between;gap:10px}.audit-top strong{display:block;font-size:10px;line-height:1.55}.audit-top span{font-size:8px;color:#7c897d;white-space:nowrap}.audit-entry p{font-size:9px;line-height:1.7;color:#68766b;margin:8px 0}.hash-line{display:flex;align-items:center;gap:8px;padding:8px 9px;background:#f1f4ee;border-radius:8px}.hash-line code{font:9px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;color:#31583d;min-width:0}.hash-line button{border:0;background:transparent;color:#526d58;font-size:9px;font-weight:900;padding:2px}.audit-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.audit-actions .btn{padding:8px 10px;font-size:9px}.empty{padding:22px 14px;border:1px dashed #dce6d7;border-radius:13px;color:#748174;text-align:center;font-size:10px;line-height:1.7;background:#fafbf8}
+.chain-card{background:linear-gradient(150deg,#173c2c,#244d36);color:#f5f5ea;border:1px solid #2b593d}.chain-card .card-head{border-bottom-color:#ffffff1c}.chain-card .card-head p{color:#c7d7c7}.chain-card .panel-kicker{color:#b3cbb3}.chain-card .card-body{padding:18px 20px}.chain-label{font-size:9px;font-weight:850;color:#cfddcb;display:block;margin:0 0 7px}.chain-input{background:#ffffff12;border-color:#ffffff2a;color:#fff}.chain-input::placeholder{color:#c1d0c0}.chain-state{display:flex;gap:9px;align-items:start;padding:11px 12px;border-radius:12px;background:#ffffff10;border:1px solid #ffffff16;color:#d2dfd0;font-size:9px;line-height:1.65;margin-top:12px}.chain-state i{width:7px;height:7px;border-radius:50%;background:#e8bd6c;flex-shrink:0;margin-top:5px}.chain-state.success i{background:#8ed29c}.chain-state.error i{background:#f5a08e}.chain-foot{font-size:9px;line-height:1.7;color:#c2d2c2;margin-top:13px}.chain-card .btn-primary{background:#eac18b;color:#173c2c}.chain-card .btn-primary:hover{background:#f2d2a7}.chain-card .btn-outline{background:#ffffff0b;border-color:#ffffff33;color:#f3f2e7}.chain-card .btn-outline:hover{background:#ffffff15}.details-toggle{border:0;background:transparent;color:#c5d8c6;font-size:9px;font-weight:850;text-decoration:underline;padding:0}#chainHelp{border-top:1px solid #ffffff22;margin-top:14px;padding-top:13px}#chainHelp ol{padding-left:18px;margin:8px 0}#chainHelp li{margin:6px 0;font-size:9px;line-height:1.6;color:#d3dfd1}#chainHelp a{color:#edc89b}.principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.principle{padding:18px;border:1px solid #e2e8de;border-radius:16px;background:#fff}.principle b{font-size:12px;display:block;margin-bottom:7px}.principle p{font-size:10px;color:#6e7b70;line-height:1.8;margin:0}footer{border-top:1px solid #e0e7dc;background:#fff;padding:27px 0}.foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;font-size:10px;color:#788477}.foot b{color:#1d3927}.status-line{font-size:10px;color:#617269;line-height:1.65;margin-top:10px}[hidden]{display:none!important}
+@media(max-width:900px){.wrap{width:min(100% - 32px,700px)}.nav-links{display:none}.hero-grid{grid-template-columns:1fr;gap:24px;padding:45px 0}.hero-panel{max-width:600px}.workbench-grid{grid-template-columns:1fr}.impact-strip{grid-template-columns:repeat(3,1fr)}.impact-intro{grid-column:1/-1}}
+@media(max-width:600px){.topline .wrap{align-items:flex-start;padding:8px 0;font-size:9px}.topline .right{display:none}nav{min-height:64px}.brand{font-size:17px}.nav-actions .btn-outline{display:none}.hero-grid{padding:37px 0 32px}h1{font-size:41px;letter-spacing:-2.3px}.hero-lead{font-size:12px}.hero-panel{padding:15px;border-radius:20px}.metric{padding:12px}.metric strong{font-size:22px}.section{padding:43px 0}.steps,.principles{grid-template-columns:1fr}.step{padding:18px}.impact-strip{grid-template-columns:1fr}.impact-intro{grid-column:auto}.section-head{display:block}.section-head .btn{margin-top:14px}.workbench-grid{gap:13px}.card-head,.card-body{padding-left:15px;padding-right:15px}.campaign-summary{grid-template-columns:1fr 1fr}.search-form{grid-template-columns:1fr}.search-form .btn{width:100%}.offer{grid-template-columns:42px minmax(0,1fr);gap:9px;padding:10px}.offer-logo{width:42px;height:42px}.audit-top{display:block}.audit-top span{display:block;margin-top:4px}.foot{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+</style></head>
+<body>
+<div class="topline"><div class="wrap"><div><b>FAIRBASKET</b> · Transparent community procurement</div><div class="top-badge right"><i></i> Hackathon prototype · fictional pilot data</div></div></div>
+<header><nav class="wrap">
+<a class="brand" href="/fairbasket.html" aria-label="FairBasket home"><span class="brand-mark">F</span><span>FairBasket<small>Community buying, made accountable</small></span></a>
+<div class="nav-links"><a href="#how-it-works">How it works</a><a href="#pilot">Live prototype</a><a href="#audit">Evidence log</a><a href="#onchain">On-chain record</a></div>
+<div class="nav-actions"><a class="btn btn-outline" href="/">Open Onde compro? ↗</a><a class="btn btn-primary" href="#pilot">Try the demo ↓</a></div>
+</nav></header>
+<main>
+<section class="hero"><div class="wrap hero-grid"><div>
+<div class="eyebrow"><span>✳</span> WEB3 FOR SOCIAL GOOD · TECH TRACK PILOT</div>
+<h1>Every basket matters.<br><em>Every decision can be checked.</em></h1>
+<p class="hero-lead">FairBasket helps community kitchens and small nonprofits compare essential-goods offers, preserve the evidence behind a buying decision, and publish a tamper-evident audit trail without taking custody of donations.</p>
+<div class="hero-cta"><a class="btn btn-primary" href="#pilot">Explore the working prototype <span>↘</span></a><a class="btn btn-outline" href="#onchain">See the Web3 layer</a></div>
+<div class="hero-points"><span><b>✓</b> Direct product links</span><span><b>✓</b> Price-source labels</span><span><b>✓</b> No funds held by the app</span></div>
+</div>
+<aside class="hero-panel" aria-label="Illustrative pilot summary"><div class="panel-top"><div><div class="panel-kicker">Pilot snapshot</div><h2>A community pantry’s monthly basket</h2></div><span class="demo-pill">ILLUSTRATIVE DATA</span></div>
+<div class="hero-metrics">
+<div class="metric"><span>People served · target</span><strong>20</strong><small>Essential-goods kits in this fictional scenario</small></div>
+<div class="metric"><span>Spending ceiling</span><strong>R$ 2,400</strong><small>Planning limit, not money deposited</small></div>
+<div class="metric"><span>Planning estimate</span><strong id="heroPlan">R$ 1.967,60</strong><small>Demonstration figures only</small></div>
+<div class="metric"><span>Live verified quotes</span><strong id="heroVerified">0</strong><small>Updates when you verify an offer</small></div>
+</div>
+<div class="panel-progress"><div class="progress-copy"><span>Illustrative plan vs. budget ceiling</span><b id="heroBudgetPercent">82%</b></div><div class="progress-track"><div class="progress-fill" id="heroBudgetBar"></div></div></div>
+<div class="panel-foot">No real nonprofit, purchase, donation or saving is claimed here. Replace the fictional pilot with consented data before reporting impact.</div></aside></div></section>
+
+<section class="section" id="how-it-works"><div class="wrap">
+<div class="section-head"><div><div class="kicker">A narrow problem, a practical workflow</div><h2>From shopping decisions to accountable evidence.</h2><p>Small community organisations often buy the same essentials with limited time and budget. Comparing pack sizes, sellers, delivery conditions and changing prices is tedious. FairBasket keeps the offer, source, decision and later audit trail connected.</p></div></div>
+<div class="steps">
+<article class="step"><div class="step-number">01</div><h3>Define a community need</h3><p>Set quantities and a spending ceiling for an essential-goods basket. The app never receives or moves donated funds.</p></article>
+<article class="step"><div class="step-number">02</div><h3>Compare actual offers</h3><p>Reuse Onde compro? search to find direct product pages. Distinguish listing/API values, product-page metadata, published ranges and unverified search snippets.</p></article>
+<article class="step"><div class="step-number">03</div><h3>Preserve the evidence</h3><p>Generate a SHA-256 digest for each evidence record, export the audit bundle, and optionally anchor the digest on Base Sepolia with a wallet-signed transaction.</p></article>
+</div>
+<div class="impact-strip"><div class="impact-intro"><strong>Impact we intend to measure</strong><span>These are evaluation metrics, not reported outcomes. We will measure them with a partner pilot only after consent.</span></div><div class="impact-stat"><b>Cost per kit</b><span>Compare like-for-like product totals before checkout.</span></div><div class="impact-stat"><b>Time to compare</b><span>Measure minutes from needs list to documented decision.</span></div><div class="impact-stat"><b>Evidence coverage</b><span>Share of line items with a source and reproducible record.</span></div></div>
+</div></section>
+
+<section class="section workbench" id="pilot"><div class="wrap">
+<div class="section-head"><div><div class="kicker">Try the prototype</div><h2>Build a transparent basket.</h2><p>Start with a fictional pantry, search for real product pages, link offers to a need, and create records you can export or anchor on a testnet. Search results depend on the available search-provider configuration.</p></div><span class="tag tag-demo">DEMO DATA IS LABELED</span></div>
+<div class="workbench-grid">
+<div class="card"><div class="card-head"><div><h3>01 · Community purchase plan</h3><p>Illustrative scenario · no real organisation or spend</p></div><span class="tag tag-demo">FICTIONAL PILOT</span></div>
+<div class="card-body"><div class="campaign-details"><div class="campaign-icon">✳</div><div><h4>Community Kitchen Esperança</h4><p>20 essential-goods kits · Brazil · monthly planning cycle<br>Fictional name and figures for demo use only.</p></div></div>
+<div class="campaign-summary"><div class="summary-box"><span>Budget cap</span><strong>R$ 2.400,00</strong></div><div class="summary-box"><span>Planning estimate</span><strong id="planTotal">R$ 1.967,60</strong></div><div class="summary-box"><span>Live quotes linked</span><strong id="linkedCount">0 / 8</strong></div></div>
+<div class="budget-line"><span>Illustrative plan</span><strong id="budgetText">82% of ceiling</strong></div><div class="budget-track"><div class="budget-fill" id="budgetBar"></div></div>
+<div class="data-note"><b>Important:</b> the values below are made-up planning references to demonstrate the workflow. They are not current market prices, quotations or purchases. Only an offer from the search API marked as exact can replace a planning value as a verified quote.</div>
+<div class="need-list" id="needList" aria-live="polite"></div>
+<div class="audit-actions" style="margin-top:16px"><button class="btn btn-outline" id="snapshotBtn" type="button">Create plan snapshot ↗</button><button class="btn btn-outline" id="exportBtn" type="button">Export audit bundle ↓</button></div>
+<p class="muted-small" style="margin-top:9px">The snapshot is hashed in this browser. Exported JSON lets a reviewer inspect the payload and reproduce its digest.</p></div></div>
+
+<div class="card"><div class="card-head"><div><h3>02 · Search & compare an offer</h3><p>Find a direct product page for one need.</p></div><span class="tag tag-green">LIVE SEARCH</span></div><div class="card-body">
+<form id="offerSearchForm"><div class="form-stack"><label class="form-label" for="needSelect">Which need are you pricing?<select class="select" id="needSelect" required></select></label><label class="form-label" for="offerQuery">Product or exact model<input class="input" id="offerQuery" type="search" placeholder="e.g. arroz tipo 1 pacote 5 kg" minlength="2" maxlength="120" required></label></div><div class="search-form" style="margin-top:10px"><button class="btn btn-primary" id="searchBtn" type="submit">Search direct offers ↗</button><button class="btn btn-outline" id="clearSearchBtn" type="button">Clear</button></div></form>
+<div id="searchStatus" class="status-line" role="status" aria-live="polite">Choose a need and search to load offers from Onde compro?.</div><div class="search-results" id="offerResults"></div>
+<div class="data-note" style="background:#f0f6ec;border-color:#d9e8d2;color:#527056"><b>Source discipline:</b> a number found in an indexed text snippet is a reference, not a live-confirmed price. Freight, variant, stock and checkout can change the final total.</div>
+</div></div>
+
+<div class="card" id="audit"><div class="card-head"><div><h3>03 · Evidence log</h3><p>Records created from the workflow in this browser.</p></div><span class="tag tag-green" id="recordCountTag">0 RECORDS</span></div><div class="card-body">
+<div class="audit-list" id="auditList"><div class="empty">No evidence yet. Search for an offer or create a plan snapshot to generate the first digest.</div></div>
+<div class="audit-actions" style="margin-top:14px"><button class="btn btn-outline" id="verifyBundleBtn" type="button">Verify local hashes</button><button class="btn btn-outline" id="exportAuditBtn" type="button">Download JSON ↓</button></div>
+<div class="status-line" id="auditStatus" role="status" aria-live="polite">Nothing has been anchored on-chain yet. Local hashes alone are not a blockchain record.</div>
+</div></div>
+
+<div class="card chain-card" id="onchain"><div class="card-head"><div><div class="panel-kicker">04 · Web3 accountability layer</div><h3 style="margin-top:5px">Anchor a digest on Base Sepolia</h3><p>Wallet-signed testnet transaction · no purchase funds move through this app.</p></div><span class="tag" style="background:#ffffff12;border-color:#ffffff2a;color:#f3cf9f">TESTNET</span></div>
+<div class="card-body"><label class="chain-label" for="contractAddress">Deployed FairBasketRegistry address</label><input class="input chain-input" id="contractAddress" inputmode="text" spellcheck="false" autocomplete="off" placeholder="0x… paste deployed contract address">
+<div class="audit-actions" style="margin-top:10px"><button class="btn btn-primary" id="connectWalletBtn" type="button">Connect wallet</button><button class="btn btn-outline" id="publishBtn" type="button" disabled>Publish selected record ↗</button></div>
+<div class="chain-state" id="chainStatus" role="status" aria-live="polite"><i></i><span>Demo mode. Connect a wallet, switch to Base Sepolia and provide a deployed contract address to write a real testnet transaction.</span></div>
+<div class="chain-foot">Only hashes, a public campaign identifier and the declared amount/type are written on-chain. Never put names, addresses, private donation details or unredacted receipts in public evidence payloads.</div>
+<button type="button" class="details-toggle" id="toggleChainHelp" style="margin-top:11px">How to enable the testnet write ↘</button>
+<div id="chainHelp" hidden><ol>
+<li>Open <a href="https://remix.ethereum.org/" target="_blank" rel="noopener noreferrer">Remix IDE</a> and create a Solidity file from <a href="https://github.com/jmc-dev-br/onde-compro/blob/main/contracts/FairBasketRegistry.sol" target="_blank" rel="noopener noreferrer">the contract source in this repository</a>.</li>
+<li>Compile with Solidity 0.8.24 or newer, below 0.9.0. In Deploy &amp; Run choose Injected Provider and switch your wallet to Base Sepolia.</li>
+<li>Deploy FairBasketRegistry. Use testnet ETH only. Copy the deployed address into the field above.</li>
+<li>Connect the same wallet that deployed the contract, select a non-demo evidence record, then publish it. The wallet must approve each transaction.</li>
+</ol><p class="muted-small" style="color:#c4d3c2">Base Sepolia uses chain ID 84532. Deployment and writes require testnet ETH for gas; this prototype does not send mainnet transactions.</p><a href="https://docs.base.org/base-chain/api-reference/ethereum-json-rpc-api/eth_chainId" target="_blank" rel="noopener noreferrer">Official Base chain-ID documentation ↗</a></div>
+</div></div>
+</div></div></section>
+
+<section class="section"><div class="wrap"><div class="section-head"><div><div class="kicker">Trust by design</div><h2>Web3 is a verification layer, not a buzzword.</h2><p>The product remains useful if nobody connects a wallet. A testnet transaction is an optional tamper-evident anchor, not a claim that the source price is correct or that delivery occurred.</p></div></div>
+<div class="principles"><div class="principle"><b>Evidence stays inspectable</b><p>Each record exports its payload, source link, timestamp and digest. Reviewers can reproduce the SHA-256 hash as well as check any on-chain transaction.</p></div><div class="principle"><b>Privacy before publicity</b><p>Personal details and unredacted receipts do not belong on a public chain. The contract stores a digest, type and declared amount only; the source record is reviewed separately.</p></div><div class="principle"><b>Impact claims are measurable</b><p>We do not claim savings, partner adoption or deliveries from fictional data. A pilot will measure comparable line-item costs, comparison time and evidence coverage.</p></div></div>
+</div></section>
+</main>
+<footer><div class="wrap foot"><div><b>FairBasket</b> · A social-impact prototype built on the Onde compro? foundation.</div><div><a href="/">Onde compro?</a> · <a href="https://dorahacks.io/hackathon/web3-social-good-2026/build" target="_blank" rel="noopener noreferrer">Hackathon submission page ↗</a></div><div>Prototype only · no real funds held</div></div></footer>
+
+<script type="module">
+const STORAGE_KEY='fairbasket-demo-v1';
+const CHAIN_ID='0x14a34', CHAIN_NAME='Base Sepolia';
+const CAMPAIGN_NAME='Community Kitchen Esperança · fictional pilot';
+const CAMPAIGN_KEY='fairbasket-community-kitchen-esperanca-2026-pilot';
+const BUDGET_CENTS=240000, TARGET_KITS=20;
+const REGISTRY_ABI=[
+ 'function registerCampaign(bytes32 campaignId, bytes32 nameHash, uint256 budgetCapCents, uint32 targetUnits) external',
+ 'function recordEvidence(bytes32 campaignId, bytes32 evidenceHash, uint8 evidenceType, uint256 amountCents) external',
+ 'function campaignExists(bytes32) view returns (bool)',
+ 'function campaignCreator(bytes32) view returns (address)'
+];
+const NEED_SEED=[
+ {id:'rice5',name:'Rice · 5 kg',qty:20,unit:'bags',reference:25.90,search:'arroz tipo 1 pacote 5 kg'},
+ {id:'beans1',name:'Beans · 1 kg',qty:20,unit:'packs',reference:8.90,search:'feijão carioca 1 kg'},
+ {id:'oil900',name:'Cooking oil · 900 ml',qty:20,unit:'bottles',reference:7.49,search:'óleo de soja 900 ml'},
+ {id:'pasta500',name:'Pasta · 500 g',qty:40,unit:'packs',reference:4.25,search:'macarrão 500 g'},
+ {id:'milk400',name:'Powdered milk · 400 g',qty:20,unit:'packs',reference:18.90,search:'leite em pó 400 g'},
+ {id:'sugar1',name:'Sugar · 1 kg',qty:20,unit:'packs',reference:4.99,search:'açúcar refinado 1 kg'},
+ {id:'coffee500',name:'Coffee · 500 g',qty:20,unit:'packs',reference:18.50,search:'café torrado moído 500 g'},
+ {id:'flour1',name:'Wheat flour · 1 kg',qty:20,unit:'packs',reference:5.20,search:'farinha de trigo 1 kg'}
+];
+const $=id=>document.getElementById(id);
+const money=value=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(value)||0);
+const fmtNum=value=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:2}).format(Number(value)||0);
+const state={needs:NEED_SEED.map(n=>({...n,offer:null})),records:[],offers:[],selectedEvidenceId:null,provider:null,signer:null,address:'',ethers:null,pending:false};
+function setText(id,value){const node=$(id);if(node)node.textContent=String(value);}
+function safeHttps(value){try{const u=new URL(String(value||''));return u.protocol==='https:'?u.href:null;}catch{return null;}}
+function confidenceOf(item){
+ if(item&&(item.priceSource==='listing'||item.priceSource==='page_live')&&Number.isFinite(item.priceValue)&&item.priceValue>0)return {key:'exact',label:item.priceSource==='listing'?'Marketplace API price':'Price found on product page',exact:true};
+ if(item&&item.priceSource==='page_range'&&Number.isFinite(item.priceMin)&&Number.isFinite(item.priceMax))return {key:'range',label:'Published price range',exact:false};
+ if(item&&(item.priceSource==='snippet'||item.priceSource==='snippet_range')&&item.priceMention)return {key:'reference',label:'Indexed reference · unverified',exact:false};
+ return {key:'none',label:'No reliable price found',exact:false};
+}
+async function sha256(value){
+ const bytes=new TextEncoder().encode(JSON.stringify(value));
+ const digest=await crypto.subtle.digest('SHA-256',bytes);
+ return '0x'+Array.from(new Uint8Array(digest)).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+}
+async function saveState(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({needs:state.needs,records:state.records,selectedEvidenceId:state.selectedEvidenceId}));}
+ catch{setText('auditStatus','Browser storage is unavailable. Export the audit bundle to keep these demo records.');}
+}
+function loadState(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;
+  const saved=JSON.parse(raw);
+  if(Array.isArray(saved.needs)&&saved.needs.length===NEED_SEED.length){
+   state.needs=NEED_SEED.map(seed=>{const previous=saved.needs.find(item=>item.id===seed.id)||{};return {...seed,offer:previous.offer||null};});
+  }
+  if(Array.isArray(saved.records))state.records=saved.records.filter(item=>item&&item.hash&&item.payload);
+  state.selectedEvidenceId=saved.selectedEvidenceId||null;
+ }catch{/* Continue with a clean prototype session. */}
+}
+function planEstimate(){return state.needs.reduce((sum,item)=>sum+(item.qty*item.reference),0);}
+function verifiedNeedCount(){return state.needs.filter(item=>item.offer&&item.offer.confidence==='exact'&&Number.isFinite(item.offer.priceValue)).length;}
+function renderNeeds(){
+ const host=$('needList');host.replaceChildren();
+ state.needs.forEach(item=>{
+  const row=document.createElement('div');row.className='need-row';
+  const left=document.createElement('div');
+  const name=document.createElement('div');name.className='need-name';name.textContent=item.name;
+  const meta=document.createElement('div');meta.className='need-meta';meta.textContent=String(item.qty)+' '+item.unit+' · planning reference '+money(item.reference)+'/unit';
+  const badge=document.createElement('span');badge.className='need-state '+(item.offer?(item.offer.confidence==='exact'?'state-quoted':'state-reference'):'state-planned');badge.textContent=item.offer?(item.offer.confidence==='exact'?'Offer linked':'Reference only'):'Needs a quote';
+  left.append(name,meta,badge);
+  const right=document.createElement('div');right.className='need-values';
+  const amount=document.createElement('strong');amount.textContent=item.offer&&item.offer.confidence==='exact'?money(item.offer.priceValue*item.qty):money(item.reference*item.qty);
+  const unit=document.createElement('span');unit.textContent=item.offer&&item.offer.confidence==='exact'?'linked quote total':'planning total';
+  right.append(amount,unit);row.append(left,right);host.append(row);
+ });
+ const estimate=planEstimate(),pct=Math.min(100,estimate/BUDGET_CENTS*10000);
+ setText('planTotal',money(estimate));setText('heroPlan',money(estimate));setText('linkedCount',verifiedNeedCount()+' / '+state.needs.length);setText('heroVerified',verifiedNeedCount());
+ setText('budgetText',fmtNum(pct)+'% of ceiling');setText('heroBudgetPercent',fmtNum(pct)+'%');$('budgetBar').style.width=pct+'%';$('heroBudgetBar').style.width=pct+'%';
+}
+function populateNeedSelect(){
+ const select=$('needSelect');select.replaceChildren();
+ state.needs.forEach(item=>{const opt=document.createElement('option');opt.value=item.id;opt.textContent=item.name+' · '+item.qty+' units';select.append(opt);});
+}
+function confidenceMarkup(item){
+ const confidence=confidenceOf(item);
+ const span=document.createElement('span');span.className='confidence confidence-'+confidence.key;span.textContent=confidence.label;return span;
+}
+function renderOffers(items){
+ const host=$('offerResults');host.replaceChildren();state.offers=Array.isArray(items)?items.slice(0,8):[];
+ if(!state.offers.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='No direct product pages returned. Try the brand, package size or exact model. The demo will not invent a price.';host.append(empty);return;}
+ state.offers.forEach(item=>{
+  const article=document.createElement('article');article.className='offer';
+  const logo=document.createElement('div');logo.className='offer-logo';logo.textContent=String(item.store||item.domain||'L').trim().charAt(0).toUpperCase();
+  const body=document.createElement('div');
+  const title=document.createElement('div');title.className='offer-title';title.textContent=item.title||'Product offer';
+  const store=document.createElement('div');store.className='offer-store';store.textContent=(item.store||item.domain||'Unknown store')+' · '+(item.directProductPage?'direct product page':'related result');
+  const price=document.createElement('div');price.className='offer-price';price.textContent=item.priceMention||'Price not identified';
+  const meta=document.createElement('div');meta.className='offer-meta';meta.append(confidenceMarkup(item));
+  if(item.priceSource==='snippet'||item.priceSource==='snippet_range'){const warning=document.createElement('span');warning.className='confidence confidence-none';warning.textContent='May be stale';meta.append(warning);}
+  const actions=document.createElement('div');actions.className='offer-actions';
+  const use=document.createElement('button');use.type='button';use.className='btn btn-primary';use.textContent='Save evidence';use.addEventListener('click',()=>addOfferEvidence(item));
+  const linkUrl=safeHttps(item.url);if(linkUrl){const link=document.createElement('a');link.className='btn btn-outline';link.href=linkUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open offer ↗';actions.append(link);}
+  actions.append(use);body.append(title,store,price,meta,actions);article.append(logo,body);host.append(article);
+ });
+}
+function renderRecords(){
+ const host=$('auditList');host.replaceChildren();
+ if(!state.records.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='No evidence yet. Search for an offer or create a plan snapshot to generate the first digest.';host.append(empty);}
+ state.records.forEach(record=>{
+  const entry=document.createElement('article');entry.className='audit-entry';
+  const top=document.createElement('div');top.className='audit-top';
+  const title=document.createElement('strong');title.textContent=record.title;
+  const date=document.createElement('span');date.textContent=new Date(record.createdAt).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});top.append(title,date);
+  const details=document.createElement('p');details.textContent=record.summary;
+  const hashLine=document.createElement('div');hashLine.className='hash-line';
+  const code=document.createElement('code');code.textContent=record.hash;
+  const copy=document.createElement('button');copy.type='button';copy.textContent='Copy';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(record.hash);setText('auditStatus','Digest copied. This is a local evidence hash until a transaction is confirmed.');}catch{setText('auditStatus','Copy unavailable. Select the digest text to copy it.');}});
+  hashLine.append(code,copy);
+  const actions=document.createElement('div');actions.className='audit-actions';
+  const select=document.createElement('button');select.type='button';select.className='btn '+(state.selectedEvidenceId===record.id?'btn-primary':'btn-outline');select.textContent=state.selectedEvidenceId===record.id?'Selected for on-chain anchor':'Select for on-chain anchor';select.addEventListener('click',()=>{state.selectedEvidenceId=record.id;saveState();renderRecords();});
+  const verify=document.createElement('button');verify.type='button';verify.className='btn btn-outline';verify.textContent='Verify digest';verify.addEventListener('click',async()=>{
+   verify.disabled=true;const recomputed=await sha256(record.payload);verify.disabled=false;const ok=recomputed.toLowerCase()===record.hash.toLowerCase();
+   setText('auditStatus',ok?'Digest verified locally: the payload matches this SHA-256 hash. This does not prove the claim is true.':'Digest mismatch: this payload no longer matches its saved digest.');setChainStatus(ok?'Record integrity verified locally. Blockchain anchoring is separate.':'Digest mismatch detected.',!ok);
+  });
+  actions.prepend(select,verify);
+  if(record.txHash){const tx=document.createElement('a');tx.className='btn btn-outline';tx.href='https://sepolia.basescan.org/tx/'+encodeURIComponent(record.txHash);tx.target='_blank';tx.rel='noopener noreferrer';tx.textContent='View testnet transaction ↗';actions.append(tx);}
+  else{const publish=document.createElement('button');publish.type='button';publish.className='btn btn-dark';publish.textContent='Publish on Base Sepolia ↗';publish.addEventListener('click',()=>publishRecord(record));actions.append(publish);}
+  entry.append(top,details,hashLine,actions);host.append(entry);
+ });
+ setText('recordCountTag',state.records.length+' RECORD'+(state.records.length===1?'':'S'));
+ $('publishBtn').disabled=!state.records.some(record=>record.id===state.selectedEvidenceId)||state.pending;
+}
+function setChainStatus(message,isError){
+ const node=$('chainStatus');node.classList.toggle('error',!!isError);node.classList.toggle('success',!isError);
+ const span=node.querySelector('span');if(span)span.textContent=message;
+}
+async function connectWallet(){
+ if(!window.ethereum)throw new Error('No injected wallet found. Install MetaMask or another EVM wallet for the optional Base Sepolia transaction; the local prototype still works without it.');
+ const mod=await import('https://cdn.jsdelivr.net/npm/ethers@6.17.0/+esm');state.ethers=mod.ethers||mod;
+ try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:CHAIN_ID}]});}
+ catch(error){
+  if(error&&error.code===4902){
+   await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:CHAIN_ID,chainName:CHAIN_NAME,nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18},rpcUrls:['https://sepolia.base.org'],blockExplorerUrls:['https://sepolia.basescan.org']}]});
+   await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:CHAIN_ID}]});
+  }else{throw error;}
+ }
+ state.provider=new state.ethers.BrowserProvider(window.ethereum);
+ await window.ethereum.request({method:'eth_requestAccounts'});
+ state.signer=await state.provider.getSigner();state.address=await state.signer.getAddress();
+ setText('connectWalletBtn',state.address.slice(0,6)+'…'+state.address.slice(-4));
+ setChainStatus('Wallet connected on Base Sepolia: '+state.address+'. Use testnet ETH only; each write requires confirmation.',false);
+ return state.signer;
+}
+function getCampaignId(){return state.ethers.id(CAMPAIGN_KEY);}
+function canonicalizeUrl(raw){
+ const value=safeHttps(raw);if(!value)return '';
+ try{const u=new URL(value);u.hash='';u.search='';return u.href;}catch{return '';}
+}
+async function addRecord(payload,meta){
+ const hash=await sha256(payload);
+ const record={id:(crypto.randomUUID?crypto.randomUUID():('rec-'+Date.now()+'-'+Math.random().toString(36).slice(2,8))),createdAt:new Date().toISOString(),title:meta.title,summary:meta.summary,type:meta.type,amountCents:meta.amountCents||0,priceSource:meta.priceSource||null,confidence:meta.confidence||'none',txHash:null,blockNumber:null,payload,hash};
+ state.records.unshift(record);state.selectedEvidenceId=record.id;await saveState();renderRecords();return record;
+}
+async function addOfferEvidence(item){
+ const need=state.needs.find(n=>n.id===$('needSelect').value);if(!need){setText('searchStatus','Choose a need first.');return;}
+ const confidence=confidenceOf(item),priceValue=confidence.exact?Number(item.priceValue):null,sourceUrl=canonicalizeUrl(item.url);
+ const payload={schema:'fairbasket.evidence.v1',campaign:CAMPAIGN_KEY,evidenceType:'quote',product:{title:String(item.title||'').slice(0,180),store:String(item.store||item.domain||'').slice(0,90),sourceUrl},price:{display:String(item.priceMention||''),value:priceValue,minimum:Number.isFinite(item.priceMin)?item.priceMin:null,maximum:Number.isFinite(item.priceMax)?item.priceMax:null,currency:'BRL',source:String(item.priceSource||'none'),confidence:confidence.key},capturedAt:new Date().toISOString(),disclaimer:'Captures a search result only. Price, stock, freight, variant and final checkout amount must be checked with the seller.'};
+ const record=await addRecord(payload,{title:'Offer evidence · '+need.name,summary:(item.store||item.domain||'Store')+' · '+(item.priceMention||'No price identified')+' · '+confidence.label+'. '+(confidence.exact?'Saved as a price-source record, not proof of final checkout total.':'Saved as an unverified reference; it does not count toward verified budget totals.'),type:0,amountCents:confidence.exact?Math.round(priceValue*100):0,priceSource:item.priceSource||null,confidence:confidence.key});
+ if(confidence.exact){need.offer={title:item.title,store:item.store||item.domain,sourceUrl,priceValue,priceMention:item.priceMention,source:item.priceSource,confidence:'exact',evidenceId:record.id};setText('searchStatus','Saved an exact price-source record for '+need.name+'. This is a quote/source record, not proof of purchase or delivery.');}
+ else{need.offer={title:item.title,store:item.store||item.domain,sourceUrl,priceValue:null,priceMention:item.priceMention||'',source:item.priceSource||null,confidence:confidence.key,evidenceId:record.id};setText('searchStatus','Saved the offer as a reference only. It will not count as a verified quote or be used to claim savings.');}
+ await saveState();renderNeeds();renderRecords();
+}
+async function createPlanSnapshot(){
+ const payload={schema:'fairbasket.snapshot.v1',campaign:{key:CAMPAIGN_KEY,name:CAMPAIGN_NAME,fictional:true,targetKits:TARGET_KITS,budgetCapCents:BUDGET_CENTS},needs:state.needs.map(item=>({id:item.id,name:item.name,quantity:item.qty,unit:item.unit,planningReferenceUnitBRL:item.reference,linkedOffer:item.offer?{title:item.offer.title,store:item.offer.store,sourceUrl:item.offer.sourceUrl,priceBRL:item.offer.priceValue,priceSource:item.offer.source,confidence:item.offer.confidence}:null})),counts:{lineItems:state.needs.length,verifiedQuotes:verifiedNeedCount()},createdAt:new Date().toISOString(),disclaimer:'Fictional pilot snapshot. Planning references are made-up for interface demonstration; this is not a real NGO, purchase, donation, saving or delivery claim.'};
+ await addRecord(payload,{title:'Plan snapshot · fictional pilot',summary:verifiedNeedCount()+' verified price sources linked out of '+state.needs.length+' line items. Planning values remain illustrative; no real spend is claimed.',type:1,amountCents:BUDGET_CENTS,confidence:'snapshot'});
+ setText('auditStatus','Plan snapshot created and hashed locally. Select it and publish to Base Sepolia only after deploying the registry contract.');
+ setChainStatus('Plan snapshot created locally. It is not on-chain yet; select Publish on Base Sepolia after contract deployment.',false);
+}
+function downloadJson(fileName,data){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fileName;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function exportBundle(){
+ const bundle={schema:'fairbasket.audit-bundle.v1',exportedAt:new Date().toISOString(),campaign:{key:CAMPAIGN_KEY,name:CAMPAIGN_NAME,fictional:true,targetKits:TARGET_KITS,budgetCapCents:BUDGET_CENTS},disclaimer:'This bundle includes fictional planning data unless an entry links to a separately sourced offer. A digest proves payload integrity, not the truth of a claim. Chain status is recorded only for transactions actually confirmed by the wallet.',records:state.records.map(record=>({id:record.id,createdAt:record.createdAt,title:record.title,type:record.type,amountCents:record.amountCents,priceSource:record.priceSource,confidence:record.confidence,payload:record.payload,sha256:record.hash,transactionHash:record.txHash,blockNumber:record.blockNumber}))};
+ downloadJson('fairbasket-audit-bundle.json',bundle);setText('auditStatus','Audit bundle downloaded. Keep the JSON file and digest together when sharing evidence.');
+}
+async function verifyAllHashes(){
+ if(!state.records.length){setText('auditStatus','There are no records to verify yet.');return;}
+ setText('auditStatus','Verifying '+state.records.length+' record digest(s)…');let bad=0;
+ for(const record of state.records){if((await sha256(record.payload)).toLowerCase()!==String(record.hash).toLowerCase())bad++;}
+ const message=bad===0?'All '+state.records.length+' local payload digest(s) match. Hash integrity does not prove the claims inside are true.':bad+' digest mismatch(es) found. Do not publish changed records.';
+ setText('auditStatus',message);setChainStatus(message,bad>0);
+}
+async function publishRecord(record){
+ if(state.pending)return;
+ const address=$('contractAddress').value.trim();
+ if(!state.ethers||!state.signer){try{await connectWallet();}catch(error){setChainStatus(error.message||'Wallet connection failed.',true);return;}}
+ if(!state.ethers.isAddress(address)){setChainStatus('Paste the deployed FairBasketRegistry contract address first. The source is in the repository; this site does not deploy it automatically.',true);return;}
+ if((await state.provider.getNetwork()).chainId!==84532n){setChainStatus('Switch the wallet to Base Sepolia before writing.',true);return;}
+ state.pending=true;renderRecords();$('connectWalletBtn').disabled=true;
+ try{
+  const contract=new state.ethers.Contract(address,REGISTRY_ABI,state.signer),campaignId=getCampaignId(),exists=await contract.campaignExists(campaignId),account=await state.signer.getAddress();
+  if(!exists){
+   setChainStatus('Awaiting wallet confirmation to register the pilot campaign…',false);
+   const txCreate=await contract.registerCampaign(campaignId,state.ethers.id(CAMPAIGN_NAME),BUDGET_CENTS,TARGET_KITS);
+   setChainStatus('Campaign transaction sent: '+txCreate.hash+'. Waiting for confirmation…',false);await txCreate.wait();
+  }else{
+   const creator=await contract.campaignCreator(campaignId);
+   if(String(creator).toLowerCase()!==String(account).toLowerCase())throw new Error('This campaign is already registered by another wallet. Use the original creator wallet or deploy a fresh test contract.');
+  }
+  setChainStatus('Awaiting wallet confirmation to anchor the selected record…',false);
+  const tx=await contract.recordEvidence(campaignId,record.hash,record.type,BigInt(Math.max(0,Math.round(Number(record.amountCents)||0))));
+  setChainStatus('Evidence transaction sent: '+tx.hash+'. Waiting for confirmation…',false);
+  const receipt=await tx.wait();record.txHash=tx.hash;record.blockNumber=Number(receipt.blockNumber);await saveState();renderRecords();
+  setChainStatus('Confirmed on Base Sepolia in block '+receipt.blockNumber+'. Transaction: '+tx.hash,false);
+  setText('auditStatus','A real testnet transaction was confirmed. It records the digest and declared type/amount; it does not independently verify the source claim.');
+ }catch(error){
+  const reason=error&&error.shortMessage?error.shortMessage:(error&&error.message?error.message:'Transaction failed or was rejected.');
+  setChainStatus(reason,true);setText('auditStatus','No successful on-chain record was confirmed. Check network, contract address, creator wallet and testnet gas.');
+ }finally{state.pending=false;$('connectWalletBtn').disabled=false;renderRecords();}
+}
+async function searchOffers(query){
+ $('searchBtn').disabled=true;setText('searchStatus','Searching for direct product pages and available price sources…');$('offerResults').replaceChildren();
+ try{
+  const response=await fetch('/api/search?q='+encodeURIComponent(query),{headers:{'Accept':'application/json'}});const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.message||'The search API could not complete this query.');
+  const items=Array.isArray(data.results)?data.results.filter(item=>safeHttps(item.url)&&item.directProductPage!==false):[];renderOffers(items);
+  setText('searchStatus',items.length?'Found '+items.length+' candidate offer(s). Each source is labelled; prices are never guessed.':'No matching direct product page was returned. Try a brand/model or different package size.');
+ }catch(error){renderOffers([]);setText('searchStatus',(error&&error.message?error.message:'Search unavailable')+' This does not create a real quotation.');}
+ finally{$('searchBtn').disabled=false;}
+}
+$('offerSearchForm').addEventListener('submit',event=>{event.preventDefault();const query=$('offerQuery').value.trim();if(query.length>=2)searchOffers(query);});
+$('clearSearchBtn').addEventListener('click',()=>{$('offerQuery').value='';$('offerResults').replaceChildren();setText('searchStatus','Choose a need and search to load offers from Onde compro?.');});
+$('needSelect').addEventListener('change',()=>{const need=state.needs.find(item=>item.id===$('needSelect').value);if(need&&need.search)$('offerQuery').value=need.search;});
+$('snapshotBtn').addEventListener('click',()=>createPlanSnapshot().catch(error=>setText('auditStatus','Could not create snapshot: '+error.message)));
+$('exportBtn').addEventListener('click',exportBundle);$('exportAuditBtn').addEventListener('click',exportBundle);$('verifyBundleBtn').addEventListener('click',()=>verifyAllHashes().catch(error=>setText('auditStatus','Verification failed: '+error.message)));
+$('connectWalletBtn').addEventListener('click',async()=>{try{await connectWallet();}catch(error){setChainStatus(error&&error.message?error.message:'Wallet connection failed.',true);}});
+$('publishBtn').addEventListener('click',()=>{const selected=state.records.find(record=>record.id===state.selectedEvidenceId);if(selected)publishRecord(selected);});
+$('toggleChainHelp').addEventListener('click',()=>{$('chainHelp').hidden=!$('chainHelp').hidden;$('toggleChainHelp').textContent=$('chainHelp').hidden?'How to enable the testnet write ↘':'Hide testnet setup ↑';});
+if(window.ethereum){
+ window.ethereum.on?.('accountsChanged',()=>{state.signer=null;state.provider=null;state.address='';setText('connectWalletBtn','Connect wallet');setChainStatus('Wallet account changed. Reconnect before submitting a transaction.',false);});
+ window.ethereum.on?.('chainChanged',()=>{state.signer=null;state.provider=null;state.address='';setText('connectWalletBtn','Connect wallet');setChainStatus('Wallet network changed. Reconnect to Base Sepolia before writing.',false);});
+}
+loadState();populateNeedSelect();$('offerQuery').value=state.needs[0].search;renderNeeds();renderRecords();
+</script>
+</body></html>
