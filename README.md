@@ -31,6 +31,19 @@ A página inicial inclui um chat contextual para ajudar a comparar as ofertas da
 - A explicação de possível preço menor usa sinais textuais (promoção, cupom, Pix, frete, usado, kit ou importado). Só é exibida como indício quando a fonte contém uma menção correspondente; isso não prova que a oferta seja a melhor.
 - O usuário deve confirmar modelo/variante, vendedor, condição, estoque, frete, prazo, garantia e valor final na página da loja. A compra ocorre fora do Onde compro?.
 
+## FairBasket — projeto de impacto social
+
+Este repositório também inclui o protótipo de hackathon **FairBasket**, uma experiência de compras comunitárias transparentes que reaproveita a busca de produtos do Onde compro?.
+
+- Demo pública: https://onde-compro.pages.dev/fairbasket.html
+- Contrato Solidity: contracts/FairBasketRegistry.sol
+- Resumo, pitch e roteiro de apresentação: HACKATHON-SUBMISSION.md
+- Passos para publicar o contrato de teste: FAIRBASKET-DEPLOY.md
+
+O protótipo começa com um cenário fictício explicitamente identificado. Ele permite buscar ofertas reais pela API existente, marcar a fonte de preço, gerar um registro com SHA-256, exportar um pacote JSON e, após implantação manual do contrato e conexão de uma carteira de teste, ancorar o hash na Base Sepolia. Não movimenta doações ou dinheiro de compras.
+
+**Importante:** a interface do site e o contrato fonte estão no repositório, mas a implantação do contrato e a transação de teste precisam ser concluídas com uma carteira do proprietário antes de afirmar que existe registro on-chain. Os valores de planejamento fictícios não são preços reais nem métricas de economia.
+
 ## Configuração da API
 
 1. Gere uma API key em https://app.tavily.com/.
