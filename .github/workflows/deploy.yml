@@ -55,6 +55,14 @@ jobs:
           PY
           node --check /tmp/fairbasket-check.mjs
 
+      - name: Compilar contrato FairBasket
+        if: steps.credentials.outputs.configured == 'true'
+        shell: bash
+        run: |
+          mkdir -p /tmp/fairbasket-solc
+          npx --yes solc@0.8.30 --bin --abi contracts/FairBasketRegistry.sol -o /tmp/fairbasket-solc
+          echo "FairBasketRegistry compiled successfully."
+
       - name: Preparar arquivos estáticos
         if: steps.credentials.outputs.configured == 'true'
         shell: bash
