@@ -114,6 +114,7 @@ jobs:
           fi
 
       - name: Publicar no Cloudflare Pages
+        id: deploy_pages
         if: steps.credentials.outputs.configured == 'true'
         uses: cloudflare/wrangler-action@v4
         with:
@@ -122,20 +123,20 @@ jobs:
           command: pages deploy dist --project-name=onde-compro --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Smoke-test published FairBasket assets
+      - name: Smoke-test deployed FairBasket assets
         if: steps.credentials.outputs.configured == 'true'
         shell: bash
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy_pages.outputs.deployment-url }}
+          ALIAS_URL: ${{ steps.deploy_pages.outputs.pages-deployment-alias-url }}
         run: |
           set -euo pipefail
-          BASE_URL="https://onde-compro.pages.dev"
+          BASE_URL="$DEPLOYMENT_URL"
+          if [[ -z "$BASE_URL" ]]; then BASE_URL="https://onde-compro.pages.dev"; fi
           READY=false
           for attempt in $(seq 1 12); do
-            echo "Checking the published FairBasket assets (attempt $attempt/12)…"
-            if curl --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html \
-              && grep -q "Spend wisely." /tmp/published-fairbasket.html \
-              && grep -q "Deploy test registry" /tmp/published-fairbasket.html \
-              && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html \
-              && curl --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
+            echo "Checking the immutable deployed URL (attempt $attempt/12): $BASE_URL"
+            if curl --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html && grep -q "Spend wisely." /tmp/published-fairbasket.html && grep -q "Deploy test registry" /tmp/published-fairbasket.html && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html && curl --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
               if python - <<'PY'
           import json
           from pathlib import Path
@@ -145,7 +146,7 @@ jobs:
           assert isinstance(artifact.get("abi"), list) and artifact["abi"], "missing ABI"
           bytecode = artifact.get("bytecode", "")
           assert isinstance(bytecode, str) and bytecode.startswith("0x") and len(bytecode) > 100, "missing bytecode"
-          print("Published FairBasket page and compiled Base Sepolia contract artifact passed smoke tests.")
+          print("Deployed FairBasket page and compiled Base Sepolia contract artifact passed smoke tests.")
           PY
               then
                 READY=true
@@ -155,7 +156,22 @@ jobs:
             sleep 5
           done
           if [[ "$READY" != "true" ]]; then
-            echo "Fresh FairBasket assets did not pass smoke tests after 12 attempts." >&2
-            echo "The deployment may be successful while the production alias is still serving stale assets." >&2
+            echo "The immutable deployment URL did not pass the FairBasket smoke test after 12 attempts." >&2
             exit 1
+          fi
+
+          # The stable/branch alias may take longer to receive the new deployment.
+          # A delayed alias is reported as a warning; the immutable deployed URL above is the required check.
+          if [[ -n "$ALIAS_URL" && "$ALIAS_URL" != "$BASE_URL" ]]; then
+            ALIAS_READY=false
+            for attempt in $(seq 1 6); do
+              if curl --fail --silent --show-error "$ALIAS_URL/fairbasket.html" -o /tmp/fairbasket-alias.html && grep -q "Spend wisely." /tmp/fairbasket-alias.html && grep -q "Deploy test registry" /tmp/fairbasket-alias.html; then
+                ALIAS_READY=true
+                break
+              fi
+              sleep 5
+            done
+            if [[ "$ALIAS_READY" != "true" ]]; then
+              echo "::warning::The immutable deployment passed, but the stable Pages alias has not yet served the new FairBasket version: $ALIAS_URL"
+            fi
           fi
