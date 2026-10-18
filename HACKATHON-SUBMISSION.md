@@ -27,7 +27,8 @@ Web3 is intentionally narrow: it is used for tamper-evident evidence anchoring, 
 - The browser demo uses a fictional “Community Kitchen Esperança” scenario with eight essential-goods line items and a R$ 2,400 budget ceiling.
 - Fictional planning values are explicitly labelled; they are never presented as current market prices.
 - A quote can be linked to a need, hashed, displayed in an evidence log and exported as JSON.
-- The UI supports MetaMask-compatible wallets on Base Sepolia and calls the FairBasketRegistry contract once a contract is deployed and configured.
+- If live search is unavailable, a separate simulated walkthrough lets a reviewer exercise the evidence/hash/export flow; those entries are explicitly marked simulated and never count as exact-source quotations.
+- The build publishes its compiled contract artifact, so the UI can deploy FairBasketRegistry directly to Base Sepolia with an injected wallet; the user still approves every transaction.
 - A local digest remains labelled local until the wallet transaction is confirmed and mined.
 - No donations, balances, tokens or purchase funds are held by the app.
 
@@ -61,10 +62,10 @@ We will not claim percentage savings, beneficiary reach, partner endorsement or 
 
 ## Recommended demo flow
 1. Open the FairBasket page and point out that the default scenario is fictional, not a claimed partner.
-2. Select “Rice · 5 kg” and search “arroz tipo 1 pacote 5 kg”.
-3. Compare source labels. Save a live result as evidence; explain why an indexed snippet does not count as a confirmed price.
+2. Select “Rice · 5 kg” and attempt a live search for “arroz tipo 1 pacote 5 kg”.
+3. Compare source labels. Save a live result as evidence; explain why an indexed snippet does not count as a confirmed price. If live search fails, use “Load simulated walkthrough” only to demonstrate the UI and label it as simulated.
 4. Create a plan snapshot, download the JSON audit bundle and use “Verify digest” to show that the payload reproduces the SHA-256 hash.
-5. If the registry has been deployed on Base Sepolia, connect the test wallet, select the record and publish it. Open the BaseScan transaction link.
+5. Use “Deploy test registry” to deploy the compiled contract to Base Sepolia, approve the wallet transaction, select a record and publish it. Only claim a chain write after the interface shows a confirmed transaction and the BaseScan link opens.
 6. Explain the metrics for a real pilot and the limits of the current demo.
 
 ## Track recommendation
@@ -72,6 +73,9 @@ Submit to Tech Track only after at least one real Base Sepolia transaction is co
 
 ## Draft project summary for DoraHacks
 FairBasket is a transparent community-procurement pilot that helps small nonprofits compare essential-goods offers and preserve verifiable evidence for purchase decisions. The prototype combines direct product discovery, explicit price-source confidence, exportable SHA-256 evidence bundles and an optional Base Sepolia anchoring contract. It never holds donation funds; Web3 makes evidence integrity independently checkable, rather than claiming that a price or delivery is automatically true. The demo uses clearly labelled fictional planning data, and the next validation step is a consented pilot measured by quote coverage, comparison time, like-for-like cost variance and audit completeness.
+
+## Demo video script
+- Timed 3-minute English narration and on-screen actions: FAIRBASKET-DEMO-SCRIPT.md
 
 ## Links
 - Prototype: https://onde-compro.pages.dev/fairbasket.html
