@@ -134,9 +134,9 @@ jobs:
           BASE_URL="$DEPLOYMENT_URL"
           if [[ -z "$BASE_URL" ]]; then BASE_URL="https://onde-compro.pages.dev"; fi
           READY=false
-          for attempt in $(seq 1 12); do
+          for attempt in $(seq 1 4); do
             echo "Checking the immutable deployed URL (attempt $attempt/12): $BASE_URL"
-            if curl --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html && grep -q "Spend wisely." /tmp/published-fairbasket.html && grep -q "Deploy test registry" /tmp/published-fairbasket.html && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html && curl --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
+            if curl --connect-timeout 5 --max-time 10 --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html && grep -q "Spend wisely." /tmp/published-fairbasket.html && grep -q "Deploy test registry" /tmp/published-fairbasket.html && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html && curl --connect-timeout 5 --max-time 10 --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
               if python - <<'PY'
           import json
           from pathlib import Path
@@ -153,7 +153,7 @@ jobs:
                 break
               fi
             fi
-            sleep 5
+            sleep 3
           done
           if [[ "$READY" != "true" ]]; then
             echo "The immutable deployment URL did not pass the FairBasket smoke test after 12 attempts." >&2
@@ -165,7 +165,7 @@ jobs:
           if [[ -n "$ALIAS_URL" && "$ALIAS_URL" != "$BASE_URL" ]]; then
             ALIAS_READY=false
             for attempt in $(seq 1 6); do
-              if curl --fail --silent --show-error "$ALIAS_URL/fairbasket.html" -o /tmp/fairbasket-alias.html && grep -q "Spend wisely." /tmp/fairbasket-alias.html && grep -q "Deploy test registry" /tmp/fairbasket-alias.html; then
+              if curl --connect-timeout 4 --max-time 8 --fail --silent --show-error "$ALIAS_URL/fairbasket.html" -o /tmp/fairbasket-alias.html && grep -q "Spend wisely." /tmp/fairbasket-alias.html && grep -q "Deploy test registry" /tmp/fairbasket-alias.html; then
                 ALIAS_READY=true
                 break
               fi
