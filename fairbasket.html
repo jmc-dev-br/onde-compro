@@ -245,6 +245,13 @@ footer{background:#fff;border-color:#dfe7dc}
  html{scroll-behavior:auto}
  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+.confidence-simulated{background:#f9e9d8;color:#8a4d2f;border:1px dashed #d8ad8c}
+.demo-actions{align-items:center;margin:10px 0 3px}
+.demo-actions .muted-small{max-width:270px}
+.chain-actions{align-items:stretch}
+.chain-actions .btn{flex:1 1 auto}
+
 </style></head>
 <body>
 <div class="topline"><div class="wrap"><div><b>FAIRBASKET</b> · Transparent community procurement</div><div class="top-badge right"><i></i> Hackathon prototype · fictional pilot data</div></div></div>
@@ -295,7 +302,8 @@ footer{background:#fff;border-color:#dfe7dc}
 
 <div class="card"><div class="card-head"><div><h3>02 · Search & compare an offer</h3><p>Find a direct product page for one need.</p></div><span class="tag tag-green">LIVE SEARCH</span></div><div class="card-body">
 <form id="offerSearchForm"><div class="form-stack"><label class="form-label" for="needSelect">Which need are you pricing?<select class="select" id="needSelect" required></select></label><label class="form-label" for="offerQuery">Product or exact model<input class="input" id="offerQuery" type="search" placeholder="e.g. arroz tipo 1 pacote 5 kg" minlength="2" maxlength="120" required></label></div><div class="search-form" style="margin-top:10px"><button class="btn btn-primary" id="searchBtn" type="submit">Search direct offers ↗</button><button class="btn btn-outline" id="clearSearchBtn" type="button">Clear</button></div></form>
-<div id="searchStatus" class="status-line" role="status" aria-live="polite">Choose a need and search to load offers from Onde compro?.</div><div class="search-results" id="offerResults"></div>
+<div class="audit-actions demo-actions"><button class="btn btn-outline" id="loadDemoOffersBtn" type="button">Load simulated walkthrough</button><span class="muted-small">Fallback for the demo only. These are not actual offers or prices.</span></div>
+<div id="searchStatus" class="status-line" role="status" aria-live="polite">Choose a need and search to load offers from Onde compro?.<div class="search-results" id="offerResults"></div>
 <div class="data-note" style="background:#f0f6ec;border-color:#d9e8d2;color:#527056"><b>Source discipline:</b> a number found in an indexed text snippet is a reference, not a live-confirmed price. Freight, variant, stock and checkout can change the final total.</div>
 </div></div>
 
@@ -307,16 +315,16 @@ footer{background:#fff;border-color:#dfe7dc}
 
 <div class="card chain-card" id="onchain"><div class="card-head"><div><div class="panel-kicker">04 · Web3 accountability layer</div><h3 style="margin-top:5px">Anchor a digest on Base Sepolia</h3><p>Wallet-signed testnet transaction · no purchase funds move through this app.</p></div><span class="tag" style="background:#ffffff12;border-color:#ffffff2a;color:#f3cf9f">TESTNET</span></div>
 <div class="card-body"><label class="chain-label" for="contractAddress">Deployed FairBasketRegistry address</label><input class="input chain-input" id="contractAddress" inputmode="text" spellcheck="false" autocomplete="off" placeholder="0x… paste deployed contract address">
-<div class="audit-actions" style="margin-top:10px"><button class="btn btn-primary" id="connectWalletBtn" type="button">Connect wallet</button><button class="btn btn-outline" id="publishBtn" type="button" disabled>Publish selected record ↗</button></div>
+<div class="audit-actions chain-actions" style="margin-top:10px"><button class="btn btn-primary" id="deployRegistryBtn" type="button">Deploy test registry ↗</button><button class="btn btn-outline" id="connectWalletBtn" type="button">Connect wallet</button><button class="btn btn-outline" id="publishBtn" type="button" disabled>Publish selected record ↗</button></div>
 <div class="chain-state" id="chainStatus" role="status" aria-live="polite"><i></i><span>Demo mode. Connect a wallet, switch to Base Sepolia and provide a deployed contract address to write a real testnet transaction.</span></div>
 <div class="chain-foot">Only hashes, a public campaign identifier and the declared amount/type are written on-chain. Never put names, addresses, private donation details or unredacted receipts in public evidence payloads.</div>
 <button type="button" class="details-toggle" id="toggleChainHelp" style="margin-top:11px">How to enable the testnet write ↘</button>
 <div id="chainHelp" hidden><ol>
-<li>Open <a href="https://remix.ethereum.org/" target="_blank" rel="noopener noreferrer">Remix IDE</a> and create a Solidity file from <a href="https://github.com/jmc-dev-br/onde-compro/blob/main/contracts/FairBasketRegistry.sol" target="_blank" rel="noopener noreferrer">the contract source in this repository</a>.</li>
-<li>Compile with Solidity 0.8.24 or newer, below 0.9.0. In Deploy &amp; Run choose Injected Provider and switch your wallet to Base Sepolia.</li>
-<li>Deploy FairBasketRegistry. Use testnet ETH only. Copy the deployed address into the field above.</li>
-<li>Connect the same wallet that deployed the contract, select a non-demo evidence record, then publish it. The wallet must approve each transaction.</li>
-</ol><p class="muted-small" style="color:#c4d3c2">Base Sepolia uses chain ID 84532. Deployment and writes require testnet ETH for gas; this prototype does not send mainnet transactions.</p><a href="https://docs.base.org/base-chain/api-reference/ethereum-json-rpc-api/eth_chainId" target="_blank" rel="noopener noreferrer">Official Base chain-ID documentation ↗</a></div>
+<li>Install or open an EVM wallet such as MetaMask. Use a dedicated test wallet, not a wallet holding valuable assets.</li>
+<li>Click <b>Deploy test registry</b>. The browser downloads the compiled FairBasketRegistry artifact from this site; confirm the deployment in your wallet.</li>
+<li>After deployment, click <b>Create plan snapshot</b> or save a product-source record. Select that record in the evidence log.</li>
+<li>Click <b>Publish on Base Sepolia</b>. On first use, the wallet asks to register the demo campaign and anchor the record. Approve both only if the wallet shows Base Sepolia (chain ID 84532).</li>
+</ol><p class="muted-small" style="color:#c4d3c2">This prototype never requests a seed phrase or private key. Deploying and anchoring requires testnet ETH for gas; transactions are not sent to mainnet. If the compiled artifact is unavailable, use <a href="https://remix.ethereum.org/" target="_blank" rel="noopener noreferrer">Remix IDE</a> and the <a href="https://github.com/jmc-dev-br/onde-compro/blob/main/contracts/FairBasketRegistry.sol" target="_blank" rel="noopener noreferrer">contract source</a>.</p><a href="https://docs.base.org/base-chain/api-reference/ethereum-json-rpc-api/eth_chainId" target="_blank" rel="noopener noreferrer">Official Base chain-ID documentation ↗</a></div>
 </div></div>
 </div></div></section>
 
@@ -355,6 +363,7 @@ const state={needs:NEED_SEED.map(n=>({...n,offer:null})),records:[],offers:[],se
 function setText(id,value){const node=$(id);if(node)node.textContent=String(value);}
 function safeHttps(value){try{const u=new URL(String(value||''));return u.protocol==='https:'?u.href:null;}catch{return null;}}
 function confidenceOf(item){
+ if(item&&item.demoOnly===true)return {key:'simulated',label:'Simulated example · not a quote',exact:false};
  if(item&&(item.priceSource==='listing'||item.priceSource==='page_live')&&Number.isFinite(item.priceValue)&&item.priceValue>0)return {key:'exact',label:item.priceSource==='listing'?'Marketplace API price':'Price found on product page',exact:true};
  if(item&&item.priceSource==='page_range'&&Number.isFinite(item.priceMin)&&Number.isFinite(item.priceMax))return {key:'range',label:'Published price range',exact:false};
  if(item&&(item.priceSource==='snippet'||item.priceSource==='snippet_range')&&item.priceMention)return {key:'reference',label:'Indexed reference · unverified',exact:false};
@@ -424,7 +433,8 @@ function renderOffers(items){
   const store=document.createElement('div');store.className='offer-store';store.textContent=(item.store||item.domain||'Unknown store')+' · '+(item.directProductPage?'direct product page':'related result');
   const price=document.createElement('div');price.className='offer-price';price.textContent=item.priceMention||'Price not identified';
   const meta=document.createElement('div');meta.className='offer-meta';meta.append(confidenceMarkup(item));
-  if(item.priceSource==='snippet'||item.priceSource==='snippet_range'){const warning=document.createElement('span');warning.className='confidence confidence-none';warning.textContent='May be stale';meta.append(warning);}
+  if(item.demoOnly===true){const warning=document.createElement('span');warning.className='confidence confidence-simulated';warning.textContent='Not a real offer';meta.append(warning);}
+  else if(item.priceSource==='snippet'||item.priceSource==='snippet_range'){const warning=document.createElement('span');warning.className='confidence confidence-none';warning.textContent='May be stale';meta.append(warning);}
   const actions=document.createElement('div');actions.className='offer-actions';
   const use=document.createElement('button');use.type='button';use.className='btn btn-primary';use.textContent='Save evidence';use.addEventListener('click',()=>addOfferEvidence(item));
   const linkUrl=safeHttps(item.url);if(linkUrl){const link=document.createElement('a');link.className='btn btn-outline';link.href=linkUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open offer ↗';actions.append(link);}
@@ -492,8 +502,8 @@ async function addRecord(payload,meta){
 async function addOfferEvidence(item){
  const need=state.needs.find(n=>n.id===$('needSelect').value);if(!need){setText('searchStatus','Choose a need first.');return;}
  const confidence=confidenceOf(item),priceValue=confidence.exact?Number(item.priceValue):null,sourceUrl=canonicalizeUrl(item.url);
- const payload={schema:'fairbasket.evidence.v1',campaign:CAMPAIGN_KEY,evidenceType:'quote',product:{title:String(item.title||'').slice(0,180),store:String(item.store||item.domain||'').slice(0,90),sourceUrl},price:{display:String(item.priceMention||''),value:priceValue,minimum:Number.isFinite(item.priceMin)?item.priceMin:null,maximum:Number.isFinite(item.priceMax)?item.priceMax:null,currency:'BRL',source:String(item.priceSource||'none'),confidence:confidence.key},capturedAt:new Date().toISOString(),disclaimer:'Captures a search result only. Price, stock, freight, variant and final checkout amount must be checked with the seller.'};
- const record=await addRecord(payload,{title:'Offer evidence · '+need.name,summary:(item.store||item.domain||'Store')+' · '+(item.priceMention||'No price identified')+' · '+confidence.label+'. '+(confidence.exact?'Saved as a price-source record, not proof of final checkout total.':'Saved as an unverified reference; it does not count toward verified budget totals.'),type:0,amountCents:confidence.exact?Math.round(priceValue*100):0,priceSource:item.priceSource||null,confidence:confidence.key});
+ const payload={schema:'fairbasket.evidence.v1',campaign:CAMPAIGN_KEY,evidenceType:'quote',demoOnly:item.demoOnly===true,product:{title:String(item.title||'').slice(0,180),store:String(item.store||item.domain||'').slice(0,90),sourceUrl},price:{display:String(item.priceMention||''),value:priceValue,minimum:Number.isFinite(item.priceMin)?item.priceMin:null,maximum:Number.isFinite(item.priceMax)?item.priceMax:null,currency:'BRL',source:item.demoOnly===true?'simulation':String(item.priceSource||'none'),confidence:confidence.key},capturedAt:new Date().toISOString(),disclaimer:item.demoOnly===true?'SIMULATED DEMO RECORD — not an actual product offer, price quotation or purchase.':'Captures a search result only. Price, stock, freight, variant and final checkout amount must be checked with the seller.'};
+ const record=await addRecord(payload,{title:'Offer evidence · '+need.name,summary:(item.store||item.domain||'Store')+' · '+(item.priceMention||'No price identified')+' · '+confidence.label+'. '+(item.demoOnly===true?'Simulated data only; not a real offer or quotation.':confidence.exact?'Saved as a price-source record, not proof of final checkout total.':'Saved as an unverified reference; it does not count toward verified budget totals.'),type:0,amountCents:confidence.exact?Math.round(priceValue*100):0,priceSource:item.priceSource||null,confidence:confidence.key});
  if(confidence.exact){need.offer={title:item.title,store:item.store||item.domain,sourceUrl,priceValue,priceMention:item.priceMention,source:item.priceSource,confidence:'exact',evidenceId:record.id};setText('searchStatus','Saved an exact price-source record for '+need.name+'. This is a quote/source record, not proof of purchase or delivery.');}
  else{need.offer={title:item.title,store:item.store||item.domain,sourceUrl,priceValue:null,priceMention:item.priceMention||'',source:item.priceSource||null,confidence:confidence.key,evidenceId:record.id};setText('searchStatus','Saved the offer as a reference only. It will not count as a verified quote or be used to claim savings.');}
  await saveState();renderNeeds();renderRecords();
@@ -503,6 +513,45 @@ async function createPlanSnapshot(){
  await addRecord(payload,{title:'Plan snapshot · fictional pilot',summary:verifiedNeedCount()+' line item(s) with exact-source prices out of '+state.needs.length+'. Remaining planning values are illustrative; no real spend is claimed.',type:1,amountCents:BUDGET_CENTS,confidence:'snapshot'});
  setText('auditStatus','Plan snapshot created and hashed locally. Select it and publish to Base Sepolia only after deploying the registry contract.');
  setChainStatus('Plan snapshot created locally. It is not on-chain yet; select Publish on Base Sepolia after contract deployment.',false);
+}
+function loadSimulatedOffers(){
+ const demoItems=[
+  {demoOnly:true,title:'SIMULATED EXAMPLE — Rice, type 1, 5 kg',store:'Example Shop A (fictional)',url:null,priceMention:'DEMO ONLY · R$ 25,90',priceValue:null,priceMin:25.9,priceMax:25.9,priceSource:'simulation',directProductPage:true},
+  {demoOnly:true,title:'SIMULATED EXAMPLE — Rice, type 1, 5 kg',store:'Example Shop B (fictional)',url:null,priceMention:'DEMO ONLY · R$ 27,50',priceValue:null,priceMin:27.5,priceMax:27.5,priceSource:'simulation',directProductPage:true},
+  {demoOnly:true,title:'SIMULATED EXAMPLE — Rice, type 1, 5 kg',store:'Example Shop C (fictional)',url:null,priceMention:'DEMO ONLY · R$ 29,90',priceValue:null,priceMin:29.9,priceMax:29.9,priceSource:'simulation',directProductPage:true}
+ ];
+ state.offers=demoItems;
+ renderOffers(demoItems);
+ setText('searchStatus','Loaded 3 simulated examples. These are fictional figures with no real product links. Use them only to demonstrate evidence creation, hash verification and export; then test the live search separately.');
+}
+async function deployRegistry(){
+ if(state.pending)return;
+ try{
+  await connectWallet();
+  if((await state.provider.getNetwork()).chainId!==84532n)throw new Error('Switch the wallet to Base Sepolia first.');
+  state.pending=true;$('deployRegistryBtn').disabled=true;$('connectWalletBtn').disabled=true;
+  setChainStatus('Loading the published Solidity artifact…',false);
+  const response=await fetch('/fairbasket-contract.json',{cache:'no-store',headers:{'Accept':'application/json'}});
+  if(!response.ok)throw new Error('The compiled contract artifact is not published yet. Open the deployment guide for the Remix fallback.');
+  const artifact=await response.json();
+  if(!artifact||!Array.isArray(artifact.abi)||typeof artifact.bytecode!=='string'||!/^0x[0-9a-f]+$/i.test(artifact.bytecode)||artifact.chainId!==84532)throw new Error('The published contract artifact failed validation.');
+  setChainStatus('Review the FairBasketRegistry deployment in your wallet. No funds other than testnet gas are used.',false);
+  const factory=new state.ethers.ContractFactory(artifact.abi,artifact.bytecode,state.signer);
+  const deployment=await factory.deploy();
+  const tx=deployment.deploymentTransaction();
+  if(tx)setChainStatus('Deployment transaction sent: '+tx.hash+'. Waiting for Base Sepolia confirmation…',false);
+  await deployment.waitForDeployment();
+  const address=await deployment.getAddress();
+  $('contractAddress').value=address;
+  try{localStorage.setItem('fairbasket-registry-address',address);}catch{/* Address can be pasted again if storage is unavailable. */}
+  setChainStatus('FairBasketRegistry deployed at '+address+'. Next, create or select a record and publish it.',false);
+  setText('auditStatus','Contract deployed on Base Sepolia. The contract address was saved in this browser. No evidence is on-chain until you publish a record.');
+ }catch(error){
+  const message=error&&error.shortMessage?error.shortMessage:(error&&error.message?error.message:'Contract deployment did not complete.');
+  setChainStatus(message,true);
+ }finally{
+  state.pending=false;$('deployRegistryBtn').disabled=false;$('connectWalletBtn').disabled=false;renderRecords();
+ }
 }
 function downloadJson(fileName,data){
  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fileName;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
@@ -558,6 +607,8 @@ async function searchOffers(query){
  finally{$('searchBtn').disabled=false;}
 }
 $('offerSearchForm').addEventListener('submit',event=>{event.preventDefault();const query=$('offerQuery').value.trim();if(query.length>=2)searchOffers(query);});
+$('loadDemoOffersBtn').addEventListener('click',loadSimulatedOffers);
+$('deployRegistryBtn').addEventListener('click',deployRegistry);
 $('clearSearchBtn').addEventListener('click',()=>{$('offerQuery').value='';$('offerResults').replaceChildren();setText('searchStatus','Choose a need and search to load offers from Onde compro?.');});
 $('needSelect').addEventListener('change',()=>{const need=state.needs.find(item=>item.id===$('needSelect').value);if(need&&need.search)$('offerQuery').value=need.search;});
 $('snapshotBtn').addEventListener('click',()=>createPlanSnapshot().catch(error=>setText('auditStatus','Could not create snapshot: '+error.message)));
@@ -569,6 +620,8 @@ if(window.ethereum){
  window.ethereum.on?.('accountsChanged',()=>{state.signer=null;state.provider=null;state.address='';setText('connectWalletBtn','Connect wallet');setChainStatus('Wallet account changed. Reconnect before submitting a transaction.',false);});
  window.ethereum.on?.('chainChanged',()=>{state.signer=null;state.provider=null;state.address='';setText('connectWalletBtn','Connect wallet');setChainStatus('Wallet network changed. Reconnect to Base Sepolia before writing.',false);});
 }
-loadState();populateNeedSelect();$('offerQuery').value=state.needs[0].search;renderNeeds();renderRecords();
+loadState();populateNeedSelect();$('offerQuery').value=state.needs[0].search;
+try{$('contractAddress').value=localStorage.getItem('fairbasket-registry-address')||'';}catch{/* paste the address manually if browser storage is unavailable */}
+renderNeeds();renderRecords();
 </script>
 </body></html>
