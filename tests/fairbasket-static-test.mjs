@@ -12,7 +12,8 @@ const requiredIds = [
   "needList", "offerSearchForm", "needSelect", "offerQuery", "searchBtn",
   "clearSearchBtn", "searchStatus", "offerResults", "snapshotBtn", "exportBtn",
   "auditList", "recordCountTag", "verifyBundleBtn", "exportAuditBtn", "auditStatus",
-  "contractAddress", "connectWalletBtn", "publishBtn", "chainStatus", "toggleChainHelp", "chainHelp"
+  "contractAddress", "deployRegistryBtn", "connectWalletBtn", "publishBtn", "chainStatus", "toggleChainHelp", "chainHelp",
+  "loadDemoOffersBtn"
 ];
 const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
 for (const id of requiredIds) {
@@ -37,6 +38,12 @@ assert.match(html, /await tx\.wait\(\)/, "UI must wait for transaction confirmat
 assert.match(html, /record\.txHash=tx\.hash/, "A transaction hash must only be saved after confirmation.");
 assert.match(html, /84532n/, "Writes must be limited to Base Sepolia chain ID 84532.");
 assert.match(html, /safeHttps\(raw\)/, "Offer links must be constrained to HTTPS.");
+assert.match(html, /function deployRegistry\(\)/, "A wallet-driven contract deployment action must exist.");
+assert.match(html, /fetch\('\/fairbasket-contract\.json'/, "Deployment must retrieve the compiled contract artifact.");
+assert.match(html, /new state\.ethers\.ContractFactory\(artifact\.abi,artifact\.bytecode,state\.signer\)/, "Contract deployment must use the published build artifact.");
+assert.match(html, /function loadSimulatedOffers\(\)/, "A fallback demo walkthrough should exist when live search is unavailable.");
+assert.match(html, /demoOnly:item\.demoOnly===true/, "Simulated offers must be persistently labelled in their evidence payload.");
+assert.match(html, /item&&item\.demoOnly===true/, "Simulated offers must never be treated as exact-source prices.");
 assert.match(html, /aria-live="polite"/, "Status updates should be announced to assistive technology.");
 
 assert.match(search, /priceSource: "listing"/, "Marketplace listing price sources must be tagged.");
