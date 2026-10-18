@@ -39,6 +39,7 @@ Este repositório também inclui o protótipo de hackathon **FairBasket**, uma e
 - Contrato Solidity: contracts/FairBasketRegistry.sol
 - Resumo, pitch e roteiro de apresentação: HACKATHON-SUBMISSION.md
 - Guia de validação social e entrevista com uma organização: FAIRBASKET-VALIDATION.md
+- Roteiro de vídeo de demonstração em inglês: FAIRBASKET-DEMO-SCRIPT.md
 - Passos para publicar o contrato de teste: FAIRBASKET-DEPLOY.md
 
 O protótipo começa com um cenário fictício explicitamente identificado. Ele permite buscar ofertas reais pela API existente, marcar a fonte de preço, gerar um registro com SHA-256, exportar um pacote JSON e, após implantação manual do contrato e conexão de uma carteira de teste, ancorar o hash na Base Sepolia. Não movimenta doações ou dinheiro de compras.
