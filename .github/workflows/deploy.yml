@@ -136,9 +136,9 @@ jobs:
           READY=false
           for attempt in $(seq 1 4); do
             echo "Checking deployed URL (attempt $attempt/4): $BASE_URL"
-            if curl --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html; then
+            if curl --location --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html; then
               if grep -q "Spend wisely." /tmp/published-fairbasket.html && grep -q "Deploy test registry" /tmp/published-fairbasket.html && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html; then
-                if curl --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
+                if curl --location --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
                   if python - <<'PY'
           import json
           from pathlib import Path
