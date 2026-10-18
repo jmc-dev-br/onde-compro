@@ -11,26 +11,27 @@ This prototype does not deploy a contract automatically. The owner deploys the s
 
 Official chain ID documentation: https://docs.base.org/base-chain/api-reference/ethereum-json-rpc-api/eth_chainId
 
-## 2. Deploy in Remix
+## 2. Deploy from the public FairBasket page (recommended)
+
+1. Wait for the latest successful Cloudflare Pages deployment. The build publishes /fairbasket-contract.json, which contains the compiled contract ABI and bytecode produced from the repository source.
+2. Open https://onde-compro.pages.dev/fairbasket.html.
+3. Scroll to “Anchor a digest on Base Sepolia” and click **Deploy test registry**.
+4. Approve the wallet connection and switch to Base Sepolia if requested. Review the deployment transaction, then approve it. Use a dedicated test wallet only.
+5. Wait for the UI to show the deployed contract address. The address is saved in this browser; copy it as a backup.
+6. Create a plan snapshot or save an offer evidence record. Select the record in the evidence log, then click **Publish on Base Sepolia**.
+7. On first use, the app may request two more transactions: register the demo campaign, then anchor the selected evidence digest. Approve them separately, then wait for the confirmed block and BaseScan transaction link.
+
+If the compiled artifact is unavailable, use the manual fallback below.
+
+## Manual deployment fallback in Remix
+
 1. Open https://remix.ethereum.org/.
 2. Create FairBasketRegistry.sol and copy contracts/FairBasketRegistry.sol from this repository.
 3. Compile with Solidity 0.8.24 or later, but below 0.9.0.
 4. In Deploy & Run, select Injected Provider, approve wallet connection, and confirm Base Sepolia is selected.
-5. Select FairBasketRegistry and click Deploy. Confirm the testnet transaction in your wallet.
-6. Copy the deployed contract address.
-
-## 3. Publish a prototype record
-1. Open https://onde-compro.pages.dev/fairbasket.html.
-2. Search for an actual product offer and save its evidence record; do not present fictional planning values as real quotations.
-3. In “Anchor a digest on Base Sepolia”, paste the contract address and connect the same wallet that deployed the contract.
-4. Select the evidence record and click “Publish on Base Sepolia”. Review the transaction and approve it in the wallet.
-5. Wait until the UI shows a confirmed block number and a “View testnet transaction” link. Check the transaction on BaseScan.
-
-The browser app calls:
-- registerCampaign(bytes32,bytes32,uint256,uint32) if the fixed demo campaign does not yet exist.
-- recordEvidence(bytes32,bytes32,uint8,uint256) for the selected digest.
-
-The campaign-creator wallet is allowed to anchor evidence. If another wallet created the same campaign key in this registry, deploy a fresh test contract for a clean demo or use the original creator wallet.
+5. Select FairBasketRegistry and deploy. Confirm the testnet transaction in your wallet.
+6. Copy the deployed contract address into the “Deployed FairBasketRegistry address” field in the FairBasket page.
+7. Continue with step 6 in the recommended browser flow above.
 
 ## Evidence types
 - 0 = quote / price-source record.
