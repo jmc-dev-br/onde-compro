@@ -20,6 +20,231 @@ header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;displ
 @media(max-width:900px){.wrap{width:min(100% - 32px,700px)}.nav-links{display:none}.hero-grid{grid-template-columns:1fr;gap:24px;padding:45px 0}.hero-panel{max-width:600px}.workbench-grid{grid-template-columns:1fr}.impact-strip{grid-template-columns:repeat(3,1fr)}.impact-intro{grid-column:1/-1}}
 @media(max-width:600px){.topline .wrap{align-items:flex-start;padding:8px 0;font-size:9px}.topline .right{display:none}nav{min-height:64px}.brand{font-size:17px}.nav-actions .btn-outline{display:none}.hero-grid{padding:37px 0 32px}h1{font-size:41px;letter-spacing:-2.3px}.hero-lead{font-size:12px}.hero-panel{padding:15px;border-radius:20px}.metric{padding:12px}.metric strong{font-size:22px}.section{padding:43px 0}.steps,.principles{grid-template-columns:1fr}.step{padding:18px}.impact-strip{grid-template-columns:1fr}.impact-intro{grid-column:auto}.section-head{display:block}.section-head .btn{margin-top:14px}.workbench-grid{gap:13px}.card-head,.card-body{padding-left:15px;padding-right:15px}.campaign-summary{grid-template-columns:1fr 1fr}.search-form{grid-template-columns:1fr}.search-form .btn{width:100%}.offer{grid-template-columns:42px minmax(0,1fr);gap:9px;padding:10px}.offer-logo{width:42px;height:42px}.audit-top{display:block}.audit-top span{display:block;margin-top:4px}.foot{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+
+/* 2026 visual refinement: quieter surfaces, clearer hierarchy, stronger product feel */
+:root{
+ --ink:#172b20;
+ --muted:#637368;
+ --line:#dce6d9;
+ --paper:#f5f7f1;
+ --white:#ffffff;
+ --green:#246744;
+ --deep:#153828;
+ --mint:#e8f2e4;
+ --orange:#d97449;
+ --gold:#e9c17d;
+ --shadow:0 20px 50px #203a2912;
+}
+body{background:var(--paper);color:var(--ink);font-size:14px;line-height:1.6}
+.topline{font-size:10px;letter-spacing:.15px}
+.topline .wrap{min-height:34px}
+header{position:sticky;top:0;z-index:20;background:#fffffff2;backdrop-filter:blur(14px);box-shadow:0 3px 22px #203a2908}
+nav{min-height:70px}
+.brand{font-size:20px;letter-spacing:-.9px}
+.brand-mark{box-shadow:0 4px 12px #173c2c22;border:1px solid #365c43}
+.nav-links{gap:25px}
+.nav-links a{font-size:11px;transition:color .15s ease}
+.hero{position:relative;background:linear-gradient(120deg,#fbfaf6 0%,#f2f7ef 55%,#fbf1e8 100%);border-bottom:1px solid #dde7d9}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.32;background-image:linear-gradient(#91ae8f18 1px,transparent 1px),linear-gradient(90deg,#91ae8f18 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(90deg,#000,transparent 78%)}
+.hero:after{content:"";position:absolute;width:540px;height:540px;right:-160px;top:-240px;border:1px solid #c9dbc4;border-radius:50%;box-shadow:0 0 0 22px #e3eddf55,0 0 0 64px #e3eddf33;pointer-events:none}
+.hero-grid{position:relative;z-index:1;padding:70px 0 65px;gap:56px}
+.eyebrow{font-size:9px;letter-spacing:1.65px;color:#2b6a48}
+.eyebrow span{width:28px;height:28px;border-radius:10px;box-shadow:0 4px 10px #27674916}
+h1{font-size:clamp(43px,5.3vw,68px);letter-spacing:-3.8px;line-height:.99;margin:20px 0 19px;max-width:690px}
+h1 em{color:#246744}
+.hero-lead{max-width:590px;font-size:14px;line-height:1.95;color:#5a6d60}
+.hero-cta{margin-top:26px;gap:11px}
+.btn{border-radius:12px;padding:12px 16px;font-size:10px;letter-spacing:.1px}
+.btn-primary{background:linear-gradient(135deg,#2e7650,#205b3d);box-shadow:0 7px 16px #27674920}
+.btn-primary:hover{background:linear-gradient(135deg,#245f41,#194c32);box-shadow:0 10px 22px #2767492a}
+.btn-outline{border-color:#d7e3d3;background:#ffffffd9}
+.btn-outline:hover{background:#edf5e9;border-color:#b7d0b2}
+.hero-points{gap:18px;margin-top:23px;font-size:10px}
+.hero-points span{gap:7px}
+.hero-panel{padding:22px;border-radius:23px;border-color:#dce6d8;background:linear-gradient(150deg,#fff 0%,#fcfdf9 62%,#f7fbf3 100%);box-shadow:0 23px 60px #173c2c12,0 2px 6px #173c2c06;overflow:hidden}
+.hero-panel:before{content:"";position:absolute;top:-83px;right:-75px;width:220px;height:220px;border-radius:50%;border:1px solid #d8e8d2;box-shadow:0 0 0 13px #edf5e944,0 0 0 33px #edf5e92b;pointer-events:none}
+.hero-panel>*{position:relative;z-index:1}
+.panel-top{margin-bottom:17px}
+.panel-top h2{font-size:16px;line-height:1.35;letter-spacing:-.45px}
+.panel-kicker{font-size:8px;letter-spacing:1.45px}
+.demo-pill{font-size:8px;letter-spacing:.35px;padding:6px 9px}
+.hero-metrics{gap:9px}
+.metric{padding:15px 14px;border-color:#e3ebe0;border-radius:15px;box-shadow:0 3px 12px #21392905}
+.metric span{font-size:8px;letter-spacing:.75px;line-height:1.5}
+.metric strong{font-size:26px;letter-spacing:-1.2px;color:#215c3b;margin:8px 0 5px}
+.metric small{font-size:9px;line-height:1.65}
+.panel-progress{margin-top:12px;padding:13px 14px;border:1px solid #dfeadd;background:linear-gradient(110deg,#eff6eb,#f7f8f0);border-radius:14px}
+.progress-copy{font-size:9px;line-height:1.6;margin-bottom:8px}
+.progress-track{height:8px;background:#d8e6d2}
+.progress-fill{background:linear-gradient(90deg,#226544,#7fb37a)}
+.panel-foot{font-size:9px;line-height:1.7;margin-top:13px;color:#748075}
+.section{padding:76px 0}
+.section-head{margin-bottom:28px}
+.kicker{font-size:8px;letter-spacing:1.7px;color:#936444}
+h2{font-size:clamp(27px,3.15vw,39px);letter-spacing:-1.7px;line-height:1.08;margin:10px 0 13px}
+.section-head p{font-size:12px;max-width:690px;line-height:1.85;color:#657469}
+.steps{gap:16px}
+.step{padding:25px;border-radius:18px;border-color:#e1e9dd;box-shadow:0 7px 22px #1d382607;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.step:hover{transform:translateY(-3px);border-color:#c2d7bd;box-shadow:0 15px 32px #1d38260d}
+.step-number{width:40px;height:40px;border-radius:13px;background:linear-gradient(145deg,#e5f1df,#f3f7ed);border:1px solid #d6e6d0;font-size:11px;letter-spacing:.4px}
+.step h3{font-size:15px;line-height:1.4}
+.step p{font-size:11px;line-height:1.85;color:#66766a}
+.impact-strip{margin-top:22px;padding:18px;gap:10px;background:linear-gradient(120deg,#eaf3e6,#f2f6ed);border-color:#dae6d5;border-radius:19px}
+.impact-intro strong{font-size:12px}
+.impact-intro span,.impact-stat span{font-size:9px;line-height:1.7}
+.impact-stat{border-color:#dce7d6;border-radius:13px;background:#ffffffc9;padding:14px}
+.impact-stat b{font-size:20px;letter-spacing:-.8px}
+.workbench{background:linear-gradient(180deg,#f8faf6 0%,#f2f5ef 100%);border-color:#e0e8dc}
+.workbench .section-head{margin-bottom:27px}
+.workbench-grid{gap:18px;align-items:stretch}
+.card{border-radius:19px;border-color:#dfe7db;box-shadow:0 8px 25px #213b2907;transition:box-shadow .18s ease,border-color .18s ease}
+.card:hover{border-color:#ccdcca;box-shadow:0 15px 34px #213b290c}
+.card-head{padding:20px 21px;background:linear-gradient(110deg,#fbfdf9,#f7faf4);border-bottom-color:#e6ede3}
+.card-head h3{font-size:13px;letter-spacing:-.25px}
+.card-head p{font-size:10px;line-height:1.65}
+.card-body{padding:21px}
+.tag{font-size:8px;letter-spacing:.55px;padding:5px 9px}
+.campaign-icon{box-shadow:0 7px 16px #173c2c17}
+.campaign-details h4{font-size:13px}
+.campaign-summary{grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin:18px 0}
+.summary-box{padding:13px;border-radius:12px;border-color:#e3ebe0;background:#f9fbf7}
+.summary-box span{font-size:8px;letter-spacing:.65px;line-height:1.5}
+.summary-box strong{font-size:16px;letter-spacing:-.65px;line-height:1.35}
+.budget-line{font-size:9px;margin-bottom:8px}
+.budget-track{height:8px;background:#e4ebe0}
+.budget-fill{background:linear-gradient(90deg,#276749,#86b981)}
+.data-note{font-size:9px;line-height:1.8;padding:12px 13px;border-radius:12px}
+.need-row{padding:14px 0;gap:13px}
+.need-name{font-size:10px}
+.need-meta{font-size:9px;line-height:1.7}
+.need-state{font-size:8px;letter-spacing:.15px}
+.need-values strong{font-size:11px}
+.need-values span{display:block;max-width:145px;margin-left:auto;white-space:normal;font-size:8px;line-height:1.6;margin-top:3px}
+.input,.select{border-color:#dce6d9;border-radius:11px;padding:12px 13px;transition:border-color .15s ease,box-shadow .15s ease}
+.input:focus,.select:focus{border-color:#85b28d;box-shadow:0 0 0 3px #dbeada70;outline:0}
+.search-form{gap:8px;margin-top:12px}
+.search-form .btn{min-height:40px}
+.status-line{font-size:10px;line-height:1.8;color:#617469}
+#searchStatus{padding:9px 11px;border-radius:10px;background:#f8faf6;border:1px solid #e7eee4}
+.search-results{gap:11px;margin-top:12px}
+.offer{grid-template-columns:46px minmax(0,1fr);gap:12px;padding:14px;border-radius:15px;border-color:#e3eae0;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.offer:hover{transform:translateY(-2px);border-color:#c5d9c0;box-shadow:0 8px 22px #203b280a}
+.offer-logo{width:45px;height:45px;border-radius:13px;background:linear-gradient(145deg,#eaf3e7,#f8faf5);border-color:#e0e9dc}
+.offer-title{font-size:11px;line-height:1.65}
+.offer-store{font-size:9px;line-height:1.7}
+.offer-price{font-size:17px;letter-spacing:-.55px;margin-top:8px}
+.offer-meta{gap:6px;margin-top:7px}
+.confidence{font-size:8px;letter-spacing:.1px;border-radius:7px;padding:5px 7px}
+.offer-actions{gap:7px;margin-top:11px}
+.offer-actions .btn{border-radius:9px;padding:9px 11px;font-size:9px}
+.audit-list{gap:11px}
+.audit-entry{padding:14px;border-color:#e0e8dc;border-radius:14px;background:linear-gradient(140deg,#fff,#fcfdf9)}
+.audit-top strong{font-size:10px;line-height:1.65}
+.audit-top span{font-size:8px}
+.audit-entry p{font-size:9px;line-height:1.8}
+.hash-line{padding:9px 10px;border:1px solid #e7ede3}
+.hash-line code{font-size:9px;line-height:1.7}
+.hash-line button{border-radius:6px;padding:5px 6px;background:#e8f2e4}
+.audit-actions{gap:8px;margin-top:12px}
+.audit-actions .btn{font-size:9px;line-height:1.4;padding:9px 11px;border-radius:10px}
+.chain-card{background:radial-gradient(ellipse at 100% 0%,#315f42 0,transparent 38%),linear-gradient(145deg,#153828,#214c33 68%,#1a402c);border-color:#2c5a3d;box-shadow:0 16px 38px #173c2c20}
+.chain-card .card-head{background:#ffffff08;border-bottom-color:#ffffff22}
+.chain-card .card-body{padding:21px}
+.chain-label{font-size:9px;letter-spacing:.2px}
+.chain-input{border-color:#ffffff30;background:#ffffff10}
+.chain-input:focus{border-color:#b4d6a9;box-shadow:0 0 0 3px #b5dca022}
+.chain-state{font-size:9px;line-height:1.8;border-radius:12px}
+.chain-foot{font-size:9px;line-height:1.8}
+.principles{gap:14px}
+.principle{padding:20px;border-radius:16px;border-color:#e0e8dd;box-shadow:0 4px 16px #243c2704;transition:transform .18s ease,border-color .18s ease}
+.principle:hover{transform:translateY(-2px);border-color:#c9dcc4}
+.principle b{font-size:12px;line-height:1.5}
+.principle p{font-size:10px;line-height:1.85}
+footer{background:#fff;border-color:#dfe7dc}
+.foot{font-size:9px;line-height:1.7}
+.foot a{font-weight:800;color:#2d6646;text-decoration:none}
+.foot a:hover{text-decoration:underline}
+@media(max-width:1000px){
+ .hero-grid{gap:32px;padding:58px 0}
+ .nav-links{gap:15px}
+ .workbench-grid{grid-template-columns:1fr 1fr}
+ .workbench-grid>.card:first-child{grid-column:1/-1}
+}
+@media(max-width:760px){
+ .wrap{width:calc(100% - 34px)}
+ .nav-links{display:none}
+ .hero-grid{grid-template-columns:1fr;gap:25px;padding:46px 0 42px}
+ .hero-copy{max-width:680px}
+ .hero-panel{max-width:680px}
+ .section{padding:54px 0}
+ .workbench-grid{grid-template-columns:1fr}
+ .workbench-grid>.card:first-child{grid-column:auto}
+ .impact-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .impact-intro{grid-column:1/-1}
+}
+@media(max-width:560px){
+ .topline .wrap{min-height:31px;align-items:flex-start;padding:7px 0;font-size:8px}
+ .topline .right{display:none}
+ nav{min-height:62px}
+ .brand{font-size:17px}
+ .brand small{font-size:8px;letter-spacing:1px}
+ .nav-actions .btn-outline{display:none}
+ .nav-actions .btn{padding:10px 12px;font-size:9px}
+ .hero-grid{padding:37px 0 31px}
+ h1{font-size:43px;letter-spacing:-2.6px;line-height:1.01;margin:17px 0}
+ .hero-lead{font-size:12px;line-height:1.85}
+ .hero-cta .btn{flex:1 1 auto}
+ .hero-points{gap:9px 13px;font-size:9px}
+ .hero-panel{padding:14px;border-radius:19px}
+ .panel-top{align-items:flex-start;flex-direction:column;gap:9px}
+ .hero-metrics{gap:8px}
+ .metric{padding:12px 11px;border-radius:12px}
+ .metric span{font-size:7px;letter-spacing:.5px}
+ .metric strong{font-size:23px;letter-spacing:-.8px}
+ .metric small{font-size:8px}
+ .panel-progress{padding:11px}
+ .progress-copy{font-size:8px}
+ .section{padding:43px 0}
+ h2{font-size:29px;letter-spacing:-1.1px}
+ .section-head{display:block;margin-bottom:21px}
+ .section-head p{font-size:11px}
+ .steps,.principles{grid-template-columns:1fr}
+ .step{padding:19px}
+ .step:hover,.principle:hover{transform:none}
+ .impact-strip{grid-template-columns:1fr;padding:13px}
+ .impact-intro{grid-column:auto}
+ .impact-stat{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px}
+ .impact-stat b{font-size:17px;white-space:nowrap}
+ .impact-stat span{text-align:right;margin-top:0;max-width:190px}
+ .card-head{padding:16px;gap:8px}
+ .card-body{padding:16px}
+ .campaign-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .summary-box{padding:11px}
+ .summary-box strong{font-size:15px}
+ .search-form{grid-template-columns:1fr}
+ .offer{grid-template-columns:37px minmax(0,1fr);gap:9px;padding:10px}
+ .offer-logo{width:37px;height:37px;border-radius:10px;font-size:13px}
+ .offer-price{font-size:16px}
+ .offer-actions .btn{font-size:8px;padding:8px 9px}
+ .need-row{grid-template-columns:minmax(0,1fr) auto;gap:8px}
+ .need-values strong{font-size:10px}
+ .need-values span{max-width:112px}
+ .audit-top{display:block}
+ .audit-top span{display:block;margin-top:4px}
+ .audit-actions .btn{flex:1 1 auto}
+ .foot{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:370px){
+ h1{font-size:38px}
+ .metric strong{font-size:20px}
+ .campaign-summary{grid-template-columns:1fr}
+ .need-values{max-width:120px;white-space:normal}
+ .need-values strong{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
 </style></head>
 <body>
 <div class="topline"><div class="wrap"><div><b>FAIRBASKET</b> · Transparent community procurement</div><div class="top-badge right"><i></i> Hackathon prototype · fictional pilot data</div></div></div>
@@ -31,8 +256,8 @@ header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;displ
 <main>
 <section class="hero"><div class="wrap hero-grid"><div>
 <div class="eyebrow"><span>✳</span> WEB3 FOR SOCIAL GOOD · WORKING PROTOTYPE</div>
-<h1>Every basket matters.<br><em>Every decision can be checked.</em></h1>
-<p class="hero-lead">FairBasket helps community kitchens and small nonprofits compare essential-goods offers, preserve the evidence behind a buying decision, and publish a tamper-evident audit trail without taking custody of donations.</p>
+<h1>Spend wisely.<br><em>Prove every decision.</em></h1>
+<p class="hero-lead">A clearer way for community kitchens and small nonprofits to compare essential-goods offers, document the choice, and keep a tamper-evident audit trail — without ever taking custody of donations.</p>
 <div class="hero-cta"><a class="btn btn-primary" href="#pilot">Explore the working prototype <span>↘</span></a><a class="btn btn-outline" href="#onchain">See the Web3 layer</a></div>
 <div class="hero-points"><span><b>✓</b> Direct product links</span><span><b>✓</b> Price-source labels</span><span><b>✓</b> No funds held by the app</span></div>
 </div>
@@ -40,28 +265,28 @@ header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;displ
 <div class="hero-metrics">
 <div class="metric"><span>People served · target</span><strong>20</strong><small>Essential-goods kits in this fictional scenario</small></div>
 <div class="metric"><span>Spending ceiling</span><strong>R$ 2,400</strong><small>Planning limit, not money deposited</small></div>
-<div class="metric"><span>Planning estimate</span><strong id="heroPlan">R$ 1.967,60</strong><small>Demonstration figures only</small></div>
-<div class="metric"><span>Line items with exact quotes</span><strong id="heroVerified">0</strong><small>Updates when a price source qualifies</small></div>
+<div class="metric"><span>Basket projection</span><strong id="heroPlan">R$ 1.967,60</strong><small>Exact-source prices + demo references</small></div>
+<div class="metric"><span>Items with exact-source prices</span><strong id="heroVerified">0</strong><small>Page/API price detected, checkout not guaranteed</small></div>
 </div>
-<div class="panel-progress"><div class="progress-copy"><span>Illustrative plan vs. budget ceiling</span><b id="heroBudgetPercent">82%</b></div><div class="progress-track"><div class="progress-fill" id="heroBudgetBar"></div></div></div>
+<div class="panel-progress"><div class="progress-copy"><span>Basket projection vs. budget cap</span><b id="heroBudgetPercent">82%</b></div><div class="progress-track"><div class="progress-fill" id="heroBudgetBar"></div></div></div>
 <div class="panel-foot">No real nonprofit, purchase, donation or saving is claimed here. Replace the fictional pilot with consented data before reporting impact.</div></aside></div></section>
 
 <section class="section" id="how-it-works"><div class="wrap">
-<div class="section-head"><div><div class="kicker">A narrow problem, a practical workflow</div><h2>From shopping decisions to accountable evidence.</h2><p>Small community organisations often buy the same essentials with limited time and budget. Comparing pack sizes, sellers, delivery conditions and changing prices is tedious. FairBasket keeps the offer, source, decision and later audit trail connected.</p></div></div>
+<div class="section-head"><div><div class="kicker">A narrow problem, a practical workflow</div><h2>From a shopping list to accountable evidence.</h2><p>Community buyers often compare the same essentials with limited time and tight budgets. FairBasket keeps the offer, source, decision and evidence connected — so a reviewer can inspect the process instead of relying on a spreadsheet alone.</p></div></div>
 <div class="steps">
 <article class="step"><div class="step-number">01</div><h3>Define a community need</h3><p>Set quantities and a spending ceiling for an essential-goods basket. The app never receives or moves donated funds.</p></article>
 <article class="step"><div class="step-number">02</div><h3>Compare actual offers</h3><p>Reuse Onde compro? search to find direct product pages. Distinguish listing/API values, product-page metadata, published ranges and unverified search snippets.</p></article>
 <article class="step"><div class="step-number">03</div><h3>Preserve the evidence</h3><p>Generate a SHA-256 digest for each evidence record, export the audit bundle, and optionally anchor the digest on Base Sepolia with a wallet-signed transaction.</p></article>
 </div>
-<div class="impact-strip"><div class="impact-intro"><strong>Impact we intend to measure</strong><span>These are evaluation metrics, not reported outcomes. We will measure them with a partner pilot only after consent.</span></div><div class="impact-stat"><b>Cost per kit</b><span>Compare like-for-like product totals before checkout.</span></div><div class="impact-stat"><b>Time to compare</b><span>Measure minutes from needs list to documented decision.</span></div><div class="impact-stat"><b>Evidence coverage</b><span>Share of line items with a source and reproducible record.</span></div></div>
+<div class="impact-strip"><div class="impact-intro"><strong>What the pilot will measure</strong><span>These are evaluation metrics, not reported outcomes. We will measure them with a partner pilot only after consent.</span></div><div class="impact-stat"><b>Cost per kit</b><span>Compare like-for-like product totals before checkout.</span></div><div class="impact-stat"><b>Time to compare</b><span>Measure minutes from needs list to documented decision.</span></div><div class="impact-stat"><b>Evidence coverage</b><span>Share of line items with a source and reproducible record.</span></div></div>
 </div></section>
 
 <section class="section workbench" id="pilot"><div class="wrap">
-<div class="section-head"><div><div class="kicker">Try the prototype</div><h2>Build a transparent basket.</h2><p>Start with a fictional pantry, search for real product pages, link offers to a need, and create records you can export or anchor on a testnet. Search results depend on the available search-provider configuration.</p></div><span class="tag tag-demo">DEMO DATA IS LABELED</span></div>
+<div class="section-head"><div><div class="kicker">Try the prototype</div><h2>Compare the basket. Keep the evidence.</h2><p>Start with a fictional pantry, search for real product pages, link offers to a need, and create records you can export or anchor on a testnet. Search results depend on the available search-provider configuration.</p></div><span class="tag tag-demo">DEMO DATA IS LABELED</span></div>
 <div class="workbench-grid">
 <div class="card"><div class="card-head"><div><h3>01 · Community purchase plan</h3><p>Illustrative scenario · no real organisation or spend</p></div><span class="tag tag-demo">FICTIONAL PILOT</span></div>
 <div class="card-body"><div class="campaign-details"><div class="campaign-icon">✳</div><div><h4>Community Kitchen Esperança</h4><p>20 essential-goods kits · Brazil · monthly planning cycle<br>Fictional name and figures for demo use only.</p></div></div>
-<div class="campaign-summary"><div class="summary-box"><span>Budget cap</span><strong>R$ 2.400,00</strong></div><div class="summary-box"><span>Planning estimate</span><strong id="planTotal">R$ 1.967,60</strong></div><div class="summary-box"><span>Exact quotes linked</span><strong id="linkedCount">0 / 8</strong></div><div class="summary-box"><span>Exact quote subtotal</span><strong id="quoteSubtotal">R$ 0,00</strong></div><div class="summary-box"><span>Vs. demo reference</span><strong id="quoteDelta">—</strong><span style="font-size:8px;color:#899287">Not realised savings</span></div></div>
+<div class="campaign-summary"><div class="summary-box"><span>Budget cap</span><strong>R$ 2.400,00</strong></div><div class="summary-box"><span>Basket projection</span><strong id="planTotal">R$ 1.967,60</strong></div><div class="summary-box"><span>Items with exact-source prices</span><strong id="linkedCount">0 / 8</strong></div><div class="summary-box"><span>Exact-source subtotal</span><strong id="quoteSubtotal">R$ 0,00</strong></div><div class="summary-box"><span>Difference vs. demo values</span><strong id="quoteDelta">—</strong><span style="font-size:8px;color:#899287">Not realised savings</span></div></div>
 <div class="budget-line"><span>Illustrative plan</span><strong id="budgetText">82% of ceiling</strong></div><div class="budget-track"><div class="budget-fill" id="budgetBar"></div></div>
 <div class="data-note"><b>Important:</b> the values below are made-up planning references to demonstrate the workflow. They are not current market prices, quotations or purchases. Only an offer from the search API marked as exact can replace a planning value as a verified quote.</div>
 <div class="need-list" id="needList" aria-live="polite"></div>
@@ -155,7 +380,7 @@ function loadState(){
   state.selectedEvidenceId=saved.selectedEvidenceId||null;
  }catch{/* Continue with a clean prototype session. */}
 }
-function planEstimate(){return state.needs.reduce((sum,item)=>sum+(item.qty*item.reference),0);}
+function planEstimate(){return state.needs.reduce((sum,item)=>sum+(item.qty*(item.offer&&item.offer.confidence==='exact'&&Number.isFinite(item.offer.priceValue)?item.offer.priceValue:item.reference)),0);}
 function verifiedNeedCount(){return state.needs.filter(item=>item.offer&&item.offer.confidence==='exact'&&Number.isFinite(item.offer.priceValue)).length;}
 function renderNeeds(){
  const host=$('needList');host.replaceChildren();
@@ -164,11 +389,11 @@ function renderNeeds(){
   const left=document.createElement('div');
   const name=document.createElement('div');name.className='need-name';name.textContent=item.name;
   const meta=document.createElement('div');meta.className='need-meta';meta.textContent=String(item.qty)+' '+item.unit+' · planning reference '+money(item.reference)+'/unit';
-  const badge=document.createElement('span');badge.className='need-state '+(item.offer?(item.offer.confidence==='exact'?'state-quoted':'state-reference'):'state-planned');badge.textContent=item.offer?(item.offer.confidence==='exact'?'Offer linked':'Reference only'):'Needs a quote';
+  const badge=document.createElement('span');badge.className='need-state '+(item.offer?(item.offer.confidence==='exact'?'state-quoted':'state-reference'):'state-planned');badge.textContent=item.offer?(item.offer.confidence==='exact'?'Exact-source price':'Reference only'):'Needs a quote';
   left.append(name,meta,badge);
   const right=document.createElement('div');right.className='need-values';
   const amount=document.createElement('strong');amount.textContent=item.offer&&item.offer.confidence==='exact'?money(item.offer.priceValue*item.qty):money(item.reference*item.qty);
-  const unit=document.createElement('span');unit.textContent=item.offer&&item.offer.confidence==='exact'?'linked quote total':'planning total';
+  const unit=document.createElement('span');unit.textContent=item.offer&&item.offer.confidence==='exact'?'source price × quantity':'demo reference total';
   right.append(amount,unit);row.append(left,right);host.append(row);
  });
  const estimate=planEstimate(),pct=Math.min(100,estimate/BUDGET_CENTS*10000);
@@ -275,7 +500,7 @@ async function addOfferEvidence(item){
 }
 async function createPlanSnapshot(){
  const payload={schema:'fairbasket.snapshot.v1',campaign:{key:CAMPAIGN_KEY,name:CAMPAIGN_NAME,fictional:true,targetKits:TARGET_KITS,budgetCapCents:BUDGET_CENTS},needs:state.needs.map(item=>({id:item.id,name:item.name,quantity:item.qty,unit:item.unit,planningReferenceUnitBRL:item.reference,linkedOffer:item.offer?{title:item.offer.title,store:item.offer.store,sourceUrl:item.offer.sourceUrl,priceBRL:item.offer.priceValue,priceSource:item.offer.source,confidence:item.offer.confidence}:null})),counts:{lineItems:state.needs.length,verifiedQuotes:verifiedNeedCount()},createdAt:new Date().toISOString(),disclaimer:'Fictional pilot snapshot. Planning references are made-up for interface demonstration; this is not a real NGO, purchase, donation, saving or delivery claim.'};
- await addRecord(payload,{title:'Plan snapshot · fictional pilot',summary:verifiedNeedCount()+' verified price sources linked out of '+state.needs.length+' line items. Planning values remain illustrative; no real spend is claimed.',type:1,amountCents:BUDGET_CENTS,confidence:'snapshot'});
+ await addRecord(payload,{title:'Plan snapshot · fictional pilot',summary:verifiedNeedCount()+' line item(s) with exact-source prices out of '+state.needs.length+'. Remaining planning values are illustrative; no real spend is claimed.',type:1,amountCents:BUDGET_CENTS,confidence:'snapshot'});
  setText('auditStatus','Plan snapshot created and hashed locally. Select it and publish to Base Sepolia only after deploying the registry contract.');
  setChainStatus('Plan snapshot created locally. It is not on-chain yet; select Publish on Base Sepolia after contract deployment.',false);
 }
