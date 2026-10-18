@@ -48,12 +48,18 @@ jobs:
           if len(scripts) != 1:
               raise SystemExit(f"Expected one FairBasket module script, found {len(scripts)}")
           Path("/tmp/fairbasket-check.mjs").write_text(scripts[0], encoding="utf-8")
+          for name in ("search", "chat"):
+              source = Path(f"functions/api/{name}.js").read_text(encoding="utf-8")
+              Path(f"/tmp/{name}-check.mjs").write_text(source, encoding="utf-8")
           contract = Path("contracts/FairBasketRegistry.sol").read_text(encoding="utf-8")
           if "contract FairBasketRegistry" not in contract or "pragma solidity ^0.8.24;" not in contract:
               raise SystemExit("FairBasketRegistry contract source is missing or malformed")
-          print("FairBasket HTML and contract source were found.")
+          print("FairBasket HTML, API functions and contract source were found.")
           PY
           node --check /tmp/fairbasket-check.mjs
+          node --check /tmp/search-check.mjs
+          node --check /tmp/chat-check.mjs
+          node tests/fairbasket-static-test.mjs
 
       - name: Compilar contrato FairBasket
         if: steps.credentials.outputs.configured == 'true'
