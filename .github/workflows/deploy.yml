@@ -128,27 +128,34 @@ jobs:
         run: |
           set -euo pipefail
           BASE_URL="https://onde-compro.pages.dev"
+          READY=false
           for attempt in $(seq 1 12); do
-            if curl --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html; then
-              break
-            fi
-            if [[ "$attempt" == "12" ]]; then
-              echo "Published FairBasket page did not become available." >&2
-              exit 1
-            fi
-            sleep 5
-          done
-          grep -q "Spend wisely." /tmp/published-fairbasket.html
-          grep -q "Deploy test registry" /tmp/published-fairbasket.html
-          curl --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json
-          python - <<'PY'
+            echo "Checking the published FairBasket assets (attempt $attempt/12)…"
+            if curl --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html \
+              && grep -q "Spend wisely." /tmp/published-fairbasket.html \
+              && grep -q "Deploy test registry" /tmp/published-fairbasket.html \
+              && grep -q "Load simulated walkthrough" /tmp/published-fairbasket.html \
+              && curl --fail --silent --show-error "$BASE_URL/fairbasket-contract.json" -o /tmp/published-fairbasket-contract.json; then
+              if python - <<'PY'
           import json
           from pathlib import Path
           artifact = json.loads(Path("/tmp/published-fairbasket-contract.json").read_text(encoding="utf-8"))
-          assert artifact.get("contractName") == "FairBasketRegistry"
-          assert artifact.get("chainId") == 84532
-          assert isinstance(artifact.get("abi"), list) and artifact["abi"]
+          assert artifact.get("contractName") == "FairBasketRegistry", "wrong contract artifact"
+          assert artifact.get("chainId") == 84532, "wrong target chain ID"
+          assert isinstance(artifact.get("abi"), list) and artifact["abi"], "missing ABI"
           bytecode = artifact.get("bytecode", "")
-          assert isinstance(bytecode, str) and bytecode.startswith("0x") and len(bytecode) > 100
+          assert isinstance(bytecode, str) and bytecode.startswith("0x") and len(bytecode) > 100, "missing bytecode"
           print("Published FairBasket page and compiled Base Sepolia contract artifact passed smoke tests.")
           PY
+              then
+                READY=true
+                break
+              fi
+            fi
+            sleep 5
+          done
+          if [[ "$READY" != "true" ]]; then
+            echo "Fresh FairBasket assets did not pass smoke tests after 12 attempts." >&2
+            echo "The deployment may be successful while the production alias is still serving stale assets." >&2
+            exit 1
+          fi
