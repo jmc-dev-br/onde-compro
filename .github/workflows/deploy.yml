@@ -36,12 +36,32 @@ jobs:
         if: steps.credentials.outputs.configured == 'true'
         uses: actions/checkout@v4
 
+      - name: Validar protótipo FairBasket
+        if: steps.credentials.outputs.configured == 'true'
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("fairbasket.html").read_text(encoding="utf-8")
+          scripts = re.findall(r'<script type="module">(.*?)</script>', html, flags=re.S | re.I)
+          if len(scripts) != 1:
+              raise SystemExit(f"Expected one FairBasket module script, found {len(scripts)}")
+          Path("/tmp/fairbasket-check.mjs").write_text(scripts[0], encoding="utf-8")
+          contract = Path("contracts/FairBasketRegistry.sol").read_text(encoding="utf-8")
+          if "contract FairBasketRegistry" not in contract or "pragma solidity ^0.8.24;" not in contract:
+              raise SystemExit("FairBasketRegistry contract source is missing or malformed")
+          print("FairBasket HTML and contract source were found.")
+          PY
+          node --check /tmp/fairbasket-check.mjs
+
       - name: Preparar arquivos estáticos
         if: steps.credentials.outputs.configured == 'true'
         shell: bash
         run: |
           mkdir -p dist
           cp index.html dist/index.html
+          cp fairbasket.html dist/fairbasket.html
           if [[ -f comunidade.html ]]; then
             cp comunidade.html dist/comunidade.html
           fi
