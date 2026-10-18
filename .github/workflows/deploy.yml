@@ -76,6 +76,29 @@ jobs:
           mkdir -p dist
           cp index.html dist/index.html
           cp fairbasket.html dist/fairbasket.html
+          ABI_FILE="$(find /tmp/fairbasket-solc -type f -name '*FairBasketRegistry.abi' -print -quit)"
+          BYTECODE_FILE="$(find /tmp/fairbasket-solc -type f -name '*FairBasketRegistry.bin' -print -quit)"
+          if [[ -z "$ABI_FILE" || -z "$BYTECODE_FILE" ]]; then
+            echo "Compiled ABI or bytecode for FairBasketRegistry was not found." >&2
+            find /tmp/fairbasket-solc -maxdepth 2 -type f -print
+            exit 1
+          fi
+          ABI_FILE="$ABI_FILE" BYTECODE_FILE="$BYTECODE_FILE" node - <<'NODE'
+          const fs = require("node:fs");
+          const abi = JSON.parse(fs.readFileSync(process.env.ABI_FILE, "utf8"));
+          const bytecode = fs.readFileSync(process.env.BYTECODE_FILE, "utf8").trim();
+          if (!Array.isArray(abi) || !/^([0-9a-f]+)$/i.test(bytecode) || bytecode.length < 100) {
+            throw new Error("Invalid compiled ABI or bytecode.");
+          }
+          fs.writeFileSync("dist/fairbasket-contract.json", JSON.stringify({
+            contractName: "FairBasketRegistry",
+            compiler: "solc 0.8.30",
+            chainId: 84532,
+            abi,
+            bytecode: "0x" + bytecode
+          }, null, 2) + "\n");
+          console.log("Wrote dist/fairbasket-contract.json (" + bytecode.length / 2 + " byte bytecode).");
+          NODE
           if [[ -f comunidade.html ]]; then
             cp comunidade.html dist/comunidade.html
           fi
