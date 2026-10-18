@@ -42,9 +42,9 @@ Este repositório também inclui o protótipo de hackathon **FairBasket**, uma e
 - Roteiro de vídeo de demonstração em inglês: FAIRBASKET-DEMO-SCRIPT.md
 - Passos para publicar o contrato de teste: FAIRBASKET-DEPLOY.md
 
-O protótipo começa com um cenário fictício explicitamente identificado. Ele permite buscar ofertas reais pela API existente, marcar a fonte de preço, gerar um registro com SHA-256, exportar um pacote JSON e, após implantação manual do contrato e conexão de uma carteira de teste, ancorar o hash na Base Sepolia. Não movimenta doações ou dinheiro de compras.
+O protótipo começa com um cenário fictício explicitamente identificado. Ele permite buscar ofertas pela API existente, marcar a fonte de preço, gerar um registro com SHA-256, exportar um pacote JSON e implantar o contrato pelo botão da própria página usando uma carteira na Base Sepolia. Se a busca ao vivo falhar, há um fluxo de demonstração simulada claramente marcada; esses dados não são tratados como cotações reais. O app não movimenta doações nem dinheiro de compras.
 
-**Importante:** a interface do site e o contrato fonte estão no repositório, mas a implantação do contrato e a transação de teste precisam ser concluídas com uma carteira do proprietário antes de afirmar que existe registro on-chain. Os valores de planejamento fictícios não são preços reais nem métricas de economia.
+**Importante:** a compilação, o deploy do site e os testes estáticos/compilação do contrato passam no pipeline. A implantação do contrato na Base Sepolia e a transação de evidência ainda precisam ser aprovadas com uma carteira de teste antes de afirmar que existe registro on-chain. Os valores de planejamento fictícios não são preços reais nem métricas de economia.
 
 ## Configuração da API
 
