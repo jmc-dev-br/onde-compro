@@ -2,6 +2,22 @@
 
 The deadline is close, so keep this to a 15–20 minute discovery conversation. The goal is to validate the workflow, not to request money, sell software or claim a partnership without permission.
 
+## A practical first contact (not yet contacted)
+
+A useful first step is to ask a local food-security network to refer you to a community buyer who is willing to speak. The municipal page for COMSEA (Conselho Municipal de Segurança Alimentar de Passo Fundo) lists the council's role in discussing and implementing food-security priorities and publishes these contact details:
+
+- Email: comsea@pmpf.rs.gov.br
+- Phone: (54) 3581-0187
+- WhatsApp/phone also listed: (54) 98404-4776
+- Official page: https://www.pmpf.rs.gov.br/conselhos-municipais-de-passo-fundo/comsea/
+
+Suggested subject: **Pedido de conversa de 15 minutos sobre comparação de compras comunitárias**
+
+Suggested first line:
+“Olá, COMSEA. Estou desenvolvendo um protótipo acadêmico de transparência de compras comunitárias e gostaria de conversar por 15 minutos com uma organização que faça compras de alimentos ou itens essenciais. Vocês poderiam indicar uma entidade que talvez aceitasse uma conversa exploratória, sem compromisso e sem compartilhar informações pessoais?”
+
+This is a public lead to try, not a confirmed partner. No message has been sent and no organisation has endorsed or tested FairBasket. Only refer to a participant or organisation in the submission after they consent.
+
 ## Message to send in Portuguese
 
 Olá! Estou desenvolvendo um protótipo gratuito chamado FairBasket para ajudar cozinhas comunitárias, associações e pequenas organizações a comparar compras essenciais e manter um registro claro das fontes de preço e das decisões.
