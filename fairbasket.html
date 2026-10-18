@@ -41,7 +41,7 @@ header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;displ
 <div class="metric"><span>People served · target</span><strong>20</strong><small>Essential-goods kits in this fictional scenario</small></div>
 <div class="metric"><span>Spending ceiling</span><strong>R$ 2,400</strong><small>Planning limit, not money deposited</small></div>
 <div class="metric"><span>Planning estimate</span><strong id="heroPlan">R$ 1.967,60</strong><small>Demonstration figures only</small></div>
-<div class="metric"><span>Live verified quotes</span><strong id="heroVerified">0</strong><small>Updates when you verify an offer</small></div>
+<div class="metric"><span>Line items with exact quotes</span><strong id="heroVerified">0</strong><small>Updates when a price source qualifies</small></div>
 </div>
 <div class="panel-progress"><div class="progress-copy"><span>Illustrative plan vs. budget ceiling</span><b id="heroBudgetPercent">82%</b></div><div class="progress-track"><div class="progress-fill" id="heroBudgetBar"></div></div></div>
 <div class="panel-foot">No real nonprofit, purchase, donation or saving is claimed here. Replace the fictional pilot with consented data before reporting impact.</div></aside></div></section>
@@ -61,7 +61,7 @@ header{background:#fff;border-bottom:1px solid #e6ebe3}nav{min-height:74px;displ
 <div class="workbench-grid">
 <div class="card"><div class="card-head"><div><h3>01 · Community purchase plan</h3><p>Illustrative scenario · no real organisation or spend</p></div><span class="tag tag-demo">FICTIONAL PILOT</span></div>
 <div class="card-body"><div class="campaign-details"><div class="campaign-icon">✳</div><div><h4>Community Kitchen Esperança</h4><p>20 essential-goods kits · Brazil · monthly planning cycle<br>Fictional name and figures for demo use only.</p></div></div>
-<div class="campaign-summary"><div class="summary-box"><span>Budget cap</span><strong>R$ 2.400,00</strong></div><div class="summary-box"><span>Planning estimate</span><strong id="planTotal">R$ 1.967,60</strong></div><div class="summary-box"><span>Live quotes linked</span><strong id="linkedCount">0 / 8</strong></div></div>
+<div class="campaign-summary"><div class="summary-box"><span>Budget cap</span><strong>R$ 2.400,00</strong></div><div class="summary-box"><span>Planning estimate</span><strong id="planTotal">R$ 1.967,60</strong></div><div class="summary-box"><span>Exact quotes linked</span><strong id="linkedCount">0 / 8</strong></div><div class="summary-box"><span>Exact quote subtotal</span><strong id="quoteSubtotal">R$ 0,00</strong></div><div class="summary-box"><span>Vs. demo reference</span><strong id="quoteDelta">—</strong><span style="font-size:8px;color:#899287">Not realised savings</span></div></div>
 <div class="budget-line"><span>Illustrative plan</span><strong id="budgetText">82% of ceiling</strong></div><div class="budget-track"><div class="budget-fill" id="budgetBar"></div></div>
 <div class="data-note"><b>Important:</b> the values below are made-up planning references to demonstrate the workflow. They are not current market prices, quotations or purchases. Only an offer from the search API marked as exact can replace a planning value as a verified quote.</div>
 <div class="need-list" id="needList" aria-live="polite"></div>
@@ -172,7 +172,12 @@ function renderNeeds(){
   right.append(amount,unit);row.append(left,right);host.append(row);
  });
  const estimate=planEstimate(),pct=Math.min(100,estimate/BUDGET_CENTS*10000);
+ const exactNeeds=state.needs.filter(item=>item.offer&&item.offer.confidence==='exact'&&Number.isFinite(item.offer.priceValue));
+ const quoteSubtotal=exactNeeds.reduce((sum,item)=>sum+item.qty*item.offer.priceValue,0);
+ const matchingReference=exactNeeds.reduce((sum,item)=>sum+item.qty*item.reference,0);
+ const diff=matchingReference-quoteSubtotal;
  setText('planTotal',money(estimate));setText('heroPlan',money(estimate));setText('linkedCount',verifiedNeedCount()+' / '+state.needs.length);setText('heroVerified',verifiedNeedCount());
+ setText('quoteSubtotal',money(quoteSubtotal));setText('quoteDelta',exactNeeds.length?((diff>=0?'+':'−')+money(Math.abs(diff))):'—');
  setText('budgetText',fmtNum(pct)+'% of ceiling');setText('heroBudgetPercent',fmtNum(pct)+'%');$('budgetBar').style.width=pct+'%';$('heroBudgetBar').style.width=pct+'%';
 }
 function populateNeedSelect(){
@@ -291,8 +296,9 @@ async function verifyAllHashes(){
 async function publishRecord(record){
  if(state.pending)return;
  const address=$('contractAddress').value.trim();
+ if(!state.ethers && !/^0x[a-fA-F0-9]{40}$/.test(address)){setChainStatus('Paste the deployed FairBasketRegistry contract address first. The source is in the repository; this site does not deploy it automatically.',true);return;}
  if(!state.ethers||!state.signer){try{await connectWallet();}catch(error){setChainStatus(error.message||'Wallet connection failed.',true);return;}}
- if(!state.ethers.isAddress(address)){setChainStatus('Paste the deployed FairBasketRegistry contract address first. The source is in the repository; this site does not deploy it automatically.',true);return;}
+ if(!state.ethers.isAddress(address)){setChainStatus('Paste a valid deployed FairBasketRegistry contract address.',true);return;}
  if((await state.provider.getNetwork()).chainId!==84532n){setChainStatus('Switch the wallet to Base Sepolia before writing.',true);return;}
  state.pending=true;renderRecords();$('connectWalletBtn').disabled=true;
  try{
