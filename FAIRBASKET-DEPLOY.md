@@ -47,4 +47,4 @@ The contract does not verify that an amount is the amount actually paid, and it 
 - The exported audit bundle opens and each payload digest can be reproduced.
 - Demo claims are labelled; fictional planning values are never described as real prices or measured savings.
 - Prepare screenshots or a demo video so the project remains understandable if a reviewer does not connect a wallet.
-- Keep a deadline buffer. The DoraHacks page in the owner's browser displays a submission deadline of 24 October 2026 at 21:00. Verify the time shown on the live submission form before uploading.
+- Deadline check: use the deadline and timezone shown on the active DoraHacks submission form as the source of truth. Older screenshots or saved notes can be stale; submit before the displayed cutoff.

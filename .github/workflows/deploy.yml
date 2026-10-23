@@ -134,6 +134,13 @@ jobs:
           BASE_URL="$DEPLOYMENT_URL"
           if [[ -z "$BASE_URL" ]]; then BASE_URL="https://onde-compro.pages.dev"; fi
           READY=false
+          if curl --location --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/" -o /tmp/published-home.html && grep -q "Compare ofertas." /tmp/published-home.html; then
+            echo "Onde compro main-page smoke test passed at $BASE_URL"
+            echo "- Main product page: public HTTP smoke test passed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::The Onde compro main page did not return the expected updated hero marker. Verify https://onde-compro.pages.dev/ in a browser."
+            echo "- Main product page: public smoke test needs manual verification." >> "$GITHUB_STEP_SUMMARY"
+          fi
           for attempt in $(seq 1 4); do
             echo "Checking deployed URL (attempt $attempt/4): $BASE_URL"
             if curl --location --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html; then

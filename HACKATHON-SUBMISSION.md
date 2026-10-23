@@ -3,6 +3,14 @@
 ## One-line pitch
 FairBasket helps small community organisations stretch essential-goods budgets by comparing direct offers and preserving verifiable evidence for every buying decision — without taking custody of donations.
 
+## Final submission checklist
+- Open both public pages in a fresh browser session: [Onde compro?](https://onde-compro.pages.dev/) and [FairBasket](https://onde-compro.pages.dev/fairbasket.html).
+- Test at least one live product search. Include only prices and offer links actually returned by the page; availability and checkout totals can change.
+- If live search is unavailable, use the simulated walkthrough only as a clearly labelled UI fallback. It is not a real quotation.
+- Save a record, run **Verify digest**, and export the JSON audit bundle so the reviewer can inspect a reproducible evidence payload.
+- **Tech Track integrity gate:** only describe an on-chain build as demonstrated after a registry deployment and evidence transaction have both been confirmed on Base Sepolia and the transaction link can be opened. Otherwise, choose a track allowed by the live rules and state that the chain write is still pending.
+- Do not claim a real partner, donation, purchase, delivery, or measured savings from the fictional pilot scenario.
+
 ## The problem
 Community kitchens, mutual-aid groups and small nonprofits often buy the same essentials with limited staff time and tight budgets. Comparing pack sizes, sellers, delivery terms and changing prices is tedious. Receipts and screenshots end up scattered across chat threads and spreadsheets, making decisions harder to review later. Donors want transparency, but small teams cannot afford enterprise procurement tooling.
 

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
+const home = readFileSync("index.html", "utf8");
 const html = readFileSync("fairbasket.html", "utf8");
 const search = readFileSync("functions/api/search.js", "utf8");
 const chat = readFileSync("functions/api/chat.js", "utf8");
@@ -59,4 +60,14 @@ assert.match(contract, /if \(campaign\.creator != msg\.sender\) revert NotCampai
 assert.match(contract, /mapping\(bytes32 => mapping\(bytes32 => bool\)\) public evidenceRecorded/, "Contract should prevent duplicate evidence hashes.");
 assert.match(contract, /This contract never holds donations|never holds donations/i, "Contract should not hold user funds.");
 
-console.log("FairBasket static checks passed: " + requiredIds.length + " required elements, " + new Set(referencedIds).size + " JS element references, price provenance, source safety, testnet guard, audit integrity, and contract interface.");
+assert.match(home, /rel="canonical" href="https:\/\/onde-compro\.pages\.dev\/?"/, "Main site should declare its canonical URL.");
+assert.match(home, /property="og:title"/, "Main site should have social sharing metadata.");
+assert.match(home, /Compare ofertas\. <em>Compre com confiança\.<\/em>/, "Main-site headline should not promise the absolute lowest price.");
+assert.match(html, /rel="canonical" href="https:\/\/onde-compro\.pages\.dev\/fairbasket\.html"/, "FairBasket should declare its canonical URL.");
+assert.match(html, /property="og:title"/, "FairBasket should have social sharing metadata.");
+const canonicalizer = html.match(/function canonicalizeUrl\(raw\)\{([\s\S]*?)\}\s*async function addRecord/);
+assert.ok(canonicalizer, "A dedicated source-URL normalizer should exist.");
+assert.match(canonicalizer[1], /return u\.href;/, "Evidence should retain the submitted HTTPS product URL.");
+assert.doesNotMatch(canonicalizer[1], /u\.(?:search|hash)\s*=/, "Evidence URL normalization must not silently delete product-identifying parameters or fragments.");
+
+console.log("FairBasket and main-site static checks passed: " + requiredIds.length + " required elements, " + new Set(referencedIds).size + " JS element references, price provenance, source safety, testnet guard, audit integrity, contract interface, metadata, and evidence URL retention.");

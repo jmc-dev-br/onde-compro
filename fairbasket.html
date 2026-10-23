@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#173c2c">
-<meta name="description" content="FairBasket helps community organisations compare essential goods and preserve verifiable procurement evidence.">
+<meta name="description" content="FairBasket is a social-impact prototype for comparing essential-goods offers and preserving reviewable purchase-decision evidence.">
+<link rel="canonical" href="https://onde-compro.pages.dev/fairbasket.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FairBasket">
+<meta property="og:title" content="FairBasket — Spend wisely. Prove every decision.">
+<meta property="og:description" content="Compare essential-goods offers, label price evidence and preserve tamper-evident records. A prototype only; no donation funds are held.">
+<meta property="og:url" content="https://onde-compro.pages.dev/fairbasket.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FairBasket — Spend wisely. Prove every decision.">
+<meta name="twitter:description" content="A social-impact prototype for transparent community procurement. No donation funds are held.">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <title>FairBasket — Transparent community buying</title>
 <style>
@@ -332,7 +341,7 @@ footer{background:#fff;border-color:#dfe7dc}
 <div class="principles"><div class="principle"><b>Evidence stays inspectable</b><p>Each record exports its payload, source link, timestamp and digest. Reviewers can reproduce the SHA-256 hash as well as check any on-chain transaction.</p></div><div class="principle"><b>Privacy before publicity</b><p>Personal details and unredacted receipts do not belong on a public chain. The contract stores a digest, type and declared amount only; the source record is reviewed separately.</p></div><div class="principle"><b>Impact claims are measurable</b><p>We do not claim savings, partner adoption or deliveries from fictional data. A pilot will measure comparable line-item costs, comparison time and evidence coverage.</p></div></div>
 </div></section>
 </main>
-<footer><div class="wrap foot"><div><b>FairBasket</b> · A social-impact prototype built on the Onde compro? foundation.</div><div><a href="/">Onde compro?</a> · <a href="https://dorahacks.io/hackathon/web3-social-good-2026/build" target="_blank" rel="noopener noreferrer">Hackathon submission page ↗</a></div><div>Prototype only · no real funds held</div></div></footer>
+<footer><div class="wrap foot"><div><b>FairBasket</b> · A social-impact prototype built on the Onde compro? foundation.</div><div><a href="/">Onde compro?</a> · <a href="https://dorahacks.io/hackathon/web3-social-good-2026/build" target="_blank" rel="noopener noreferrer">Hackathon submission page ↗</a> · <a href="https://github.com/jmc-dev-br/onde-compro" target="_blank" rel="noopener noreferrer">Source code ↗</a></div><div>Prototype only · no real funds held</div></div></footer>
 
 <script type="module">
 const STORAGE_KEY='fairbasket-demo-v1';
@@ -491,8 +500,9 @@ async function connectWallet(){
 }
 function getCampaignId(){return state.ethers.id(CAMPAIGN_KEY);}
 function canonicalizeUrl(raw){
- const value=safeHttps(raw);if(!value)return '';
- try{const u=new URL(value);u.hash='';u.search='';return u.href;}catch{return '';}
+ const value=safeHttps(raw);
+ if(!value)return '';
+ try{const u=new URL(value);return u.href;}catch{return '';}
 }
 async function addRecord(payload,meta){
  const hash=await sha256(payload);
