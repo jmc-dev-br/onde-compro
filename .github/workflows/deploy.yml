@@ -141,6 +141,41 @@ jobs:
             echo "::warning::The Onde compro main page did not return the expected updated hero marker. Verify https://onde-compro.pages.dev/ in a browser."
             echo "- Main product page: public smoke test needs manual verification." >> "$GITHUB_STEP_SUMMARY"
           fi
+          # Check the canonical user-facing production domain as well as the unique deployment URL.
+          LIVE_URL="https://onde-compro.pages.dev"
+          if [[ "$LIVE_URL" != "$BASE_URL" ]]; then
+            if curl --location --connect-timeout 4 --max-time 10 --fail --silent --show-error "$LIVE_URL/" -o /tmp/stable-home.html &&
+               grep -q "Compare ofertas." /tmp/stable-home.html &&
+               curl --location --connect-timeout 4 --max-time 10 --fail --silent --show-error "$LIVE_URL/fairbasket.html" -o /tmp/stable-fairbasket.html &&
+               grep -q "Spend wisely." /tmp/stable-fairbasket.html &&
+               curl --location --connect-timeout 4 --max-time 10 --fail --silent --show-error "$LIVE_URL/fairbasket-contract.json" -o /tmp/stable-fairbasket-contract.json; then
+              echo "Canonical production URLs passed home, FairBasket and contract-artifact HTTP checks: $LIVE_URL"
+              echo "- Canonical production domain: home page, FairBasket and contract artifact smoke checks passed." >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::warning::The unique deployment URL passed its smoke test, but one or more checks on the canonical production domain failed. Open https://onde-compro.pages.dev/ and /fairbasket.html manually."
+              echo "- Canonical production domain: one or more checks need manual verification." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
+          # Check the main live search endpoint without failing a deployment when an external search provider is temporarily unavailable.
+          if curl --location --connect-timeout 4 --max-time 15 --fail --silent --show-error "$LIVE_URL/api/search?q=arroz%20tipo%201%20pacote%205%20kg" -o /tmp/live-search-smoke.json; then
+            if python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path("/tmp/live-search-smoke.json").read_text(encoding="utf-8"))
+          if not isinstance(payload, dict) or not isinstance(payload.get("results"), list):
+              raise SystemExit("Search endpoint returned an unexpected JSON shape.")
+          print(f"Live search endpoint returned valid JSON with {len(payload['results'])} result(s).")
+          PY
+            then
+              echo "- Live product search: endpoint returned JSON with a results array." >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::warning::The live product-search endpoint responded but returned an unexpected payload. Test a query in the browser."
+              echo "- Live product search: response shape needs manual verification." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          else
+            echo "::warning::The live product-search endpoint did not return a successful HTTP response during this deployment check. Test live search in the browser; static UI checks still passed."
+            echo "- Live product search: provider/API response needs manual verification." >> "$GITHUB_STEP_SUMMARY"
+          fi
           for attempt in $(seq 1 4); do
             echo "Checking deployed URL (attempt $attempt/4): $BASE_URL"
             if curl --location --connect-timeout 4 --max-time 8 --fail --silent --show-error "$BASE_URL/fairbasket.html" -o /tmp/published-fairbasket.html; then
