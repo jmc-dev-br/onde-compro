@@ -1,0 +1,13 @@
+[
+  {
+    "id": "fairbasket",
+    "name": "FairBasket",
+    "kind": "project",
+    "category": "Impacto social",
+    "status": "Protótipo em evolução",
+    "description": "Uma experiência de compras comunitárias transparentes, criada para comparar ofertas essenciais e registrar as decisões de compra.",
+    "url": "/fairbasket.html",
+    "cta": "Conhecer projeto",
+    "featured": true
+  }
+]
