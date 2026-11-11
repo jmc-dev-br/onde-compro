@@ -36,6 +36,7 @@
     var existing = document.querySelector("[data-theme-toggle]");
     if (existing) return existing;
     var host = document.querySelector(".nav-actions") ||
+      document.querySelector(".partners-actions") ||
       document.querySelector(".social-nav") ||
       document.querySelector(".club-nav") ||
       document.querySelector("header nav");
@@ -46,10 +47,7 @@
     button.className = "theme-toggle";
     button.setAttribute("data-theme-toggle", "");
     button.innerHTML = '<span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-label">Escuro</span>';
-    button.addEventListener("click", function () {
-      applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
-    });
-    if (host.classList.contains("nav-actions")) host.prepend(button);
+    if (host.classList.contains("nav-actions") || host.classList.contains("partners-actions")) host.prepend(button);
     else host.appendChild(button);
     return button;
   }
