@@ -20,7 +20,6 @@
     if (button) {
       var icon = button.querySelector(".theme-toggle-icon");
       var label = button.querySelector(".theme-toggle-label");
-      var next = selected === "dark" ? "light" : "dark";
       if (icon) icon.textContent = selected === "dark" ? "☀" : "☾";
       if (label) label.textContent = selected === "dark" ? "Claro" : "Escuro";
       button.setAttribute("aria-label", selected === "dark" ? "Ativar modo claro" : "Ativar modo escuro");
@@ -58,6 +57,7 @@
     applyTheme(stored === "dark" || stored === "light" ? stored : systemTheme(), false);
     var toggle = mountToggle();
     if (toggle) {
+      applyTheme(root.getAttribute("data-theme"), false);
       toggle.addEventListener("click", function () {
         applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
       });
