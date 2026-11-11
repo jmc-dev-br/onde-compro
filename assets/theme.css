@@ -66,6 +66,10 @@ html[data-theme="dark"] {
   header nav.wrap .nav-more-menu a {padding:10px}
 }
 @media(max-width:540px) {
+  header nav.wrap {flex-wrap:wrap;row-gap:8px;padding-top:9px;padding-bottom:9px}
+  header nav.wrap .brand {flex:1 1 auto}
+  header nav.wrap .mobile-menu-toggle {order:2}
+  header nav.wrap .nav-actions {order:3;width:100%;justify-content:flex-end;gap:6px}
   .theme-toggle {min-height:38px;padding:0 9px}
   .theme-toggle-label {display:none}
   .mobile-menu-toggle {min-height:38px;padding:0 9px}
@@ -78,6 +82,7 @@ html[data-theme="dark"] .top b {color:#a5dcae}
 html[data-theme="dark"] header {background:rgba(22,33,26,.96)!important;border-color:#34443a!important}
 html[data-theme="dark"] .navlinks,html[data-theme="dark"] .navlinks a {color:#d5e2d8}
 html[data-theme="dark"] .navlinks a:hover {color:#a8dfb1}
+html[data-theme="dark"] .account-nav-button {background:#202d24!important;border-color:#405246!important;color:#edf3ee!important}
 html[data-theme="dark"] .hero {
   background:radial-gradient(ellipse at 82% 25%,#284632 0,transparent 31%),linear-gradient(120deg,#101a14,#16241a 62%,#1c2d20)!important;
   border-color:#34443a!important;color:#edf3ee!important;
